@@ -3,7 +3,7 @@ import './css/Project.css';
 import { motion } from 'framer-motion';
 import {
   FaLaptopCode, FaHospital, FaSchool, FaBrain, FaHome,
-  FaGamepad, FaPlane, FaComments, FaGithub
+  FaGamepad, FaPlane, FaShoppingCart, FaComments, FaGithub
 } from 'react-icons/fa';
 
 const projects = [
