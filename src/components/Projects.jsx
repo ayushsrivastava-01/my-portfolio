@@ -9,7 +9,7 @@ import {
 const projects = [
   {
   title: "Grocery Shopping Webapp",
-  description: "A full-stack grocery shopping web application with user authentication, cart management, and order placement features.",
+  description: "A full-stack grocery shopping web application with user and admin panel both.",
   github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
   icon: <FaShoppingCart />
   },
