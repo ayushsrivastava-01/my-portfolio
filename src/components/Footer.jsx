@@ -1,6 +1,7 @@
 import React from 'react';
 import './css/Footer.css';
 import { FaInstagram, FaLinkedin, FaTelegram, FaGithub } from 'react-icons/fa';
+import { FaThreads } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -35,6 +36,7 @@ const Footer = () => {
               <a href="https://www.linkedin.com/in/ayush-srivastava01" target="_blank" rel="noreferrer"><FaLinkedin /></a>
               <a href="https://telegram.me/ayushsrivastava_01" target="_blank" rel="noreferrer"><FaTelegram /></a>
               <a href="https://github.com/ayushsrivastava-01" target="_blank" rel="noreferrer"><FaGithub /></a>
+              <a href="https://www.threads.com/@ayushsrivastava_01" target="_blank" rel="noreferrer"><FaThreads /></a>
             </div>
             <p className="footer-email">
               Email: <a href="mailto:ayushsrivastava1854@gmail.com" className="footer-email-link">ayushsrivastava1854@gmail.com</a>
