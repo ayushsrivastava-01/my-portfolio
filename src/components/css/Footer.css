@@ -83,7 +83,7 @@
 }
 
 .social-icons a:hover {
-  color: #1ccde0; 
+  color: cyan; 
   transform: translateY(-5px) scale(1.2); 
 }
 
