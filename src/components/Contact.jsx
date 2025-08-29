@@ -34,20 +34,6 @@ const Contact = () => {
           <h3>Social Platforms</h3>
           <div className="social-icons">
             <a
-              href="https://www.linkedin.com/in/ayush-srivastava01"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href="https://github.com/ayushsrivastava-01"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <FaGithub />
-            </a>
-            <a
               href="https://www.instagram.com/ayushsrivastava_01"
               target="_blank"
               rel="noopener noreferrer"
@@ -55,11 +41,25 @@ const Contact = () => {
               <FaInstagram />
             </a>
             <a
+              href="https://www.linkedin.com/in/ayush-srivastava01"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedin />
+            </a>
+            <a
               href="https://telegram.me/ayushsrivastava_01"
               target="_blank"
               rel="noreferrer"
             >
               <FaTelegram />
+            </a>
+            <a
+              href="https://github.com/ayushsrivastava-01"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaGithub />
             </a>
             <a
               href="https://www.threads.com/@ayushsrivastava_01"
