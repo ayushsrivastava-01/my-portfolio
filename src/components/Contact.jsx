@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
-import { FaEnvelope, FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaTelegram, FaGithub,FaEnvelope } from 'react-icons/fa';
+import { FaThreads } from 'react-icons/fa6';
 
 const Contact = () => {
   const [animate, setAnimate] = useState(false);
@@ -52,6 +53,20 @@ const Contact = () => {
               rel="noopener noreferrer"
             >
               <FaInstagram />
+            </a>
+            <a
+              href="https://telegram.me/ayushsrivastava_01"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaTelegram />
+            </a>
+            <a
+              href="https://www.threads.com/@ayushsrivastava_01"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaThreads />
             </a>
           </div>
         </div>
