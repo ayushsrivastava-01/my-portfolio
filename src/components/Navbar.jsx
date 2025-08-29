@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './css/navbar.css';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -15,7 +15,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close menu on navigation (optional)
+  // Close menu on navigation
   const handleNavClick = () => {
     setIsOpen(false);
   };
@@ -23,7 +23,9 @@ const Navbar = () => {
   return (
     <nav className={`navbar navbar-expand-lg custom-navbar sticky-top ${scrolled ? 'sticky-scrolled' : ''}`}>
       <div className="container">
-        <Link className="navbar-brand" to="/" onClick={handleNavClick}>Ayush's Portfolio</Link>
+        <NavLink className="navbar-brand" to="/" onClick={handleNavClick}>
+          Ayush's Portfolio
+        </NavLink>
 
         <button
           className={`navbar-toggler custom-toggler ${isOpen ? 'open' : ''}`}
@@ -33,7 +35,7 @@ const Navbar = () => {
           aria-label="Toggle navigation"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {/* Hamburger icon lines */}
+          {/* Hamburger icon */}
           <span className="toggler-icon"></span>
           <span className="toggler-icon"></span>
           <span className="toggler-icon"></span>
@@ -42,31 +44,25 @@ const Navbar = () => {
         <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav ms-auto d-flex align-items-center flex-column flex-lg-row text-center text-lg-start">
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/" onClick={handleNavClick}>Home</Link>
+              <NavLink className="nav-link custom-link" to="/" onClick={handleNavClick}>Home</NavLink>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/about" onClick={handleNavClick}>About</Link>
+              <NavLink className="nav-link custom-link" to="/about" onClick={handleNavClick}>About</NavLink>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/skills" onClick={handleNavClick}>Skills</Link>
+              <NavLink className="nav-link custom-link" to="/skills" onClick={handleNavClick}>Skills</NavLink>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/projects" onClick={handleNavClick}>Projects</Link>
+              <NavLink className="nav-link custom-link" to="/projects" onClick={handleNavClick}>Projects</NavLink>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/contact" onClick={handleNavClick}>Contact</Link>
+              <NavLink className="nav-link custom-link" to="/contact" onClick={handleNavClick}>Contact</NavLink>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/certificate" onClick={handleNavClick}>Certificates</Link>
+              <NavLink className="nav-link custom-link" to="/certificate" onClick={handleNavClick}>Certificates</NavLink>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link custom-link" to="/resume" onClick={handleNavClick}>Resume</Link>
+              <NavLink className="nav-link custom-link" to="/resume" onClick={handleNavClick}>Resume</NavLink>
             </li>
           </ul>
         </div>

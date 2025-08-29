@@ -64,6 +64,15 @@
   color: #FFD700 !important;
 }
 
+/* ✅ Active NavLink highlight */
+.custom-link.active {
+  color: #FFD700 !important;
+}
+
+.custom-link.active::after {
+  width: 80%;
+}
+
 /* TOGGLER BUTTON */
 .custom-toggler {
   border: 2px solid #FFD700;
@@ -118,7 +127,7 @@
     background-color: #000000;
     padding: 1rem 0;
     z-index: 1049;
-    box-shadow: none; /* Removed extra shadow as requested */
+    box-shadow: none;
   }
 
   .navbar-nav {
@@ -133,7 +142,7 @@
   }
 
   body {
-    padding-top: 70px; /* push content below navbar when fixed */
+    padding-top: 70px;
   }
 }
 
@@ -149,25 +158,7 @@
   }
 }
 
-
 /* Animate collapse menu on mobile */
-@media (max-width: 991px) {
-  .navbar-collapse {
-    opacity: 0;
-    transform: translateY(-15px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    will-change: opacity, transform;
-    pointer-events: none; /* disable interaction when hidden */
-  }
-
-  .navbar-collapse.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto; /* enable interaction when shown */
-    transition-delay: 0.15s; /* slight latency */
-  }
-}
-
 @media (max-width: 991px) {
   .navbar-collapse {
     opacity: 0;
@@ -180,6 +171,6 @@
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
-    transition-delay: 0.5s; /* Increased delay */
+    transition-delay: 0.5s;
   }
 }
