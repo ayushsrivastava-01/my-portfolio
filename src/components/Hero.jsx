@@ -12,11 +12,18 @@ const Hero = () => {
       <div className="background-animation"></div>
       <div className="container d-flex align-items-center justify-content-center min-vh-100">
         <div className="row align-items-center w-100">
+          
+          {/* Image with animated background shapes */}
           <div className="col-lg-6 text-center mb-4 mb-lg-0 fade-in-left">
             <div className="image-wrapper">
+              <div className="shape shape1"></div>
+              <div className="shape shape2"></div>
+              <div className="shape shape3"></div>
               <img src={heroImage} alt="Hero" className="img-fluid hero-img" />
             </div>
           </div>
+
+          {/* Text Content */}
           <div className="col-lg-6 text-center text-lg-start fade-in-right">
             <h1 className="hero-heading">
               Hi, I'm <span className="highlight">Ayush Srivastava</span>
@@ -31,6 +38,7 @@ const Hero = () => {
               </Link>
             </div>
           </div>
+
         </div>
       </div>
     </section>
