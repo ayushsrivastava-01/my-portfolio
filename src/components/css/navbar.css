@@ -4,7 +4,7 @@
   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
   padding: 1rem 1.5rem;
   transition: box-shadow 0.3s ease;
-  z-index: 1050; /* make sure it’s high */
+  z-index: 1050; 
   position: sticky;
   top: 0;
 }

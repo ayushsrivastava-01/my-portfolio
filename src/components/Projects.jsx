@@ -3,15 +3,21 @@ import './css/Project.css';
 import { motion } from 'framer-motion';
 import {
   FaLaptopCode, FaHospital, FaSchool, FaBrain, FaHome,
-  FaGamepad, FaPlane, FaShoppingCart, FaComments, FaGithub
+  FaGamepad, FaPlane, FaShoppingCart, FaComments, FaGithub, FaCalculator
 } from 'react-icons/fa';
 
 const projects = [
   {
-  title: "Grocery Shopping Webapp",
-  description: "A full-stack grocery shopping web application with user and admin panel both.",
-  github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
-  icon: <FaShoppingCart />
+    title: "Number System Converter",
+    description: "A web-based number system converter and calculator (binary, octal, decimal, hexadecimal) with copy & swap features.",
+    github: "https://github.com/ayushsrivastava-01/Number-Convertor",
+    icon: <FaCalculator />
+  },
+  {
+    title: "Grocery Shopping Webapp",
+    description: "A full-stack grocery shopping web application with user and admin panel both.",
+    github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
+    icon: <FaShoppingCart />
   },
   {
     title: "Chat Application",
