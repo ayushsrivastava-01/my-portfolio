@@ -61,13 +61,7 @@
   transition: all 0.3s ease;
 }
 
-.quick-box:hover {
-  background-color: #FFD700;
-  color: #000;
-  transform: scale(1.05) translateY(-3px);
-  box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
-}
-
+.quick-box:hover,
 .quick-box.active {
   background-color: #FFD700;
   color: #000;
@@ -112,7 +106,7 @@
   text-decoration: underline;
 }
 
-/* Simple Visitors Counter */
+/* Visitors Counter */
 .visitors-counter {
   text-align: center;
   color: #FFD700;

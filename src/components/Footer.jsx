@@ -8,17 +8,13 @@ const Footer = () => {
   const [visitors, setVisitors] = useState(0);
 
   useEffect(() => {
-    // ✅ Prevent double counting (React Strict Mode fix)
-    if (!sessionStorage.getItem('counted')) {
-      const storedCount = localStorage.getItem('visitorCount');
-      const newCount = storedCount ? parseInt(storedCount) + 1 : 1;
-      localStorage.setItem('visitorCount', newCount);
-      setVisitors(newCount);
-      sessionStorage.setItem('counted', 'true');
-    } else {
-      const storedCount = localStorage.getItem('visitorCount');
-      setVisitors(storedCount ? parseInt(storedCount) : 1);
-    }
+    // Get previous count from localStorage
+    const storedCount = localStorage.getItem('visitorCount');
+    
+    // Increment count every time page loads
+    const newCount = storedCount ? parseInt(storedCount) + 1 : 1;
+    localStorage.setItem('visitorCount', newCount);
+    setVisitors(newCount);
   }, []);
 
   return (
@@ -26,14 +22,12 @@ const Footer = () => {
       <div className="container">
         <div className="footer-content">
 
-          {/* ===== Left Section ===== */}
           <div className="footer-left">
             <h2 className="footer-heading-underline">Ayush Srivastava</h2>
             <p>Full-Stack Developer</p>
             <p>Programmer</p>
           </div>
 
-          {/* ===== Center Section (Quick Links) ===== */}
           <div className="footer-center">
             <h4 className="footer-heading-underline">Quick Links</h4><br />
             <div className="quick-links-boxes">
@@ -45,7 +39,6 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ===== Right Section (Socials + Email) ===== */}
           <div className="footer-right">
             <h4 className="footer-heading-underline">Connect with Me</h4>
             <div className="social-icons">
@@ -62,12 +55,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* ===== Visitor Counter ===== */}
         <p className="visitors-counter">
           No. of visitors: <span className="visitor-count">{visitors}</span>
         </p>
 
-        {/* ===== Copyright ===== */}
         <p className="copyright">
           © {new Date().getFullYear()} Ayush Srivastava. All rights reserved.
         </p>

@@ -121,7 +121,7 @@ const Projects = () => {
                 className="project-link visit-link"
                 onClick={() => handleVisit(project.live)}
               >
-                Visit Project
+                View Live
               </button>
             </div>
           </motion.div>
