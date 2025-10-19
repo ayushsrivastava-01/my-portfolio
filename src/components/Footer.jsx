@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './css/Footer.css';
 import { FaInstagram, FaLinkedin, FaTelegram, FaGithub } from 'react-icons/fa';
 import { FaThreads } from 'react-icons/fa6';
 import { NavLink } from 'react-router-dom';
 
 const Footer = () => {
-  const [visitors, setVisitors] = useState(0);
-
-  useEffect(() => {
-    // Get previous count from localStorage
-    const storedCount = localStorage.getItem('visitorCount');
-    
-    // Increment count every time page loads
-    const newCount = storedCount ? parseInt(storedCount) + 1 : 1;
-    localStorage.setItem('visitorCount', newCount);
-    setVisitors(newCount);
-  }, []);
-
   return (
     <footer className="footer-section">
       <div className="container">
@@ -54,10 +42,6 @@ const Footer = () => {
             </p>
           </div>
         </div>
-
-        <p className="visitors-counter">
-          No. of visitors: <span className="visitor-count">{visitors}</span>
-        </p>
 
         <p className="copyright">
           © {new Date().getFullYear()} Ayush Srivastava. All rights reserved.
