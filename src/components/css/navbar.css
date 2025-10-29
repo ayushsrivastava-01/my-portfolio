@@ -86,13 +86,12 @@
 .custom-link.active::after {
   width: 100%;
 }
-
 /* TOGGLER BUTTON */
 .custom-toggler {
   border: 2px solid #FFD700;
-  border-radius: 4px;
+  border-radius: 6px;
   padding: 5px 8px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
   position: relative;
   width: 36px;
@@ -100,24 +99,34 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  overflow: hidden; /* ✅ Needed for shimmer */
   transition: all 0.3s ease;
-  z-index: 1100; /* Make sure toggler is above menu */
+  z-index: 1100;
 }
 
+/* Hamburger lines */
 .toggler-icon {
   display: block;
   height: 3px;
   width: 100%;
-  background-color: #FFD700;
+  background-color: #ffffff; /* Default white */
   border-radius: 2px;
   transition: all 0.3s ease;
   transform-origin: center;
 }
 
-/* When open - transform hamburger to cross */
+/* Hover color + glow */
+.custom-toggler:hover .toggler-icon {
+  background-color: #FFD700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+}
+
+/* When open - transforms into cross */
 .custom-toggler.open .toggler-icon:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
+  background-color: #FFD700;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
 }
 
 .custom-toggler.open .toggler-icon:nth-child(2) {
@@ -126,6 +135,49 @@
 
 .custom-toggler.open .toggler-icon:nth-child(3) {
   transform: rotate(-45deg) translate(6px, -6px);
+  background-color: #FFD700;
+  box-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+}
+
+/* ✨ Shimmer animation overlay */
+.custom-toggler::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 215, 0, 0.5),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+
+.custom-toggler:hover::before {
+  left: 100%;
+  transition: left 0.8s ease-in-out;
+}
+
+/* 💡 Soft breathing glow animation when menu is open */
+@keyframes goldenPulse {
+  0% {
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+  }
+}
+
+/* Apply pulse when open */
+.custom-toggler.open {
+  animation: goldenPulse 1.8s infinite ease-in-out;
 }
 
 /* RESPONSIVE NAVBAR - MOBILE SIDEBAR DESIGN */
