@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const fullText =
-    "A passionate full-stack developer who loves turning complex problems into elegant solutions. With a strong foundation in both frontend and backend technologies, I build responsive, efficient, and user-friendly web applications that make an impact.";
+    "A passionate full-stack developer who loves turning complex problems into elegant solutions. With a strong foundation in both frontend and backend technologies.";
 
   return (
     <section id="home" className="hero-section">
-      <div className="background-animation"></div>
+      <div className="background-pattern"></div>
       <div className="container d-flex align-items-center justify-content-center min-vh-100">
         <div className="row align-items-center w-100">
           
