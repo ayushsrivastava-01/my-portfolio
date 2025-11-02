@@ -79,7 +79,7 @@ const Projects = () => {
     if (url) {
       window.open(url, "_blank");
     } else {
-      setModalMessage("🚧 Work in progress...\n\n🛠️ Project is not live yet...\n\n💻 You can check it on GitHub!");
+      setModalMessage("🛠️ Project is not deployed yet !!! \nVisit GitHub for the source code.");
       setModalOpen(true);
     }
   };
@@ -109,18 +109,10 @@ const Projects = () => {
             <h3>{project.title}</h3>
             <p>{project.description}</p>
             <div className="project-buttons">
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-link"
-              >
+              <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
                 GitHub <FaGithub />
               </a>
-              <button
-                className="project-link visit-link"
-                onClick={() => handleVisit(project.live)}
-              >
+              <button className="project-link visit-link" onClick={() => handleVisit(project.live)}>
                 View Live
               </button>
             </div>
@@ -130,10 +122,19 @@ const Projects = () => {
 
       {modalOpen && (
         <div className="modal-overlay" onClick={() => setModalOpen(false)}>
-          <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <p>{modalMessage}</p>
-            <button className="modal-close" onClick={() => setModalOpen(false)}>OK</button>
-          </div>
+          <motion.div
+            className="modal-box"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className="modal-title">🚧 Work in Progress</h3>
+            <p className="modal-text">{modalMessage}</p>
+            <button className="modal-btn" onClick={() => setModalOpen(false)}>
+              Close
+            </button>
+          </motion.div>
         </div>
       )}
     </section>
