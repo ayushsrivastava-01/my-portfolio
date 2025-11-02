@@ -112,7 +112,7 @@ const Contact = () => {
 
           {formSubmitted ? (
             <div className="thank-you-message">
-              <p>✅ Thank you! Your message has been sent successfully.</p>
+              <p>Thank you! Your message has been sent successfully☑️</p>
             </div>
           ) : (
             <form
