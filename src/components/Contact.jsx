@@ -21,7 +21,6 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const formData = new FormData(e.target);
 
     try {
@@ -40,13 +39,8 @@ const Contact = () => {
 
   return (
     <div className="contact-section">
-      {/* Hidden Netlify Form for Detection */}
-      <form
-        name="contact"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        hidden
-      >
+      {/* Hidden form for Netlify */}
+      <form name="contact" data-netlify="true" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
         <textarea name="message"></textarea>
@@ -55,25 +49,24 @@ const Contact = () => {
       <div className={`contact-header ${animate ? "show" : ""}`}>
         <h2 className="contact-heading">Let's Connect</h2>
         <p className="contact-subheading">
-          Feel free to contact. I'm just one click away...
+          Feel free to reach out — I’m just one click away from you !!!
         </p>
       </div>
 
       <div className={`contact-container ${animate ? "show" : ""}`}>
-        {/* Email Box */}
-        <div className="contact-box email-box">
+        {/* 📧 Email + Social Box */}
+        <div className="contact-box info-box">
           <FaEnvelope className="icon" />
-          <h3>Email Me</h3>
-          <p>
-            <a href="mailto:ayushsrivastava1854@gmail.com">
-              ayushsrivastava1854@gmail.com
-            </a>
-          </p>
-        </div>
+          <h3>Get in Touch</h3>
 
-        {/* Social Box */}
-        <div className="contact-box social-box">
-          <h3>Social Platforms</h3>
+          <a
+            href="mailto:ayushsrivastava1854@gmail.com"
+            className="email-link"
+          >
+            ayushsrivastava1854@gmail.com
+          </a><br /><br /><br />
+
+          <h4 className="social-heading">Social Platforms</h4>
           <div className="social-icons">
             <a
               href="https://www.instagram.com/ayushsrivastava_01"
@@ -113,7 +106,7 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* 💌 Contact Form */}
+        {/* 💌 Contact Form Box */}
         <div className="contact-box form-box">
           <h3>Send a Message</h3>
 

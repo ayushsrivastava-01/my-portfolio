@@ -6,28 +6,25 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
-/* Header animations */
+/* Header */
 .contact-header {
   opacity: 0;
   transform: translateY(-30px);
   transition: all 0.8s ease;
 }
-
 .contact-header.show {
   opacity: 1;
   transform: translateY(0);
 }
-
 .contact-heading {
   font-size: 2.7rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   position: relative;
 }
-
 .contact-heading::after {
   content: "";
   display: block;
@@ -47,140 +44,91 @@
     width: 100px;
   }
 }
-
 .contact-subheading {
   font-size: 1.1rem;
   color: #cccccc;
   margin-bottom: 3rem;
 }
 
+/* Container */
 .contact-container {
   display: flex;
   gap: 2rem;
   justify-content: center;
   align-items: stretch;
+  flex-wrap: wrap;
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.8s ease;
-  white-space: nowrap;
 }
-
 .contact-container.show {
   opacity: 1;
   transform: translateY(0);
 }
 
 .contact-box {
-  min-width: 350px;
-  width: 400px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
   border-radius: 20px;
   padding: 3rem 2rem;
   box-shadow: 0 0 25px rgba(255, 74, 87, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  white-space: normal;
+  width: 400px;
+  max-width: 90%;
 }
-
 .contact-box:hover {
   transform: scale(1.03);
   box-shadow: 0 0 35px rgba(255, 74, 87, 0.25);
 }
 
-.email-box .icon {
+/* Info box */
+.info-box .icon {
   color: #ff4a57;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   display: block;
   margin: 0 auto 1rem;
 }
-
-.contact-box h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #ffffff;
+.info-box h3 {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
 }
-
-.contact-box a {
+.email-link {
   color: #cccccc;
   font-size: 1.1rem;
   text-decoration: none;
   transition: color 0.3s ease;
-  word-break: break-word;
-  overflow-wrap: anywhere;
   display: inline-block;
+  margin-bottom: 1.5rem;
 }
-
-.contact-box a:hover {
+.email-link:hover {
   color: #ff4a57;
-  text-decoration: underline;
 }
-
 .social-icons {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  margin-top: 1rem;
+  gap: 1.5rem;
 }
-
 .social-icons a {
   color: #ffffff;
-  font-size: 2rem;
+  font-size: 1.8rem;
   transition: transform 0.3s ease, color 0.3s ease;
 }
-
 .social-icons a:hover {
   transform: scale(1.2);
   color: #ff4a57;
 }
 
-/* Responsive */
-@media screen and (max-width: 768px) {
-  .contact-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    overflow: visible;
-  }
-
-  .contact-box {
-    width: 90%;
-    min-width: unset;
-    margin: 0;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .email-box .icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .contact-box h3 {
-    font-size: 1.3rem;
-  }
-
-  .contact-box a {
-    font-size: 1rem;
-  }
-}
-
-.form-box form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
+/* Form box */
+.form-group {
+  margin-bottom: 1.2rem; /* 👈 space between each input field */
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.9rem 1rem;
   border-radius: 10px;
   border: none;
   outline: none;
@@ -189,7 +137,6 @@
   background: rgba(255, 255, 255, 0.1);
   transition: background 0.3s ease;
 }
-
 .form-group input:focus,
 .form-group textarea:focus {
   background: rgba(255, 255, 255, 0.2);
@@ -204,13 +151,14 @@
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
 }
-
 .submit-btn:hover {
   background: #ff6670;
   transform: scale(1.03);
 }
 
+/* Success message */
 .thank-you-message {
   margin-top: 1rem;
   padding: 1.2rem;
@@ -221,7 +169,6 @@
   font-size: 1.05rem;
   animation: fadeIn 0.6s ease;
 }
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -230,5 +177,17 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-box {
+    width: 100%;
+    max-width: 95%;
   }
 }
