@@ -40,6 +40,18 @@ const Contact = () => {
 
   return (
     <div className="contact-section">
+      {/* Hidden Netlify Form for Detection */}
+      <form
+        name="contact"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        hidden
+      >
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <textarea name="message"></textarea>
+      </form>
+
       <div className={`contact-header ${animate ? "show" : ""}`}>
         <h2 className="contact-heading">Let's Connect</h2>
         <p className="contact-subheading">
