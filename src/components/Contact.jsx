@@ -24,7 +24,7 @@ const Contact = () => {
     const formData = new FormData(e.target);
     const email = formData.get("email");
 
-    // ✅ Basic email format + domain validation
+    // ✅ Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
     const domain = email.split("@")[1];
@@ -35,23 +35,26 @@ const Contact = () => {
       return;
     }
 
+    // ✅ Set user's email as reply-to value dynamically
+    formData.set("replyto", email);
+
     try {
       await fetch("/", {
         method: "POST",
         body: formData,
       });
       setFormSubmitted(true);
-      setLoading(false);
       e.target.reset();
     } catch (error) {
       console.error("Form submission error:", error);
+    } finally {
       setLoading(false);
     }
   };
 
   return (
     <div className="contact-section">
-      {/* Hidden Netlify form */}
+      {/* Hidden Netlify form for backend */}
       <form name="contact" data-netlify="true" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
@@ -71,10 +74,7 @@ const Contact = () => {
           <FaEnvelope className="icon" />
           <h3>Get in Touch</h3>
 
-          <a
-            href="mailto:ayushsrivastava1854@gmail.com"
-            className="email-link"
-          >
+          <a href="mailto:ayushsrivastava1854@gmail.com" className="email-link">
             ayushsrivastava1854@gmail.com
           </a>
 
@@ -82,39 +82,19 @@ const Contact = () => {
           <h4 className="social-heading">Social Platforms</h4>
 
           <div className="social-icons">
-            <a
-              href="https://www.instagram.com/ayushsrivastava_01"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://www.instagram.com/ayushsrivastava_01" target="_blank" rel="noopener noreferrer">
               <FaInstagram />
             </a>
-            <a
-              href="https://www.linkedin.com/in/ayush-srivastava01"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://www.linkedin.com/in/ayush-srivastava01" target="_blank" rel="noopener noreferrer">
               <FaLinkedin />
             </a>
-            <a
-              href="https://telegram.me/ayushsrivastava_01"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://telegram.me/ayushsrivastava_01" target="_blank" rel="noreferrer">
               <FaTelegram />
             </a>
-            <a
-              href="https://github.com/ayushsrivastava-01"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://github.com/ayushsrivastava-01" target="_blank" rel="noopener noreferrer">
               <FaGithub />
             </a>
-            <a
-              href="https://www.threads.net/@ayushsrivastava_01"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href="https://www.threads.net/@ayushsrivastava_01" target="_blank" rel="noreferrer">
               <FaThreads />
             </a>
           </div>
@@ -137,7 +117,6 @@ const Contact = () => {
               onSubmit={handleSubmit}
             >
               <input type="hidden" name="form-name" value="contact" />
-              <input type="hidden" name="reply-to" value="email" />
               <p hidden>
                 <label>
                   Don’t fill this out: <input name="bot-field" />
@@ -145,31 +124,19 @@ const Contact = () => {
               </p>
 
               <div className="form-group">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Name"
-                  required
-                />
+                <input type="text" name="name" placeholder="Your Name" required />
               </div>
 
               <div className="form-group">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  required
-                />
+                <input type="email" name="email" placeholder="Your Email" required />
               </div>
 
               <div className="form-group">
-                <textarea
-                  name="message"
-                  rows="4"
-                  placeholder="Your Message"
-                  required
-                ></textarea>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
               </div>
+
+              {/* ✅ Hidden replyto field */}
+              <input type="hidden" name="replyto" />
 
               <button type="submit" className="submit-btn" disabled={loading}>
                 {loading ? "Sending..." : "Send Message"}
