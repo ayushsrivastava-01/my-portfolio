@@ -22,6 +22,18 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
+    const email = formData.get("email");
+
+    // ✅ Basic email format + domain validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
+    const domain = email.split("@")[1];
+
+    if (!emailRegex.test(email) || !validDomains.includes(domain)) {
+      alert("Please use a valid email address (like Gmail, Outlook, or Yahoo)");
+      setLoading(false);
+      return;
+    }
 
     try {
       await fetch("/", {
@@ -39,7 +51,7 @@ const Contact = () => {
 
   return (
     <div className="contact-section">
-      {/* Hidden form for Netlify */}
+      {/* Hidden Netlify form */}
       <form name="contact" data-netlify="true" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
@@ -54,7 +66,7 @@ const Contact = () => {
       </div>
 
       <div className={`contact-container ${animate ? "show" : ""}`}>
-        {/* 📧 Email + Social Box */}
+        {/* 📧 Info box */}
         <div className="contact-box info-box">
           <FaEnvelope className="icon" />
           <h3>Get in Touch</h3>
@@ -64,9 +76,11 @@ const Contact = () => {
             className="email-link"
           >
             ayushsrivastava1854@gmail.com
-          </a><br /><br /><br />
+          </a>
 
+          <br /><br /><br />
           <h4 className="social-heading">Social Platforms</h4>
+
           <div className="social-icons">
             <a
               href="https://www.instagram.com/ayushsrivastava_01"
@@ -106,13 +120,13 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* 💌 Contact Form Box */}
+        {/* 💌 Form box */}
         <div className="contact-box form-box">
           <h3>Send a Message</h3>
 
           {formSubmitted ? (
             <div className="thank-you-message">
-              <p>Thank you! Your message has been sent successfully☑️</p>
+              <p>Thank you! Your message has been sent successfully ☑️</p>
             </div>
           ) : (
             <form
@@ -123,6 +137,7 @@ const Contact = () => {
               onSubmit={handleSubmit}
             >
               <input type="hidden" name="form-name" value="contact" />
+              <input type="hidden" name="reply-to" value="email" />
               <p hidden>
                 <label>
                   Don’t fill this out: <input name="bot-field" />
