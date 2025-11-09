@@ -99,7 +99,7 @@ const About = () => {
               <div className="about-lottie">
                 <Lottie
                   animationData={codingAnimation}
-                  loop={false}
+                  loop={true}
                 />
               </div>
 
