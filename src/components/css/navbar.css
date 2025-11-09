@@ -19,20 +19,26 @@
 
 /* BRAND STYLING */
 .navbar-brand {
-  color: white !important;
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 1px;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
   margin-right: 2rem;
-  text-align: left; /* ✅ Left aligned */
+  text-align: left;
+  background: linear-gradient(90deg, #FFECB3, #97cced);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.4s ease;
 }
 
 .navbar-brand:hover {
-  color: #FFD700;
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+  background: linear-gradient(90deg, #97cced, #FFECB3); 
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px rgba(186, 179, 135, 0.7);
+  transform: translateY(-1.5px); /* subtle lift */
 }
-
 /* NAV LINKS CONTAINER */
 .navbar-nav {
   display: flex;

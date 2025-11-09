@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
+import successAnimation from "../assets/success.json";
+
 import {
   FaInstagram,
   FaLinkedin,
@@ -8,6 +10,7 @@ import {
   FaEnvelope,
 } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
+import Lottie from "lottie-react";
 
 const Contact = () => {
   const [animate, setAnimate] = useState(false);
@@ -106,6 +109,11 @@ const Contact = () => {
 
           {formSubmitted ? (
             <div className="thank-you-message">
+              <Lottie
+                animationData={successAnimation}
+                loop={false}
+                style={{ height: 150, margin: "0 auto 1rem" }}
+              />
               <p>Thank you! Your message has been sent successfully ☑️</p>
             </div>
           ) : (

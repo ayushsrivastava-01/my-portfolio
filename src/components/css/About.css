@@ -1,12 +1,14 @@
+/* ================= ABOUT SECTION ================= */
 .about-section {
   background: linear-gradient(to right, #0f0f0f, #1a1a1a);
   padding: 100px 20px;
   color: #fff;
 }
 
+/* Section Title */
 .section-title {
   text-align: center;
-  font-size: 2.8rem;
+  font-size: 3rem;
   margin-bottom: 40px;
   font-weight: bold;
   color: #fff;
@@ -36,246 +38,186 @@
   100% { width: 60px; }
 }
 
+/* ================= WRAPPER ================= */
 .about-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 40px;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch; /* make boxes same height */
 }
 
+/* ================= PROFILE / IMAGE CARD ================= */
 .profile-card {
-  flex: 1 1 300px;
+  flex: 1 1 350px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 215, 0, 0.2);
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+  border-radius: 20px; /* card rounded */
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.1);
   text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
+.profile-card:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3), 0 0 50px rgba(255, 215, 0, 0.15);
+}
+
+/* Square Image with rounded corners */
+.image-card img {
+  width: 100%;
+  max-width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid #FFD700;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.image-card img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgb(234, 198, 243);
+}
+
+/* Profile Text */
 .profile-card h3 {
   color: #FFD700;
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .profile-card .title {
   color: #ccc;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
+/* Quote */
 .quote {
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   color: #eee;
   margin-bottom: 20px;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
 }
 
-.fade-quote {
-  transition: opacity 0.5s ease;
-}
-
-.mini-values-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 20px;
-  padding-top: 10px;
-  border-top: 1px solid rgba(255, 215, 0, 0.2);
-}
-
-.mini-value-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 215, 0, 0.2);
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mini-value-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
-}
-
-.mini-value-card h5 {
-  font-size: 1.6rem;
-  margin-bottom: 5px;
-}
-
-.mini-value-card p {
-  font-size: 0.9rem;
-  color: #ddd;
-}
-
+/* ================= ABOUT TEXT ================= */
 .about-text {
-  flex: 1 1 500px;
-  font-size: 1.1rem;
+  flex: 1 1 350px;
+  font-size: 1.5rem;
   line-height: 1.8;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 215, 0, 0.2);
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+  border-radius: 20px; /* rounded card */
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: justify;
 }
 
+/* Highlighted text */
 .about-text strong {
   color: #FFD700;
 }
-
-.fade-in {
-  animation: fadeInUp 1s ease-out;
+.about-text:hover{
+  transform: scale(1.07);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.3), 0 0 50px rgba(255, 215, 0, 0.15);
 }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.what-i-do-section {
+/* ================= WHAT I DO / MISSION SECTIONS ================= */
+.what-i-do-section,
+.core-mission-section {
   margin-top: 60px;
+  text-align: center;
 }
 
-.what-title {
-  text-align: center;
+.what-title,
+.mission-title {
   font-size: 2rem;
   color: #FFD700;
   margin-bottom: 25px;
   text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
 }
 
-.what-cards {
+.what-cards,
+.mission-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 20px;
 }
 
-.what-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.what-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(201, 28, 244, 0.737);
-}
-
-.what-card h4 {
-  color: #FFD700;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-}
-
-.what-card p {
-  color: #ccc;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-/* Fade In Animations */
-.fade-in {
-  opacity: 0;
-  animation: fadeInUp 1s ease-out forwards;
-}
-
-.fade-in-delay-1 {
-  opacity: 0;
-  animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 0.3s;
-}
-
-.fade-in-delay-2 {
-  opacity: 0;
-  animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 0.6s;
-}
-
-.fade-in-delay-3 {
-  opacity: 0;
-  animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 0.9s;
-}
-
-.fade-in-delay-4 {
-  opacity: 0;
-  animation: fadeInUp 1s ease-out forwards;
-  animation-delay: 1.2s;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Mission & Core Values Styling */
-.core-mission-section {
-  margin-top: 50px;
-  text-align: center;
-}
-
-.mission-title {
-  font-size: 2rem;
-  color: #FFD700;
-  margin-bottom: 30px;
-  text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-}
-
-.mission-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-}
-
+.what-card,
 .mission-card {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 215, 0, 0.15);
-  border-radius: 12px;
+  border-radius: 15px;
   padding: 20px;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.what-card:hover,
 .mission-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(87, 235, 255, 0.956);
+  box-shadow: 0 0 20px rgba(142, 157, 239, 0.85);
 }
 
+.what-card h4,
 .mission-card h4 {
   color: #FFD700;
   margin-bottom: 10px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
+.what-card p,
 .mission-card p {
   color: #ccc;
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
-/* Hover + Jump Effect for Profile and About Box */
-.jumping-card {
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .about-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-card img {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-text {
+    font-size: 1.15rem;
+  }
+}
+ /* Underline for title in profile card */
+.profile-card .title {
+  color: #ccc;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
 }
 
-.jumping-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.25), 0 0 40px rgba(255, 215, 0, 0.15);
+.profile-card .title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px; /* distance from text */
+  width: 50%;
+  height: 3px;
+  background: #FFD700;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.profile-card .title:hover::after {
+  width: 100%;
 }

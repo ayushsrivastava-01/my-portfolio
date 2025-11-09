@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import "./css/About.css";
+import profileImage from "../assets/ayush.jpg";
 
 const quotes = [
   "Code is like humor. When you have to explain it, it’s bad.",
@@ -53,8 +54,9 @@ const About = () => {
         </h2>
 
         <div className="about-wrapper">
+          {/* ================= IMAGE CARD ================= */}
           <motion.div
-            className="profile-card jumping-card"
+            className="profile-card jumping-card image-card"
             variants={itemVariants}
             animate={{ y: [0, -10, 0] }}
             transition={{
@@ -64,26 +66,13 @@ const About = () => {
               ease: "easeInOut",
             }}
           >
+            <img src={profileImage} alt="Ayush Srivastava" />
             <h3>Ayush Srivastava</h3>
             <p className="title">Full-Stack Developer</p>
             <p className="quote">"{quotes[quoteIndex]}"</p>
-
-            <div className="mini-values-container">
-              {["🚀 Growth", "💡 Innovation", "🤝 Teamwork", "🌐 Vision"].map(
-                (value, index) => (
-                  <motion.div
-                    className="mini-value-card"
-                    key={index}
-                    variants={itemVariants}
-                  >
-                    <h5>{value.split(" ")[0]}</h5>
-                    <p>{value.split(" ")[1]}</p>
-                  </motion.div>
-                )
-              )}
-            </div>
           </motion.div>
 
+          {/* ================= ABOUT TEXT ================= */}
           <motion.div
             className="about-text jumping-card"
             variants={itemVariants}
@@ -96,32 +85,17 @@ const About = () => {
             }}
           >
             <p>
-              Hello! I'm <strong>Ayush Srivastava</strong>, a passionate
-              Full-Stack Developer who thrives on building clean, efficient, and
-              visually engaging websites and applications.
-            </p>
-            <p>
-              I enjoy blending creativity with functionality to deliver modern
-              web experiences. I'm always exploring the latest tech to stay
-              ahead in this fast-paced field.
-            </p>
-            <p>
-              When I'm not coding, you'll find me exploring design inspiration,
-              contributing to open-source projects, or leveling up my skills.
-            </p>
-            <p>
-              I believe great code is like great design — intuitive, efficient,
-              and user-focused. Every project I work on is an opportunity to
-              turn ideas into impactful digital solutions. I'm driven by
-              curiosity, creativity, and a commitment to continuous improvement.
-            </p>
-            <p>
-              I value collaboration, adaptability, and lifelong learning as the
-              foundation of both personal and professional growth.
+              Hello! I'm <strong>Ayush Srivastava</strong>, a Full-Stack Developer
+              passionate about building clean and efficient web experiences. I
+              blend creativity with functionality, constantly exploring the latest
+              tech. I enjoy contributing to open-source projects and leveling up
+              my skills. I believe great code is intuitive and user-focused,
+              turning ideas into impactful digital solutions.
             </p>
           </motion.div>
         </div>
 
+        {/* ================= Mission Section ================= */}
         <motion.div className="core-mission-section" variants={itemVariants}>
           <h3 className="mission-title">My Mission & Core Values</h3>
           <div className="mission-cards">
@@ -150,6 +124,7 @@ const About = () => {
           </div>
         </motion.div>
 
+        {/* ================= What I Do Section ================= */}
         <motion.div className="what-i-do-section" variants={itemVariants}>
           <h3 className="what-title">What I Do ?</h3>
           <div className="what-cards">

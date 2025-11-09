@@ -30,11 +30,11 @@ const Hero = () => {
             </h1>
             <p className="hero-subtext animate-text">{fullText}</p>
             <div className="hero-buttons mt-4">
-              <Link to="/contact" className="btn hero-btn me-3">
-                Contact Me
+              <Link to="/contact" className="btn hero-btn contact-btn me-3">
+                CONTACT ME
               </Link>
               <Link to="/projects" className="btn hero-btn-outline">
-                See my Work
+                SEE MY WORK
               </Link>
             </div>
           </div>
