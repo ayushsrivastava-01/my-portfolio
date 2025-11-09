@@ -107,11 +107,14 @@
 .email-link:hover {
   color: #ff4a57;
 }
+/* Social Platforms heading */
 .social-heading {
-  font-size: 1.1rem;
-  color: #bbb;
+  font-size: 1.4rem;      
+  color: #ff4a57;           
+  font-weight: 600;        
   margin-bottom: 1rem;
 }
+
 .social-icons {
   display: flex;
   justify-content: center;
@@ -197,6 +200,14 @@
     max-width: 95%;
   }
 }
+@media screen and (max-width: 500px) {
+.lottie-icon {
+  margin: 0 auto 1rem;
+  width: 100px;
+  height: 100px;
+}
+}
+
 .thank-you-message {
   margin-top: 1rem;
   padding: 1.2rem;
@@ -210,4 +221,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+}
+.lottie-icon {
+  margin: 0 auto 1rem;
+  width: 200px;
+  height: 200px;
 }

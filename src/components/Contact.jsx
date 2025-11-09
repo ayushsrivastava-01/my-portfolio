@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
 import successAnimation from "../assets/success.json";
+import emailAnimation from "../assets/contact.json"; // ← your Lottie JSON for email
 
 import {
   FaInstagram,
   FaLinkedin,
   FaTelegram,
   FaGithub,
-  FaEnvelope,
 } from "react-icons/fa";
 import { FaThreads } from "react-icons/fa6";
 import Lottie from "lottie-react";
@@ -27,7 +27,6 @@ const Contact = () => {
     const formData = new FormData(e.target);
     const email = formData.get("email");
 
-    // ✅ Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
     const domain = email.split("@")[1];
@@ -38,7 +37,6 @@ const Contact = () => {
       return;
     }
 
-    // ✅ Set user's email as reply-to value dynamically
     formData.set("replyto", email);
 
     try {
@@ -57,7 +55,6 @@ const Contact = () => {
 
   return (
     <div className="contact-section">
-      {/* Hidden Netlify form for backend */}
       <form name="contact" data-netlify="true" hidden>
         <input type="text" name="name" />
         <input type="email" name="email" />
@@ -72,9 +69,11 @@ const Contact = () => {
       </div>
 
       <div className={`contact-container ${animate ? "show" : ""}`}>
-        {/* 📧 Info box */}
+        {/* 📧 Info box with Lottie */}
         <div className="contact-box info-box">
-          <FaEnvelope className="icon" />
+          <div className="lottie-icon">
+            <Lottie animationData={emailAnimation} loop={true}/>
+          </div>
           <h3>Get in Touch</h3>
 
           <a href="mailto:ayushsrivastava1854@gmail.com" className="email-link">
@@ -143,7 +142,6 @@ const Contact = () => {
                 <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
               </div>
 
-              {/* ✅ Hidden replyto field */}
               <input type="hidden" name="replyto" />
 
               <button type="submit" className="submit-btn" disabled={loading}>

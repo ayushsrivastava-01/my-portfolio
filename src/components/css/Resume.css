@@ -108,3 +108,29 @@
     width: 90%;
   }
 }
+/* Container for heading + Lottie */
+.resume-title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+/* Lottie icon for heading */
+.resume-title-container .lottie-icon {
+  width: 150px;
+  height: 200px;
+  margin-bottom: -5%;
+}
+
+@media screen and (max-width: 500px) {
+  .resume-title {
+  font-size: 2rem;
+  margin-top: 17%;
+  }
+  .resume-title-container .lottie-icon {
+    width: 100px;
+    height: 100px;
+  }
+}
