@@ -1,7 +1,8 @@
-import React from 'react';
-import './css/Hero.css';
-import heroImage from '../assets/ayush.jpg';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./css/Hero.css";
+import Lottie from "lottie-react";
+import heroAnimation from "../assets/hero.json";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const fullText =
@@ -12,15 +13,14 @@ const Hero = () => {
       <div className="background-pattern"></div>
       <div className="container d-flex align-items-center justify-content-center min-vh-100">
         <div className="row align-items-center w-100">
-          
-          {/* Image with animated background shapes */}
+
+          {/* Animation */}
           <div className="col-lg-6 text-center mb-4 mb-lg-0 fade-in-left">
-            <div className="image-wrapper">
-              <div className="shape shape1"></div>
-              <div className="shape shape2"></div>
-              <div className="shape shape3"></div>
-              <img src={heroImage} alt="Hero" className="img-fluid hero-img" />
-            </div>
+            <Lottie
+              animationData={heroAnimation}
+              loop={true}
+              className="hero-lottie"
+            />
           </div>
 
           {/* Text Content */}
