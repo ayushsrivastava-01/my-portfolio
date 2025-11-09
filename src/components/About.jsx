@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import "./css/About.css";
+import Lottie from "lottie-react";
 import profileImage from "../assets/ayush.jpg";
+import codingAnimation from "../assets/about.json"; // your Lottie JSON
 
 const quotes = [
   "Code is like humor. When you have to explain it, it’s bad.",
@@ -84,14 +86,34 @@ const About = () => {
               ease: "easeInOut",
             }}
           >
-            <p>
-              Hello! I'm <strong>Ayush Srivastava</strong>, a Full-Stack Developer
-              passionate about building clean and efficient web experiences. I
-              blend creativity with functionality, constantly exploring the latest
-              tech. I enjoy contributing to open-source projects and leveling up
-              my skills. I believe great code is intuitive and user-focused,
-              turning ideas into impactful digital solutions.
-            </p>
+            <div
+              className="about-text-content"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "20px",
+              }}
+            >
+              {/* Lottie Animation on top */}
+              <div className="about-lottie">
+                <Lottie
+                  animationData={codingAnimation}
+                  loop={false}
+                />
+              </div>
+
+              {/* Text below animation */}
+              <p style={{ textAlign: "center" }}>
+                I'm <strong>Ayush Srivastava</strong>, a Full-Stack
+                Developer passionate about building clean and efficient web
+                experiences. I blend creativity with functionality, constantly
+                exploring the latest tech. I enjoy contributing to open-source
+                projects and leveling up my skills. I believe great code is
+                intuitive and user-focused, turning ideas into impactful digital
+                solutions.
+              </p>
+            </div>
           </motion.div>
         </div>
 
@@ -116,8 +138,14 @@ const About = () => {
                 text: "Creativity, Integrity, Empathy, and a strong sense of Responsibility in every line of code I write.",
               },
             ].map((card, i) => (
-              <motion.div key={i} className="mission-card" variants={itemVariants}>
-                <h4>{card.emoji} {card.title}</h4>
+              <motion.div
+                key={i}
+                className="mission-card"
+                variants={itemVariants}
+              >
+                <h4>
+                  {card.emoji} {card.title}
+                </h4>
                 <p>{card.text}</p>
               </motion.div>
             ))}
@@ -151,7 +179,9 @@ const About = () => {
               },
             ].map((service, i) => (
               <motion.div key={i} className="what-card" variants={itemVariants}>
-                <h4>{service.emoji} {service.title}</h4>
+                <h4>
+                  {service.emoji} {service.title}
+                </h4>
                 <p>{service.text}</p>
               </motion.div>
             ))}
