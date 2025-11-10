@@ -134,6 +134,34 @@
 .form-group {
   margin-bottom: 1.2rem;
 }
+.form-box h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated line below "Send a Message" */
+.form-box h3::after {
+  content: "";
+  display: block;
+  width: 60px; /* initial width */
+  height: 4px;
+  background: linear-gradient(to right,#ff4a57,rgb(225, 249, 107));
+  border-radius: 10px;
+  margin: 0.5rem auto 0;
+  animation: line-grow 2s infinite alternate;
+}
+
+@keyframes line-grow {
+  0% {
+    width: 40px;
+  }
+  100% {
+    width: 80px;
+  }
+}
+
 .form-group input,
 .form-group textarea {
   width: 100%;
@@ -189,6 +217,17 @@
   }
 }
 
+.lottie-icon {
+  margin: 0 auto 1rem;
+  width: 200px;
+  height: 200px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+  z-index: 1;
+}
+.lottie-icon:hover{
+  filter: drop-shadow(0 0px 10px rgba(104, 99, 78, 0.841)) /* soft yellow */
+          drop-shadow(0 0 6px rgba(99, 127, 151, 0.973));}
+
 /* Responsive */
 @media screen and (max-width: 768px) {
   .contact-container {
@@ -221,9 +260,4 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-.lottie-icon {
-  margin: 0 auto 1rem;
-  width: 200px;
-  height: 200px;
 }
