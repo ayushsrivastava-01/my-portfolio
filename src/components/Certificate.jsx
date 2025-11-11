@@ -40,35 +40,61 @@ const Certificate = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, type: 'spring', stiffness: 100 }}
       >
-        My Certificates
+        My <span className="highlight">Certificates</span>
       </motion.h2>
+
+      <motion.p
+        className="section-subtitle"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+      >
+        Professional achievements and learning milestones
+      </motion.p>
 
       <div className="certificates-grid">
         {certificates.map((cert, index) => (
           <motion.div
             className="certificate-card"
             key={index}
-            initial={{ y: 100, opacity: 0 }}
+            initial={{ y: 80, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{
               type: "spring",
-              stiffness: 150,
-              damping: 10,
-              delay: index * 0.2
+              stiffness: 100,
+              damping: 20,
+              delay: index * 0.1
             }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-30px" }}
+            whileHover={{ 
+              y: -5,
+              transition: { duration: 0.2 }
+            }}
           >
-            <img src={cert.image} alt={cert.title} />
+            <div className="card-image-container">
+              <motion.img 
+                src={cert.image} 
+                alt={cert.title}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              />
+            </div>
+
             <h4>{cert.title}</h4>
-            <a
+
+            <motion.a
               href={cert.pdf}
               target="_blank"
               rel="noopener noreferrer"
               className="view-button"
               download={false}
+              whileHover={{ 
+                scale: 1.03,
+              }}
+              whileTap={{ scale: 0.98 }}
             >
               View Certificate
-            </a>
+            </motion.a>
           </motion.div>
         ))}
       </div>
