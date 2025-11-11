@@ -14,10 +14,12 @@
 /* Headings */
 .resume-title {
   font-size: 3rem;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.2rem; 
   background: linear-gradient(90deg, #ff00cc, #3333ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text; 
+  background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  color: transparent;
   font-weight: bold;
   animation: fadeUp 1s ease-in-out forwards;
 }
@@ -38,33 +40,222 @@
   flex-wrap: wrap;
   justify-content: center;
   animation: fadeUp 1.4s ease-in-out forwards;
+  width: 100%;
 }
 
-/* Buttons */
-.resume-btn {
-  padding: 1rem 2.5rem;
-  border-radius: 12px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff;
-  border: none;
+/* Download button container for tooltip */
+.download-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip */
+.download-button-container .tooltip {
+  position: absolute;
+  background-color: #fff;
+  color: #111;
+  font-size: 0.9rem;
+  border-radius: .25em;
+  padding: 8px 12px;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }
 
-.resume-btn:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
-  opacity: 0.95;
+.download-button-container .tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #fff;
 }
 
-.download-btn {
-  background: linear-gradient(135deg, #00c851, #007e33);
+.download-button-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
 }
 
-.view-btn {
+/* ✅ Force both buttons to have same size and layout */
+.download-button,
+.view-button {
+  width: 260px;
+  height: 55px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.45em;
+  font-family: "Arial";
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===================== DOWNLOAD BUTTON ===================== */
+.download-button {
+  background: #20c539;
+  color: #fff;
+  transition: background 0.3s ease;
+}
+
+.download-button:hover {
+  background: #6c18ff;
+}
+
+.button-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.text,
+.icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: top 0.5s ease;
+  color: #fff;
+}
+
+.text {
+  top: 0;
+}
+
+.icon {
+  top: 100%;
+  color: #fff;
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.download-button:hover .text {
+  top: -100%;
+}
+
+.download-button:hover .icon {
+  top: 0;
+}
+
+/* ===================== VIEW BUTTON ===================== */
+.view-button {
   background: linear-gradient(135deg, #33b5e5, #0099cc);
+  color: #fff;
+  cursor: pointer;
+}
+
+.view-button .button-bg {
+  border-radius: 0.45em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1);
+  transition: transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.button-bg-layers {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  top: -60%;
+  aspect-ratio: 1 / 1;
+  width: max(200%, 10rem);
+}
+
+.button-bg-layer {
+  border-radius: 0.45em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(0);
+}
+
+.button-bg-layer.-purple {
+  background-color: rgba(163, 116, 255);
+}
+
+.button-bg-layer.-turquoise {
+  background-color: rgba(23, 241, 209);
+}
+
+.button-bg-layer.-yellow {
+  background-color: rgba(255, 208, 116);
+}
+
+.button-inner,
+.button-inner-hover,
+.button-inner-static {
+  pointer-events: none;
+  display: block;
+}
+
+.button-inner {
+  position: relative;
+}
+
+.button-inner-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(70%);
+}
+
+.view-button:hover .button-inner-static {
+  opacity: 0;
+  transform: translateY(-70%);
+  transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 0.3s linear;
+}
+
+.view-button:hover .button-inner-hover {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 1.4s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 1.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.view-button:hover .button-bg-layer {
+  transition: transform 1.3s cubic-bezier(0.19, 1, 0.22, 1),
+              opacity 0.3s linear;
+}
+
+.view-button:hover .button-bg-layer-1 {
+  transform: scale(1);
+}
+
+.view-button:hover .button-bg-layer-2 {
+  transition-delay: 0.1s;
+  transform: scale(1);
+}
+
+.view-button:hover .button-bg-layer-3 {
+  transition-delay: 0.2s;
+  transform: scale(1);
 }
 
 /* Animations */
@@ -79,13 +270,27 @@
   }
 }
 
-/* For staggered animations */
 .animate-fade-up {
   opacity: 0;
   animation: fadeUp 0.8s ease forwards;
 }
 
-/* Mobile responsiveness */
+/* Heading + Lottie */
+.resume-title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.resume-title-container .lottie-icon {
+  width: 150px;
+  height: 200px;
+  margin-bottom: -5%;
+}
+
+/* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .resume-title {
     font-size: 2.3rem;
@@ -96,41 +301,62 @@
     padding: 0 1rem;
   }
 
-  .resume-btn {
-    width: 100%;
-    padding: 0.9rem 1.5rem;
-    font-size: 1rem;
-  }
-
   .resume-buttons {
     flex-direction: column;
-    gap: 1rem;
-    width: 90%;
+    gap: 1.5rem;
+    width: 100%;
+    align-items: center;
   }
-}
-/* Container for heading + Lottie */
-.resume-title-container {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-  margin-bottom: 1.2rem;
-}
 
-/* Lottie icon for heading */
-.resume-title-container .lottie-icon {
-  width: 150px;
-  height: 200px;
-  margin-bottom: -5%;
+  .download-button,
+  .view-button {
+    width: 280px;
+    height: 50px;
+    margin: 0 auto;
+  }
 }
 
 @media screen and (max-width: 500px) {
   .resume-title {
-  font-size: 2rem;
-  margin-top: 17%;
+    font-size: 2rem;
+    margin-top: 17%;
   }
+
   .resume-title-container .lottie-icon {
     width: 100px;
     height: 100px;
+  }
+
+  .resume-buttons {
+    width: 100%;
+    align-items: center;
+  }
+
+  .download-button,
+  .view-button {
+    width: 260px;
+    height: 45px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .resume-buttons {
+    width: 100%;
+    align-items: center;
+  }
+
+  .download-button,
+  .view-button {
+    width: 220px;
+    height: 42px;
+    margin: 0 auto;
+  }
+  
+  /* Adjust tooltip for very small screens */
+  .download-button-container .tooltip {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    bottom: calc(100% + 8px);
   }
 }

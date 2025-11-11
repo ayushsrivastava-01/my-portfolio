@@ -6,7 +6,7 @@ import profileImage from "../assets/ayush.jpg";
 import codingAnimation from "../assets/about.json"; // your Lottie JSON
 
 const quotes = [
-  "Code is like humor. When you have to explain it, it’s bad.",
+  "Code is like humor. When you have to explain it, it's bad.",
   "Programs must be written for people to read.",
   "Simplicity is the soul of efficiency.",
   "First, solve the problem. Then, write the code.",
@@ -51,6 +51,9 @@ const About = () => {
       variants={containerVariants}
     >
       <motion.div className="container" variants={itemVariants}>
+        {/* ADDED: Hidden H1 for better SEO structure */}
+        <h1 style={{display: 'none'}}>About Ayush Srivastava - Full Stack Developer</h1>
+        
         <h2 className="section-title">
           About <span>Me</span>
         </h2>
@@ -68,7 +71,8 @@ const About = () => {
               ease: "easeInOut",
             }}
           >
-            <img src={profileImage} alt="Ayush Srivastava" />
+            {/* ADDED: alt text for SEO */}
+            <img src={profileImage} alt="Ayush Srivastava - Full Stack Developer" />
             <h3>Ayush Srivastava</h3>
             <p className="title">Full-Stack Developer</p>
             <p className="quote">"{quotes[quoteIndex]}"</p>
@@ -103,7 +107,7 @@ const About = () => {
                 />
               </div>
 
-              {/* Text below animation */}
+              {/* Text below animation - ALREADY PERFECT FOR SEO! */}
               <p style={{ textAlign: "center" }}>
                 I'm <strong>Ayush Srivastava</strong>, a Full-Stack
                 Developer passionate about building clean and efficient web

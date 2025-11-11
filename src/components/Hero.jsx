@@ -25,16 +25,33 @@ const Hero = () => {
 
           {/* Text Content */}
           <div className="col-lg-6 text-center text-lg-start fade-in-right">
-            <h1 className="hero-heading">
-              Hi, I'm <span className="highlight">Ayush Srivastava</span>
+            {/* ADDED: Hidden H1 for better SEO structure */}
+            <h1 className="hero-heading" style={{display: 'none'}}>
+              Ayush Srivastava - Full Stack Developer Portfolio
             </h1>
-            <p className="hero-subtext animate-text">{fullText}</p>
+            
+            {/* Your existing visible heading */}
+            <h2 className="hero-heading">
+              Hi, I'm <span className="highlight">Ayush Srivastava</span>
+            </h2>
+            <p className="hero-subtext">{fullText}</p>
             <div className="hero-buttons mt-4">
-              <Link to="/contact" className="btn hero-btn contact-btn me-3">
+              <Link to="/contact" className="modern-btn contact-btn me-3">
                 CONTACT ME
               </Link>
-              <Link to="/projects" className="btn hero-btn-outline">
-                SEE MY WORK
+              <Link to="/projects" className="animated-button">
+                <svg viewBox="0 0 24 24" className="arr-2" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+                  ></path>
+                </svg>
+                <span className="text">SEE MY WORK</span>
+                <span className="circle"></span>
+                <svg viewBox="0 0 24 24" className="arr-1" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+                  ></path>
+                </svg>
               </Link>
             </div>
           </div>
