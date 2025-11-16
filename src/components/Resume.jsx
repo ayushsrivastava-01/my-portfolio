@@ -25,7 +25,7 @@ const Resume = () => {
             href={resumePDF}
             download="Ayush_Resume.pdf"
             className="button download-button"
-            data-tooltip="Size: 55Kb"
+            data-tooltip="Size: 578Kb"
           >
             <div className="button-wrapper">
               <div className="text">Download Resume</div>
