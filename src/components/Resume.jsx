@@ -36,7 +36,7 @@ const Resume = () => {
               </span>
             </div>
           </a>
-          <div className="tooltip">Size: 55Kb</div>
+          <div className="tooltip">Size: 578Kb</div>
         </div>
 
         {/* View Resume Button */}
