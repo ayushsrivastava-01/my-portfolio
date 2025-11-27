@@ -180,7 +180,7 @@ const Projects = () => {
                 onClick={(e) => handleVisit(project.live, project.title, e)}
               >
                 {project.live ? <FaExternalLinkAlt /> : <FaLaptopCode />}
-                {project.live ? 'Live Demo' : 'View Code'}
+                {project.live ? 'Live Demo' : 'Live Demo'}
               </button>
             </div>
           </motion.div>
