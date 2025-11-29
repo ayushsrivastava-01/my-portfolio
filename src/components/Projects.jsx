@@ -15,6 +15,14 @@ const projects = [
     tech: ["HTML5", "JavaScript", "CSS3"]
   },
   {
+    title: "Weather App",
+    description: "A modern, responsive webapp that provides real-time weather updates,hourly & day wise for any location.",
+    github: "https://github.com/ayushsrivastava-01/weather-app",
+    live: "https://skytemp.vercel.app/",
+    icon: "⛅",
+    tech: ["JavaScript", "React", "CSS3"]
+  },
+  {
     title: "Grocery Shopping Webapp",
     description: "Full-stack e-commerce platform with user authentication and admin dashboard",
     github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
