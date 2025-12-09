@@ -33,7 +33,7 @@ const projects = [
   {
     title: "Personal Portfolio",
     description: "My personal portfolio, a collection of my works,education and achievements.",
-    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
+    github: "https://github.com/ayushsrivastava-01/my-portfolio",
     icon: "👨‍💻",
     live: "https://ayushsri.netlify.app/",
     tech: ["HTML5", "CSS3", "JavaScript","React.js","Tailwind"]
