@@ -23,6 +23,22 @@ const projects = [
     tech: ["JavaScript", "React", "CSS3"]
   },
   {
+    title: "Real Estate Webapp",
+    description: "Property listing platform with advanced filtering and search capabilities",
+    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
+    icon: "🏠",
+    live: "https://sunriserealestate.netlify.app/",
+    tech: ["HTML5", "CSS3", "JavaScript","Node.js","Express"]
+  },
+  {
+    title: "Personal Portfolio",
+    description: "My personal portfolio, a collection of my works,education and achievements.",
+    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
+    icon: "👨‍💻",
+    live: "https://ayushsri.netlify.app/",
+    tech: ["HTML5", "CSS3", "JavaScript","React.js","Tailwind"]
+  },
+  {
     title: "Grocery Shopping Webapp",
     description: "Full-stack e-commerce platform with user authentication and admin dashboard",
     github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
@@ -57,13 +73,6 @@ const projects = [
     github: "https://github.com/ayushsrivastava-01/quiz-app",
     icon: "🧠",
     tech: ["React", "JavaScript", "CSS3"]
-  },
-  {
-    title: "Real Estate Webapp",
-    description: "Property listing platform with advanced filtering and search capabilities",
-    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
-    icon: "🏠",
-    tech: ["HTML5", "CSS3", "JavaScript","Node.js","Express"]
   },
   {
     title: "School Management System",
