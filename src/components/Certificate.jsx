@@ -10,6 +10,7 @@ import C4 from '../assets/C4.png';
 import C6 from '../assets/C6.png';
 import C7 from '../assets/C7.png';
 import C8 from '../assets/C8.png';
+import C9 from '../assets/C9.png';
 
 import P1 from '/certificates/C1.pdf';
 import P2 from '/certificates/C2.pdf';
@@ -19,12 +20,14 @@ import P5 from '/certificates/C5.pdf';
 import P6 from '/certificates/C6.pdf';
 import P7 from '/certificates/C7.pdf';
 import P8 from '/certificates/C8.pdf';
+import P9 from '/certificates/C9.pdf';
 
 const certificates = [
   { title: "Generative AI Mastermind class conducted by Outskill", image: C8, pdf: P8 },
   { title: "Web Development Internship", image: C1, pdf: P1 },
   { title: "Web Development using Java", image: C3, pdf: P3 },
   { title: "File handling in Python", image: C2, pdf: P2 },
+  { title: "AI Design Challenges organised by VI", image: C9, pdf: P9 },
   { title: "Career in Tech", image: C5, pdf: P4 },
   { title: "Data Science & Machine Learning", image: C4, pdf: P5 },
   { title: "Technical Workshop", image: C6, pdf: P6 },
