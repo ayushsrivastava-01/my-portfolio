@@ -39,6 +39,22 @@ const projects = [
     tech: ["HTML5", "CSS3", "JavaScript","React.js","Tailwind"]
   },
   {
+    title: "Travel Booking System",
+    description: "Travel agency website with destination exploration and booking features",
+    github: "https://github.com/ayushsrivastava-01/travel-agency-webpage",
+    icon: "✈️",
+    live: "https://xploretravelagency.netlify.app/",
+    tech: ["HTML5", "CSS3", "JavaScript"]
+  },
+  {
+    title: "Educational Platform",
+    description: "Modern school website with responsive design and interactive elements",
+    github: "https://github.com/ayushsrivastava-01/school-webpage",
+    live: "https://newschools.netlify.app/",
+    icon: "🎓",
+    tech: ["HTML5", "CSS3", "JavaScript"]
+  },
+  {
     title: "Grocery Shopping Webapp",
     description: "Full-stack e-commerce platform with user authentication and admin dashboard",
     github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
@@ -60,14 +76,6 @@ const projects = [
     tech: ["Node.js", "Tailwind CSS", "JavaScript"]
   },
   {
-    title: "Educational Platform",
-    description: "Modern school website with responsive design and interactive elements",
-    github: "https://github.com/ayushsrivastava-01/school-webpage",
-    live: "https://newschools.netlify.app/",
-    icon: "🎓",
-    tech: ["HTML5", "CSS3", "JavaScript"]
-  },
-  {
     title: "Interactive Quiz Engine",
     description: "Dynamic quiz application with scoring system and instant feedback",
     github: "https://github.com/ayushsrivastava-01/quiz-app",
@@ -80,13 +88,6 @@ const projects = [
     github: "https://github.com/ayushsrivastava-01/school-management-system",
     icon: "💻",
     tech: ["Java", "MySQL", "JDBC","AWT","Swing"]
-  },
-  {
-    title: "Travel Booking System",
-    description: "Travel agency website with destination exploration and booking features",
-    github: "https://github.com/ayushsrivastava-01/travel-agency-webpage",
-    icon: "✈️",
-    tech: ["HTML5", "CSS3", "JavaScript"]
   },
   {
     title: "Tic Tac Toe Game",
