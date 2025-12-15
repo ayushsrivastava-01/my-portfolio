@@ -55,6 +55,14 @@ const projects = [
     tech: ["HTML5", "CSS3", "JavaScript"]
   },
   {
+    title: "Tic Tac Toe Game",
+    description: "Classic two-player game with win detection and responsive design",
+    github: "https://github.com/ayushsrivastava-01/tic-tac-toe",
+    icon: "🎮",
+    live: "https://tactoex.netlify.app/",
+    tech: ["JavaScript", "HTML5", "CSS3"]
+  },
+  {
     title: "Grocery Shopping Webapp",
     description: "Full-stack e-commerce platform with user authentication and admin dashboard",
     github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
