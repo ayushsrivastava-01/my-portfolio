@@ -97,13 +97,6 @@ const projects = [
     icon: "💻",
     tech: ["Java", "MySQL", "JDBC","AWT","Swing"]
   },
-  {
-    title: "Tic Tac Toe Game",
-    description: "Classic two-player game with win detection and responsive design",
-    github: "https://github.com/ayushsrivastava-01/tic-tac-toe",
-    icon: "🎮",
-    tech: ["JavaScript", "HTML5", "CSS3"]
-  },
 ];
 
 const Projects = () => {
