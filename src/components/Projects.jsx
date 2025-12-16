@@ -7,14 +7,6 @@ import {
 
 const projects = [
   {
-    title: "Real Estate Webapp",
-    description: "Property listing platform with advanced filtering and search capabilities",
-    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
-    icon: "🏠",
-    live: "https://sunriserealestate.netlify.app/",
-    tech: ["HTML5", "CSS3", "JavaScript","Node.js","Express"]
-  },
-  {
     title: "Number System Converter",
     description: "Advanced number system converter with real-time calculations and copy-paste functionality",
     github: "https://github.com/ayushsrivastava-01/Number-Convertor",
@@ -31,44 +23,20 @@ const projects = [
     tech: ["JavaScript", "React", "CSS3"]
   },
   {
+    title: "Real Estate Webapp",
+    description: "Property listing platform with advanced filtering and search capabilities",
+    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
+    icon: "🏠",
+    live: "https://sunriserealestate.netlify.app/",
+    tech: ["HTML5", "CSS3", "JavaScript","Node.js","Express"]
+  },
+  {
     title: "Personal Portfolio",
     description: "My personal portfolio, a collection of my works,education and achievements.",
-    github: "https://github.com/ayushsrivastava-01/my-portfolio",
+    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
     icon: "👨‍💻",
     live: "https://ayushsri.netlify.app/",
     tech: ["HTML5", "CSS3", "JavaScript","React.js","Tailwind"]
-  },
-  {
-    title: "Travel Booking System",
-    description: "Travel agency website with destination exploration and booking features",
-    github: "https://github.com/ayushsrivastava-01/travel-agency-webpage",
-    icon: "✈️",
-    live: "https://xploretravelagency.netlify.app/",
-    tech: ["HTML5", "CSS3", "JavaScript"]
-  },
-  {
-    title: "Educational Platform",
-    description: "Modern school website with responsive design and interactive elements",
-    github: "https://github.com/ayushsrivastava-01/school-webpage",
-    live: "https://newschools.netlify.app/",
-    icon: "🎓",
-    tech: ["HTML5", "CSS3", "JavaScript"]
-  },
-  {
-    title: "Tic Tac Toe Game",
-    description: "Classic two-player game with win detection and responsive design",
-    github: "https://github.com/ayushsrivastava-01/tic-tac-toe",
-    icon: "🎮",
-    live: "https://tactoex.netlify.app/",
-    tech: ["JavaScript", "HTML5", "CSS3"]
-  },
-  {
-    title: "Interactive Quiz Engine",
-    description: "Dynamic quiz application with scoring system and instant feedback",
-    github: "https://github.com/ayushsrivastava-01/quiz-app",
-    icon: "🧠",
-    live: "https://brainstormy.netlify.app/",
-    tech: ["React", "JavaScript", "CSS3"]
   },
   {
     title: "Grocery Shopping Webapp",
@@ -92,11 +60,40 @@ const projects = [
     tech: ["Node.js", "Tailwind CSS", "JavaScript"]
   },
   {
+    title: "Educational Platform",
+    description: "Modern school website with responsive design and interactive elements",
+    github: "https://github.com/ayushsrivastava-01/school-webpage",
+    live: "https://newschools.netlify.app/",
+    icon: "🎓",
+    tech: ["HTML5", "CSS3", "JavaScript"]
+  },
+  {
+    title: "Interactive Quiz Engine",
+    description: "Dynamic quiz application with scoring system and instant feedback",
+    github: "https://github.com/ayushsrivastava-01/quiz-app",
+    icon: "🧠",
+    tech: ["React", "JavaScript", "CSS3"]
+  },
+  {
     title: "School Management System",
     description: "Complete student and staff management system with CRUD operations",
     github: "https://github.com/ayushsrivastava-01/school-management-system",
     icon: "💻",
     tech: ["Java", "MySQL", "JDBC","AWT","Swing"]
+  },
+  {
+    title: "Travel Booking System",
+    description: "Travel agency website with destination exploration and booking features",
+    github: "https://github.com/ayushsrivastava-01/travel-agency-webpage",
+    icon: "✈️",
+    tech: ["HTML5", "CSS3", "JavaScript"]
+  },
+  {
+    title: "Tic Tac Toe Game",
+    description: "Classic two-player game with win detection and responsive design",
+    github: "https://github.com/ayushsrivastava-01/tic-tac-toe",
+    icon: "🎮",
+    tech: ["JavaScript", "HTML5", "CSS3"]
   },
 ];
 
