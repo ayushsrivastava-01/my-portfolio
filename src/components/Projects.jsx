@@ -7,6 +7,14 @@ import {
 
 const projects = [
   {
+    title: "Real Estate Webapp",
+    description: "Property listing platform with advanced filtering and search capabilities",
+    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
+    icon: "🏠",
+    live: "https://sunriserealestate.netlify.app/",
+    tech: ["HTML5", "CSS3", "JavaScript","Node.js","Express"]
+  },
+  {
     title: "Number System Converter",
     description: "Advanced number system converter with real-time calculations and copy-paste functionality",
     github: "https://github.com/ayushsrivastava-01/Number-Convertor",
@@ -21,14 +29,6 @@ const projects = [
     live: "https://skytemp.vercel.app/",
     icon: "⛅",
     tech: ["JavaScript", "React", "CSS3"]
-  },
-  {
-    title: "Real Estate Webapp",
-    description: "Property listing platform with advanced filtering and search capabilities",
-    github: "https://github.com/ayushsrivastava-01/real-estate-agency",
-    icon: "🏠",
-    live: "https://sunriserealestate.netlify.app/",
-    tech: ["HTML5", "CSS3", "JavaScript","Node.js","Express"]
   },
   {
     title: "Personal Portfolio",
