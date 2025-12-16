@@ -63,6 +63,14 @@ const projects = [
     tech: ["JavaScript", "HTML5", "CSS3"]
   },
   {
+    title: "Interactive Quiz Engine",
+    description: "Dynamic quiz application with scoring system and instant feedback",
+    github: "https://github.com/ayushsrivastava-01/quiz-app",
+    icon: "🧠",
+    live: "https://brainstormy.netlify.app/",
+    tech: ["React", "JavaScript", "CSS3"]
+  },
+  {
     title: "Grocery Shopping Webapp",
     description: "Full-stack e-commerce platform with user authentication and admin dashboard",
     github: "https://github.com/ayushsrivastava-01/Grocery-Shopping-Webapp",
@@ -82,13 +90,6 @@ const projects = [
     github: "https://github.com/ayushsrivastava-01/hospital-management-system",
     icon: "🏥",
     tech: ["Node.js", "Tailwind CSS", "JavaScript"]
-  },
-  {
-    title: "Interactive Quiz Engine",
-    description: "Dynamic quiz application with scoring system and instant feedback",
-    github: "https://github.com/ayushsrivastava-01/quiz-app",
-    icon: "🧠",
-    tech: ["React", "JavaScript", "CSS3"]
   },
   {
     title: "School Management System",
