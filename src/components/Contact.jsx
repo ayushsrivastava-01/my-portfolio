@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
 import successAnimation from "../assets/success.json";
-import emailAnimation from "../assets/contact.json"; // Lottie JSON
+import emailAnimation from "../assets/contact.json";
 
 import {
   FaInstagram,
@@ -26,28 +26,33 @@ const Contact = () => {
     setLoading(true);
 
     const formData = new FormData(e.target);
+    const name = formData.get("name");
     const email = formData.get("email");
+    const message = formData.get("message");
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
-    const domain = email.split("@")[1];
-
-    if (!emailRegex.test(email) || !validDomains.includes(domain)) {
-      alert("Please use a valid email address (Gmail, Yahoo, Outlook, Hotmail)");
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
       setLoading(false);
       return;
     }
 
     try {
-      await fetch("/", {
+      const res = await fetch("/.netlify/functions/sendMail", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message }),
       });
+
+      if (!res.ok) throw new Error("Failed to send message");
 
       setFormSubmitted(true);
       e.target.reset();
     } catch (error) {
       console.error("Form submission error:", error);
+      alert("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -72,10 +77,10 @@ const Contact = () => {
           <h3>Get in Touch</h3>
 
           <a
-            href="mailto:ayushsrivastava1854@gmail.com"
+            href="mailto:srivastava999ayush@gmail.com"
             className="email-link"
           >
-            ayushsrivastava1854@gmail.com
+            srivastava999ayush@gmail.com
           </a>
 
           <br /><br /><br />
@@ -139,21 +144,7 @@ const Contact = () => {
               <p>Thank you! Your message has been sent successfully ☑️</p>
             </div>
           ) : (
-            <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-              onSubmit={handleSubmit}
-            >
-              <input type="hidden" name="form-name" value="contact" />
-
-              <p hidden>
-                <label>
-                  Don't fill this out: <input name="bot-field" />
-                </label>
-              </p>
-
+            <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <input
                   type="text"
