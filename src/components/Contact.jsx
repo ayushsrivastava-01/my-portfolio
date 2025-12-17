@@ -328,7 +328,7 @@ const Contact = () => {
               </div>
 
               <p className="privacy-note">
-                Your information is safe with me. I don't share your data with anyone.
+                🔒 Your information is safe with me.
               </p>
             </form>
           )}
