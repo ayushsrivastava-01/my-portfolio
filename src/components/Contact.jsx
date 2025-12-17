@@ -59,6 +59,7 @@ const Contact = () => {
     }
 
     try {
+      // ✅ Proper Netlify POST submission
       await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
