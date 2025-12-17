@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './css/Project.css';
 import { motion } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaLaptopCode } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaLaptopCode, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 // Using your original projects array with added images
 const projects = [
@@ -106,6 +106,10 @@ const projects = [
 const Projects = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [showAllProjects, setShowAllProjects] = useState(false);
+
+  // Show only first 6 projects initially
+  const visibleProjects = showAllProjects ? projects : projects.slice(0, 6);
 
   const handleVisit = (url, title, event) => {
     event.preventDefault();
@@ -129,6 +133,10 @@ const Projects = () => {
     setModalOpen(false);
   };
 
+  const toggleShowAllProjects = () => {
+    setShowAllProjects(!showAllProjects);
+  };
+
   return (
     <section className="projects-section">
       <motion.div
@@ -142,7 +150,7 @@ const Projects = () => {
       </motion.div>
 
       <div className="projects-grid">
-        {projects.map((project, index) => (
+        {visibleProjects.map((project, index) => (
           <motion.div
             className="project-card"
             key={project.title}
@@ -155,14 +163,13 @@ const Projects = () => {
               transition: { duration: 0.3 }
             }}
           >
-            {/* Project Image - Replace src with your actual image paths */}
+            {/* Project Image */}
             <div className="project-image">
               <img 
                 src={project.image} 
                 alt={project.title}
                 loading="lazy"
                 onError={(e) => {
-                  // Fallback if image doesn't exist
                   e.target.style.display = 'none';
                   e.target.parentNode.style.background = 'linear-gradient(135deg, #3b82f6, #10b981)';
                 }}
@@ -228,6 +235,31 @@ const Projects = () => {
           </motion.div>
         ))}
       </div>
+
+      {/* Show All / Show Less Button */}
+      {projects.length > 6 && (
+        <motion.div 
+          className="show-more-container"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <button 
+            className="show-more-btn"
+            onClick={toggleShowAllProjects}
+          >
+            {showAllProjects ? (
+              <>
+                <FaChevronUp /> Show Less
+              </>
+            ) : (
+              <>
+                <FaChevronDown /> Show All Projects ({projects.length - 6} more)
+              </>
+            )}
+          </button>
+        </motion.div>
+      )}
 
       {/* Modal - Shows when clicking "Coming Soon" */}
       {modalOpen && (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./css/Contact.css";
 import successAnimation from "../assets/success.json";
-import emailAnimation from "../assets/contact.json"; // ← your Lottie JSON for email
+import emailAnimation from "../assets/contact.json"; // Lottie JSON
 
 import {
   FaInstagram,
@@ -24,6 +24,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const formData = new FormData(e.target);
     const email = formData.get("email");
 
@@ -32,18 +33,17 @@ const Contact = () => {
     const domain = email.split("@")[1];
 
     if (!emailRegex.test(email) || !validDomains.includes(domain)) {
-      alert("Please use a valid email address (like Gmail, Outlook, or Yahoo)");
+      alert("Please use a valid email address (Gmail, Yahoo, Outlook, Hotmail)");
       setLoading(false);
       return;
     }
-
-    formData.set("replyto", email);
 
     try {
       await fetch("/", {
         method: "POST",
         body: formData,
       });
+
       setFormSubmitted(true);
       e.target.reset();
     } catch (error) {
@@ -55,12 +55,6 @@ const Contact = () => {
 
   return (
     <div className="contact-section">
-      <form name="contact" data-netlify="true" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <textarea name="message"></textarea>
-      </form>
-
       <div className={`contact-header ${animate ? "show" : ""}`}>
         <h2 className="contact-heading">Let's Connect</h2>
         <p className="contact-subheading">
@@ -69,40 +63,69 @@ const Contact = () => {
       </div>
 
       <div className={`contact-container ${animate ? "show" : ""}`}>
-        {/* 📧 Info box with Lottie */}
+        {/* 📧 INFO BOX */}
         <div className="contact-box info-box">
           <div className="lottie-icon">
-            <Lottie animationData={emailAnimation} loop={true}/>
+            <Lottie animationData={emailAnimation} loop />
           </div>
+
           <h3>Get in Touch</h3>
 
-          <a href="mailto:ayushsrivastava1854@gmail.com" className="email-link">
+          <a
+            href="mailto:ayushsrivastava1854@gmail.com"
+            className="email-link"
+          >
             ayushsrivastava1854@gmail.com
           </a>
 
           <br /><br /><br />
+
           <h4 className="social-heading">Social Platforms</h4>
 
           <div className="social-icons">
-            <a href="https://www.instagram.com/ayushsrivastava_01" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://www.instagram.com/ayushsrivastava_01"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaInstagram />
             </a>
-            <a href="https://www.linkedin.com/in/ayush-srivastava01" target="_blank" rel="noopener noreferrer">
+
+            <a
+              href="https://www.linkedin.com/in/ayush-srivastava01"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaLinkedin />
             </a>
-            <a href="https://telegram.me/ayushsrivastava_01" target="_blank" rel="noreferrer">
+
+            <a
+              href="https://telegram.me/ayushsrivastava_01"
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaTelegram />
             </a>
-            <a href="https://github.com/ayushsrivastava-01" target="_blank" rel="noopener noreferrer">
+
+            <a
+              href="https://github.com/ayushsrivastava-01"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <FaGithub />
             </a>
-            <a href="https://www.threads.net/@ayushsrivastava_01" target="_blank" rel="noreferrer">
+
+            <a
+              href="https://www.threads.net/@ayushsrivastava_01"
+              target="_blank"
+              rel="noreferrer"
+            >
               <FaThreads />
             </a>
           </div>
         </div>
 
-        {/* 💌 Form box */}
+        {/* 💌 FORM BOX */}
         <div className="contact-box form-box">
           <h3>Send a Message</h3>
 
@@ -124,6 +147,7 @@ const Contact = () => {
               onSubmit={handleSubmit}
             >
               <input type="hidden" name="form-name" value="contact" />
+
               <p hidden>
                 <label>
                   Don't fill this out: <input name="bot-field" />
@@ -131,18 +155,31 @@ const Contact = () => {
               </p>
 
               <div className="form-group">
-                <input type="text" name="name" placeholder="Your Name" required />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                />
               </div>
 
               <div className="form-group">
-                <input type="email" name="email" placeholder="Your Email" required />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                />
               </div>
 
               <div className="form-group">
-                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <textarea
+                  name="message"
+                  rows="4"
+                  placeholder="Your Message"
+                  required
+                ></textarea>
               </div>
-
-              <input type="hidden" name="replyto" />
 
               <button type="submit" className="submit-btn" disabled={loading}>
                 {loading ? "Sending..." : "Send Message"}
