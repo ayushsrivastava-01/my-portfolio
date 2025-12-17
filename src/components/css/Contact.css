@@ -287,3 +287,90 @@
   align-items: center;
   text-align: center;
 }
+
+/* Add these styles to your Contact.css file */
+
+.hidden-field {
+  display: none !important;
+}
+
+.field-info {
+  font-size: 0.75rem;
+  color: #666;
+  display: block;
+  margin-top: 0.25rem;
+  text-align: right;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.required-note {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.submit-btn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.success-note {
+  font-size: 0.9rem;
+  color: #28a745;
+  margin-top: 0.5rem;
+}
+
+.privacy-note {
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.response-time {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.thank-you-message h4 {
+  color: #28a745;
+  margin-bottom: 1rem;
+}
+
+/* Form validation styles */
+input:invalid,
+textarea:invalid {
+  border-color: #ff6b6b !important;
+}
+
+input:valid,
+textarea:valid {
+  border-color: #51cf66 !important;
+}
