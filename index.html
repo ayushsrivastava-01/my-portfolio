@@ -57,14 +57,8 @@
   </head>
 
   <body>
-    <!-- ✅ NETLIFY STATIC FORM (Minimal & Safe) -->
-    <form
-      name="contact"
-      method="POST"
-      data-netlify="true"
-      data-netlify-honeypot="bot-field"
-      hidden
-    >
+    <!-- ✅ Minimal Netlify static form for detection -->
+    <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
       <input type="hidden" name="form-name" value="contact" />
       <p style="display:none;">
         <label>Don’t fill this out: <input name="bot-field" /></label>

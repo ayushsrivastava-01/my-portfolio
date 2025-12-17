@@ -15,71 +15,36 @@ import Lottie from "lottie-react";
 const Contact = () => {
   const [animate, setAnimate] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setTimeout(() => setAnimate(true), 100);
   }, []);
 
-  // Encode form data for Netlify
-  const encode = (data) =>
-    Object.keys(data)
-      .map(
-        (key) =>
-          encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
-      )
-      .join("&");
+  const handleSubmit = (e) => {
+    // Honeypot & email validation before native submit
+    const form = e.target;
+    const botField = form.querySelector('input[name="bot-field"]').value;
+    const email = form.querySelector('input[name="email"]').value;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const formData = new FormData(e.target);
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const message = formData.get("message");
-    const botField = formData.get("bot-field");
-
-    // Honeypot check
-    if (botField) {
-      console.log("Spam detected!");
-      setLoading(false);
-      return;
-    }
-
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
     const domain = email.split("@")[1];
 
-    if (!emailRegex.test(email) || !validDomains.includes(domain)) {
-      alert("Please use a valid email address (Gmail, Yahoo, Outlook, Hotmail)");
-      setLoading(false);
+    if (botField) {
+      // Spam detected → stop submission
+      e.preventDefault();
+      console.log("Spam detected!");
       return;
     }
 
-    try {
-      // ✅ Proper Netlify POST submission
-      await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({
-          "form-name": "contact",
-          name,
-          email,
-          message,
-          "bot-field": botField,
-        }),
-      });
-
-      setFormSubmitted(true);
-      e.target.reset();
-    } catch (error) {
-      console.error("Form submission error:", error);
-      alert("Oops! Something went wrong.");
-    } finally {
-      setLoading(false);
+    if (!emailRegex.test(email) || !validDomains.includes(domain)) {
+      e.preventDefault();
+      alert("Please use a valid email address (Gmail, Yahoo, Outlook, Hotmail)");
+      return;
     }
+
+    // Allow native submit → Netlify email notification will trigger
+    setFormSubmitted(true);
   };
 
   return (
@@ -144,6 +109,7 @@ const Contact = () => {
             >
               <input type="hidden" name="form-name" value="contact" />
 
+              {/* Honeypot field */}
               <p style={{ display: "none" }}>
                 <label>
                   Don’t fill this out: <input name="bot-field" />
@@ -162,8 +128,8 @@ const Contact = () => {
                 <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
               </div>
 
-              <button type="submit" className="submit-btn" disabled={loading}>
-                {loading ? "Sending..." : "Send Message"}
+              <button type="submit" className="submit-btn">
+                Send Message
               </button>
             </form>
           )}
