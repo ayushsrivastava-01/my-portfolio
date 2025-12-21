@@ -31,12 +31,12 @@
   line-height: 1.6;
 }
 
-/* Projects Grid - 2 projects per row */
+/* Projects Grid - CHANGED TO 3 PROJECTS PER ROW */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* Changed from 2 to 3 */
   gap: 30px;
-  max-width: 1200px;
+  max-width: 1300px; /* Increased for 3 columns */
   margin: 0 auto;
 }
 
@@ -88,18 +88,78 @@
   opacity: 0.5;
 }
 
+/* Live Badge - UPDATED WITH ANIMATIONS */
 .live-badge {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: linear-gradient(135deg, #10b981, #059669);
   color: white;
-  padding: 6px 16px;
+  padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 600;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+
+.live-badge.live-pulse {
+  background: linear-gradient(135deg, #10b981, #059669);
+  animation: pulse 2s infinite;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+}
+
+.live-badge.coming-soon {
+  background: linear-gradient(135deg, #d2b356,#eddf47 );
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  display: inline-block;
+  animation: blink 1.5s infinite;
+}
+
+/* Live Badge Animations */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Live Demo Button Glow Effect */
+.action-btn.demo-btn.live-glow {
+  animation: buttonGlow 2s infinite;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+}
+
+@keyframes buttonGlow {
+  0%, 100% {
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.7);
+  }
 }
 
 /* Project Content */
@@ -371,11 +431,18 @@
   box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
 }
 
-/* Responsive Design */
+/* Responsive Design - UPDATED FOR 3 COLUMNS */
+@media (max-width: 1200px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr); /* Tablet pe 2 columns */
+    max-width: 900px;
+  }
+}
+
 @media (max-width: 1024px) {
   .projects-grid {
-    grid-template-columns: 1fr;
-    max-width: 600px;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
   }
 }
 
@@ -386,6 +453,11 @@
   
   .projects-title {
     font-size: 2.5rem;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr; /* Mobile pe 1 column */
+    max-width: 500px;
   }
   
   .project-image {

@@ -176,9 +176,16 @@ const Projects = () => {
               />
               <div className="image-overlay"></div>
               
-              {/* Live/Demo Badge */}
-              <div className="live-badge">
-                {project.live ? 'Live' : 'Coming Soon'}
+              {/* Live/Demo Badge - UPDATED WITH ANIMATION */}
+              <div className={`live-badge ${project.live ? 'live-pulse' : 'coming-soon'}`}>
+                {project.live ? (
+                  <>
+                    <span className="live-dot"></span>
+                    LIVE
+                  </>
+                ) : (
+                  'Coming Soon'
+                )}
               </div>
             </div>
 
@@ -224,7 +231,7 @@ const Projects = () => {
                   <FaGithub /> Source Code
                 </a>
                 <button 
-                  className={`action-btn demo-btn ${!project.live ? 'coming-soon' : ''}`}
+                  className={`action-btn demo-btn ${!project.live ? 'coming-soon' : 'live-glow'}`}
                   onClick={(e) => handleVisit(project.live, project.title, e)}
                 >
                   {project.live ? <FaExternalLinkAlt /> : <FaLaptopCode />}
