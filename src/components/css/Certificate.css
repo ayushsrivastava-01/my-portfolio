@@ -1,3 +1,5 @@
+/* Certificate.css */
+
 .certificates-section {
   padding: 4rem 2rem;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
@@ -42,6 +44,7 @@
   margin: 0 auto;
 }
 
+/* Simple hover effect */
 .certificate-card {
   background: rgba(17, 25, 40, 0.8);
   padding: 1.5rem;
@@ -53,47 +56,12 @@
   align-items: center;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.certificate-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  padding: 2px;
-  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .certificate-card:hover {
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(102, 126, 234, 0.4);
   transform: translateY(-5px);
-}
-
-.certificate-card:hover::before {
-  opacity: 1;
-  animation: borderGlow 2s ease-in-out infinite;
-}
-
-@keyframes borderGlow {
-  0%, 100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: rgba(102, 126, 234, 0.3);
 }
 
 .card-image-container {
@@ -131,48 +99,40 @@
   border: none;
   cursor: pointer;
   font-family: inherit;
-  position: relative;
-  overflow: hidden;
-}
-
-.view-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 8px;
-  padding: 2px;
-  background: linear-gradient(135deg, #2196F3, #21CBF3, #2196F3);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .view-button:hover {
   background: #1976d2;
-  box-shadow: 
-    0 0 15px rgba(33, 150, 243, 0.6),
-    0 0 30px rgba(33, 150, 243, 0.4);
   transform: translateY(-2px);
 }
 
-.view-button:hover::before {
-  opacity: 1;
-  animation: buttonGlow 1.5s ease-in-out infinite;
+/* Show More Button */
+.show-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
 }
 
-@keyframes buttonGlow {
-  0%, 100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
+.show-more-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.show-more-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 /* Responsive Design */
@@ -210,6 +170,11 @@
   .view-button {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
+  }
+
+  .show-more-btn {
+    padding: 12px 24px;
+    font-size: 0.95rem;
   }
 }
 

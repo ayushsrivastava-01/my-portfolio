@@ -108,8 +108,8 @@ const Projects = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [showAllProjects, setShowAllProjects] = useState(false);
 
-  // Show only first 6 projects initially
-  const visibleProjects = showAllProjects ? projects : projects.slice(0, 6);
+  // Show only first 9 projects initially (3 rows)
+  const visibleProjects = showAllProjects ? projects : projects.slice(0, 9);
 
   const handleVisit = (url, title, event) => {
     event.preventDefault();
@@ -243,8 +243,8 @@ const Projects = () => {
         ))}
       </div>
 
-      {/* Show All / Show Less Button */}
-      {projects.length > 6 && (
+      {/* Show All / Show Less Button - Show only if there are more than 9 projects */}
+      {projects.length > 9 && (
         <motion.div 
           className="show-more-container"
           initial={{ opacity: 0, y: 20 }}
@@ -261,7 +261,7 @@ const Projects = () => {
               </>
             ) : (
               <>
-                <FaChevronDown /> Show All Projects ({projects.length - 6} more)
+                <FaChevronDown /> Show All Projects ({projects.length - 9} more)
               </>
             )}
           </button>
