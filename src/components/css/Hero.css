@@ -411,14 +411,202 @@
   opacity: 1;
 }
 
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 768px) {
+.hero-lottie-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-lottie {
+  width: 100%;
+  max-width: 500px;
+  transform: transform 0.3s ease;
+}
+
+.hero-buttons {
+  position: relative;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  z-index: 2;
+}
+
+.btn-bg-wave {
+  position: absolute;
+  top: -40%;
+  left: -10%;
+  width: 120%;
+  height: 180%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.wave-lottie {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  filter: blur(3px);
+}
+
+/* ===================== RESPONSIVE FIXES ===================== */
+
+/* NEW: Center content between 400px - 1000px */
+@media (min-width: 400px) and (max-width: 1000px) {
+  .hero-section .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-section .col-lg-6 {
+    max-width: 100%;
+    text-align: center !important;
+  }
+
+  .hero-heading {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .hero-subtext {
+    font-size: 1.1rem;
+    text-align: center;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-lottie {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .hero-buttons {
+    justify-content: center !important;
+    margin-top: 2rem;
+  }
+
+  .fade-in-left,
+  .fade-in-right {
+    text-align: center;
+  }
+}
+
+/* Tablets and medium laptops: 768px - 991px */
+@media (min-width: 768px) and (max-width: 991px) {
+  .hero-heading {
+    font-size: 2.2rem;
+  }
+
+  .hero-subtext {
+    font-size: 1.2rem;
+  }
+
+  .hero-lottie {
+    max-width: 400px;
+  }
+}
+
+/* CRITICAL FIX: Screen resolutions 1000px - 1450px */
+@media (min-width: 1001px) and (max-width: 1450px) {
+  .hero-section {
+    padding: 60px 0 40px;
+  }
+
+  .container {
+    max-width: 95% !important;
+    padding: 0 20px;
+  }
+
   .hero-heading {
     font-size: 2rem;
   }
 
   .hero-subtext {
-    font-size: 1rem;
+    font-size: 1.15rem;
+    margin-top: 0.8rem;
+  }
+
+  .hero-lottie {
+    max-width: 380px;
+    transform: translateX(0) !important;
+  }
+
+  .hero-buttons {
+    margin-top: 1.5rem !important;
+    justify-content: flex-start;
+  }
+
+  .modern-btn,
+  .animated-button {
+    width: 150px;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .modern-btn::before {
+    height: 48px;
+  }
+
+  .modern-btn:hover::before {
+    width: 150px;
+  }
+
+  .animated-button:hover .circle {
+    width: 180px;
+    height: 180px;
+  }
+
+  /* Better column spacing */
+  .row.align-items-center {
+    gap: 20px;
+  }
+
+  .col-lg-6 {
+    flex: 0 0 48%;
+    max-width: 48%;
+  }
+}
+
+/* Fine-tune for 1200px - 1450px specifically */
+@media (min-width: 1200px) and (max-width: 1450px) {
+  .hero-heading {
+    font-size: 2.3rem;
+  }
+
+  .hero-subtext {
+    font-size: 1.25rem;
+  }
+
+  .hero-lottie {
+    max-width: 420px;
+  }
+
+  .container {
+    max-width: 90% !important;
+  }
+}
+
+/* Original desktop styles for larger screens */
+@media (min-width: 1451px) {
+  .hero-lottie {
+    transform: translateX(80px);
+  }
+
+  .hero-buttons {
+    justify-content: flex-start;
+  }
+}
+
+/* Mobile devices below 400px */
+@media (max-width: 399px) {
+  .hero-heading {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.95rem;
   }
 
   .hero-img {
@@ -441,60 +629,21 @@
   .modern-btn::before {
     height: 45px;
   }
+
+  .modern-btn:hover::before {
+    width: 140px;
+  }
   
   .animated-button:hover .circle {
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 160px;
   }
-}
 
-.hero-lottie-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-lottie {
-  width: 100%;
-  max-width: 500px;
-  transform: transform 0.3s ease;
-}
-
-@media (min-width: 992px) {
   .hero-lottie {
-    transform: translateX(80px);
+    max-width: 280px;
   }
-}
 
-.hero-buttons {
-  position: relative;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-  z-index: 2;
-}
-
-@media (min-width: 768px) {
   .hero-buttons {
-    justify-content: flex-start;
+    justify-content: center;
   }
-}
-
-.btn-bg-wave {
-  position: absolute;
-  top: -40%;
-  left: -10%;
-  width: 120%;
-  height: 180%;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.wave-lottie {
-  width: 100%;
-  height: 100%;
-  opacity: 0.6;
-  filter: blur(3px);
 }

@@ -3,6 +3,7 @@ import './css/Footer.css';
 import { FaInstagram, FaLinkedin, FaTelegram, FaGithub } from 'react-icons/fa';
 import { FaThreads } from 'react-icons/fa6';
 import { NavLink } from 'react-router-dom';
+import Chatbot from './Chatbot';
 
 const Footer = () => {
   return (
@@ -47,6 +48,7 @@ const Footer = () => {
           © {new Date().getFullYear()} Ayush Srivastava. All rights reserved.
         </p>
       </div>
+      <Chatbot/>
     </footer>
   );
 };

@@ -310,3 +310,20 @@
     font-size: 1.5rem !important; /* extra small screens */
   }
 }
+/* Add this to your navbar.css file, at the end of the media query */
+
+@media (max-width: 991px) {
+  /* Force navbar elements to be above everything */
+  .custom-navbar,
+  .navbar-collapse,
+  .menu-overlay {
+    z-index: 999999 !important; /* Extremely high to ensure it's on top */
+  }
+  
+  /* Add this to ensure body doesn't scroll when menu is open */
+  body.nav-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+}
