@@ -116,7 +116,7 @@ function Chatbot() {
       return "Hello! I'm here to help you explore Ayush Srivastava's portfolio. He's a passionate full-stack developer. What would you like to know?";
     }
     
-    if (msg.includes('about') || msg.includes('who')) {
+    if (msg.includes('about') || msg.includes('who') || msg.includes('ayush') || msg.includes('srivastava')) {
       return "Ayush Srivastava is a Full-Stack Developer passionate about building clean, efficient web experiences. He blends creativity with functionality and enjoys turning complex problems into elegant solutions.";
     }
     
