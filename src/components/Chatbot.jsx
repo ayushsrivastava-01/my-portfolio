@@ -14,11 +14,13 @@ function Chatbot() {
   const [typing, setTyping] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(true);
 
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const notificationTimerRef = useRef(null);
   const interactionTimerRef = useRef(null);
+  const greetingTimerRef = useRef(null);
 
   const API_KEY = "API_KEY";
 
@@ -91,6 +93,23 @@ function Chatbot() {
     }
   };
 
+  // Abusive words detection
+  const abusiveWords = [
+    'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'pussy', 
+    'ass', 'bhenchod', 'madarchod', 'chutiya', 'gandu', 'lawde', 'lund',
+    'motherfucker', 'fucker', 'bullshit', 'damn', 'hell', 'idiot', 'stupid',
+    'retard', 'moron', 'dumb', 'fat', 'ugly', 'loser', 'wtf', 'omg'
+  ];
+
+  // Enhanced greetings
+  const greetings = [
+    "Namaste! 🙏 How can I assist you with Ayush's portfolio today?",
+    "Hello there! 🌟 What would you like to know about Ayush's work?",
+    "Hi! 👋 Ready to explore Ayush's portfolio? Ask me anything!",
+    "Greetings! ✨ I'm here to help you discover Ayush's skills and projects.",
+    "Welcome! 😊 Feel free to ask about Ayush's experience, skills, or projects."
+  ];
+
   // Show notification after 3 seconds
   useEffect(() => {
     const showTimer = setTimeout(() => {
@@ -108,6 +127,21 @@ function Chatbot() {
       }
     };
   }, []);
+
+  // Auto-close greeting after 5 seconds
+  useEffect(() => {
+    if (showGreeting) {
+      greetingTimerRef.current = setTimeout(() => {
+        setShowGreeting(false);
+      }, 5000);
+    }
+    
+    return () => {
+      if (greetingTimerRef.current) {
+        clearTimeout(greetingTimerRef.current);
+      }
+    };
+  }, [showGreeting]);
 
   // Track user interaction
   useEffect(() => {
@@ -161,9 +195,20 @@ function Chatbot() {
     scrollToBottom();
   }, [messages, typing]);
 
-  // ENHANCED SMART RESPONSE SYSTEM WITH BETTER INPUT HANDLING
+  // Check for abusive language
+  const containsAbusiveLanguage = (message) => {
+    const lowerMsg = message.toLowerCase();
+    return abusiveWords.some(word => lowerMsg.includes(word));
+  };
+
+  // ENHANCED SMART RESPONSE SYSTEM
   const getSmartResponse = (userMessage) => {
     const msg = userMessage.toLowerCase().trim();
+    
+    // Check for abusive language
+    if (containsAbusiveLanguage(msg)) {
+      return "I'm here to help you learn about Ayush's professional portfolio. Please maintain respectful communication. 😊\n\nYou can ask about:\n• Projects & Skills\n• Experience & Education\n• Contact information";
+    }
     
     // Handle very short/nonsense inputs
     if (msg.length <= 2 && !/hi|ok|no|by|hi|hey/.test(msg)) {
@@ -171,44 +216,69 @@ function Chatbot() {
     }
     
     // Handle goodbye/farewell
-    if (/bye|goodbye|see you|farewell|cya|exit|quit|close/.test(msg)) {
-      return "Goodbye! 👋 Feel free to return anytime to learn more about Ayush's portfolio. Have a great day!";
+    if (/bye|goodbye|see you|farewell|cya|exit|quit|close|good night|goodnight/.test(msg)) {
+      const farewells = [
+        "Goodbye! 👋 Feel free to return anytime to learn more about Ayush's portfolio.",
+        "See you later! 😊 Have a great day!",
+        "Take care! 🌟 Don't hesitate to come back if you have more questions.",
+        "Goodbye! 🙏 Wishing you all the best.",
+        "Farewell! ✨ Stay curious and keep learning!"
+      ];
+      return farewells[Math.floor(Math.random() * farewells.length)];
     }
     
     // Handle thanks
-    if (/thanks|thank you|appreciate|thx/.test(msg)) {
-      return "You're welcome! 😊 Is there anything else you'd like to know about Ayush's portfolio?";
+    if (/thanks|thank you|appreciate|thx|thankyou|ty|grateful/.test(msg)) {
+      const thanksResponses = [
+        "You're welcome! 😊 Is there anything else you'd like to know about Ayush's portfolio?",
+        "My pleasure! 🌟 Happy to help you explore Ayush's work.",
+        "Glad I could help! 🙏 Feel free to ask more questions.",
+        "You're most welcome! ✨ What else interests you?",
+        "Happy to assist! 😄 Let me know if you need more information."
+      ];
+      return thanksResponses[Math.floor(Math.random() * thanksResponses.length)];
     }
     
     // Handle greetings
-    if (/hi|hello|hey|greetings|good morning|good afternoon|good evening/.test(msg)) {
-      return `Hello! 👋 I'm here to help you explore Ayush Srivastava's portfolio. He's a ${portfolioData.role} with ${portfolioData.experience.length}+ years of experience.\n\nWhat would you like to know about?`;
+    if (/hi|hello|hey|greetings|good morning|good afternoon|good evening|namaste|hola|bonjour/.test(msg)) {
+      const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+      return randomGreeting;
     }
     
     // Handle "what" questions
-    if (/what (can|should|do) (you|i) (do|ask|say)/.test(msg)) {
-      return "You can ask me about:\n📁 **Projects** - Real Estate app, Weather app, etc.\n💻 **Skills** - React, Node.js, JavaScript, etc.\n👨‍💻 **Experience** - Internships at Edureka & HackerRank\n🎓 **Education** - BCA degree details\n📜 **Certifications** - 16+ professional certs\n📧 **Contact** - Email, LinkedIn, GitHub\n\nWhat interests you most?";
+    if (/what (can|should|do) (you|i) (do|ask|say|learn)/.test(msg)) {
+      return "You can ask me about:\n📁 **Projects** - Real Estate app, Weather app, etc.\n💻 **Skills** - React, Node.js, JavaScript, etc.\n👨‍💻 **Experience** - Internships at Edureka & HackerRank\n🎓 **Education** - BCA degree details\n📜 **Certifications** - Professional certifications\n📧 **Contact** - Email, LinkedIn, GitHub\n\nWhat interests you most?";
     }
     
     // Handle "who" questions
-    if (/who (are you|is ayush|is this)/.test(msg)) {
-      return `I'm the AI assistant for **${portfolioData.name}**, a ${portfolioData.role}. I help visitors explore his portfolio, projects, and skills.\n\n${portfolioData.about}`;
+    if (/who (are you|is ayush|is this|made you)/.test(msg)) {
+      return `I'm the AI assistant for **${portfolioData.name}**, a ${portfolioData.role}. I help visitors explore his portfolio, projects, and skills.\n\n${portfolioData.about}\n\nBuilt with React by Ayush himself!`;
     }
     
     // Handle "how" questions
-    if (/how (are you|old|many|to contact)/.test(msg)) {
-      if (/how (are you|you doing)/.test(msg)) {
-        return "I'm doing great, thanks for asking! 😊 Ready to help you explore Ayush's portfolio.";
+    if (/how (are you|old|many|to contact|can i|do i)/.test(msg)) {
+      if (/how (are you|you doing|do you feel)/.test(msg)) {
+        const moodResponses = [
+          "I'm doing great, thanks for asking! 😊 Ready to help you explore Ayush's portfolio.",
+          "Feeling fantastic! 🌟 Excited to share Ayush's work with you.",
+          "I'm wonderful! 🙏 Let's dive into Ayush's portfolio together.",
+          "All good here! ✨ How can I assist you today?",
+          "I'm excellent! 😄 Ready to answer your questions."
+        ];
+        return moodResponses[Math.floor(Math.random() * moodResponses.length)];
       }
-      if (/how many (projects|skills|certs)/.test(msg)) {
+      if (/how many (projects|skills|certs|certifications|experiences)/.test(msg)) {
         if (/projects/.test(msg)) return `Ayush has built **${portfolioData.projects.length} major projects**, including a Real Estate Webapp and Weather Application.`;
         if (/skills/.test(msg)) return `He has skills in **${portfolioData.skills.frontend.length + portfolioData.skills.backend.length + portfolioData.skills.database.length} technologies** across frontend, backend, and databases.`;
-        if (/certs/.test(msg)) return `He holds **${portfolioData.certifications.length}+ professional certifications** including Generative AI Mastermind and HackerRank certifications.`;
+        if (/certs/.test(msg) || /certifications/.test(msg)) return `He holds **${portfolioData.certifications.length}+ professional certifications** including Generative AI Mastermind and HackerRank certifications.`;
+        if (/experiences/.test(msg)) return `He has **${portfolioData.experience.length} professional experiences** including internships at Edureka and HackerRank.`;
       }
+      if (/how to contact/.test(msg)) return `You can contact Ayush via:\n📧 **Email:** ${portfolioData.contact.email}\n💼 **LinkedIn:** ${portfolioData.contact.linkedin}\n🐙 **GitHub:** ${portfolioData.contact.github}`;
+      if (/how can i/.test(msg)) return "You can explore Ayush's portfolio by asking about specific topics. Try:\n• 'Show me your React projects'\n• 'Tell me about your education'\n• 'What are your certifications?'";
     }
     
     // Handle project-related queries
-    if (/project|work|build|create|portfolio|github|code|repository/.test(msg)) {
+    if (/project|work|build|create|portfolio|github|code|repository|app|application/.test(msg)) {
       const projectsList = portfolioData.projects.map(p => 
         `• **${p.name}** - ${p.description} (${p.tech.join(', ')})`
       ).join('\n');
@@ -217,12 +287,12 @@ function Chatbot() {
     }
     
     // Handle skills queries
-    if (/skill|tech|technology|stack|language|framework/.test(msg)) {
+    if (/skill|tech|technology|stack|language|framework|expertise/.test(msg)) {
       return `**Technical Skills:**\n\n**Frontend:** ${portfolioData.skills.frontend.join(', ')}\n**Backend:** ${portfolioData.skills.backend.join(', ')}\n**Databases:** ${portfolioData.skills.database.join(', ')}\n**Tools:** ${portfolioData.skills.tools.join(', ')}\n**Soft Skills:** ${portfolioData.skills.soft.join(', ')}`;
     }
     
     // Handle experience queries
-    if (/experience|work|job|internship|professional/.test(msg)) {
+    if (/experience|work|job|internship|professional|career|background/.test(msg)) {
       const expList = portfolioData.experience.map(exp => 
         `• **${exp.role}** at ${exp.company} (${exp.duration})`
       ).join('\n');
@@ -231,23 +301,23 @@ function Chatbot() {
     }
     
     // Handle education queries
-    if (/education|degree|college|study|graduate|background/.test(msg)) {
+    if (/education|degree|college|study|graduate|background|academic/.test(msg)) {
       return `**Education:**\n• **Degree:** ${portfolioData.education.degree}\n• **College:** ${portfolioData.education.college}\n• **Year:** ${portfolioData.education.year}`;
     }
     
     // Handle contact queries
-    if (/contact|email|hire|reach|linkedin|github|connect|message/.test(msg)) {
+    if (/contact|email|hire|reach|linkedin|github|connect|message|get in touch|social media/.test(msg)) {
       return `**Contact Ayush:**\n📧 **Email:** ${portfolioData.contact.email}\n💼 **LinkedIn:** ${portfolioData.contact.linkedin}\n🐙 **GitHub:** ${portfolioData.contact.github}\n🌐 **Portfolio:** ${portfolioData.contact.portfolio}`;
     }
     
     // Handle certification queries
-    if (/certif|certificate|qualification|cert|course/.test(msg)) {
+    if (/certif|certificate|qualification|cert|course|training|learning/.test(msg)) {
       return `**Certifications:**\n${portfolioData.certifications.map(c => `• ${c}`).join('\n')}\n\n**Total:** ${portfolioData.certifications.length}+ professional certifications`;
     }
     
     // Handle specific technology queries
-    if (/(react|javascript|node|python|java|php|html|css|sql|mongodb|mysql)/.test(msg)) {
-      const tech = msg.match(/(react|javascript|node|python|java|php|html|css|sql|mongodb|mysql)/i)?.[0] || 'these technologies';
+    if (/(react|javascript|node|python|java|php|html|css|sql|mongodb|mysql|tailwind|express)/.test(msg)) {
+      const tech = msg.match(/(react|javascript|node|python|java|php|html|css|sql|mongodb|mysql|tailwind|express)/i)?.[0] || 'these technologies';
       const techUpper = tech.charAt(0).toUpperCase() + tech.slice(1);
       
       // Check if this tech is in skills
@@ -262,8 +332,20 @@ function Chatbot() {
       }
     }
     
+    // Handle compliments
+    if (/good|great|awesome|amazing|wonderful|excellent|impressive|smart|intelligent|nice|cool/.test(msg)) {
+      const compliments = [
+        "Thank you! 😊 Ayush works hard to build great projects.",
+        "Much appreciated! 🌟 Ayush is passionate about his work.",
+        "Thanks for the kind words! 🙏 I'll pass them along.",
+        "Glad you think so! ✨ Ayush is always learning and improving.",
+        "Thank you! 😄 Ayush would be happy to hear that."
+      ];
+      return compliments[Math.floor(Math.random() * compliments.length)];
+    }
+    
     // Handle "yes/no/maybe" responses
-    if (/^yes$|^no$|^maybe$|^ok$|^okay$|^sure$/i.test(msg)) {
+    if (/^yes$|^no$|^maybe$|^ok$|^okay$|^sure$|^alright$/i.test(msg)) {
       return "Great! What specific aspect of Ayush's portfolio would you like to explore? For example:\n• 'Tell me about React projects'\n• 'Show me your skills'\n• 'What's your experience?'";
     }
     
@@ -272,13 +354,20 @@ function Chatbot() {
       return "I see you typed a single letter. If you're testing, try asking about:\n• 'P' for Projects\n• 'S' for Skills\n• 'E' for Experience\n• 'C' for Contact\nOr type a full question about Ayush's portfolio!";
     }
     
+    // Handle "I love you" or similar
+    if (/i love you|love you|i like you|marry me/.test(msg)) {
+      return "That's sweet! 😊 I'm an AI assistant here to help you explore Ayush's portfolio. Let's focus on professional topics!";
+    }
+    
     // Default response for unclear queries
     const suggestions = [
       "Try: 'Show me your React projects'",
       "Ask: 'What are your technical skills?'",
       "Type: 'Tell me about your experience'",
       "Say: 'How can I contact you?'",
-      "Question: 'What certifications do you have?'"
+      "Question: 'What certifications do you have?'",
+      "Try: 'Tell me about your education'",
+      "Ask: 'Show me your GitHub projects'"
     ];
     
     const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
@@ -290,66 +379,6 @@ function Chatbot() {
   const callOpenAI = async (userMessage) => {
     // Always use smart response for now to avoid API issues
     return getSmartResponse(userMessage);
-    
-    // If you want to use OpenAI, uncomment below and add your API key
-    /*
-    if (!API_KEY || API_KEY === "API_KEY") {
-      return getSmartResponse(userMessage);
-    }
-    
-    try {
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`
-        },
-        body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
-          messages: [
-            {
-              role: 'system',
-              content: `You are a helpful assistant for Ayush Srivastava's portfolio website.
-              
-              KEY INFORMATION:
-              - Ayush is a Full-Stack Developer
-              - Skills: React, JavaScript, Node.js, Express, MongoDB, MySQL, HTML/CSS
-              - Projects: Real Estate Webapp, Weather App, Portfolio, Number Converter, Travel Booking
-              - Experience: Internships at Edureka & HackerRank (2+ years total)
-              - Education: BCA from MSITM Degree College (2025)
-              - Certifications: 16+ including Generative AI, Web Development
-              - Contact: ayushsrivastava1854@gmail.com, linkedin.com/in/ayush-srivastava01
-              
-              RESPONSE RULES:
-              1. Keep responses concise (2-4 sentences max)
-              2. Use simple, clear language
-              3. If user says nonsense or single letters, ask what they want to know
-              4. For "bye" or "exit", say goodbye
-              5. Always stay on topic about Ayush's portfolio
-              6. Use bullet points only for lists
-              7. Don't be too formal - be friendly
-              8. If unsure, ask what they want to know about Ayush`
-            },
-            {
-              role: 'user',
-              content: userMessage
-            }
-          ],
-          max_tokens: 100,
-          temperature: 0.7
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('API Error');
-      }
-
-      const data = await response.json();
-      return data.choices[0].message.content;
-    } catch (error) {
-      return getSmartResponse(userMessage);
-    }
-    */
   };
 
   const handleSend = async () => {
@@ -379,6 +408,26 @@ function Chatbot() {
     }, 500);
   };
 
+  // Refresh conversation
+  const handleRefresh = () => {
+    setMessages([
+      { 
+        text: "👋 Welcome! I'm Ayush's portfolio assistant. Ask me about:\n• Projects & Skills 🚀\n• Experience & Education 📚\n• Certifications & Contact 📧\n• Technical expertise 💻", 
+        sender: 'bot',
+        time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+      }
+    ]);
+    setShowGreeting(true);
+    
+    // Auto-close greeting after 5 seconds
+    if (greetingTimerRef.current) {
+      clearTimeout(greetingTimerRef.current);
+    }
+    greetingTimerRef.current = setTimeout(() => {
+      setShowGreeting(false);
+    }, 5000);
+  };
+
   // Quick questions
   const quickQuestions = [
     { text: "What projects have you built?", emoji: "🚀" },
@@ -405,6 +454,26 @@ function Chatbot() {
 
   return (
     <div className="portfolio-chatbot">
+      {/* Greeting Popup */}
+      {showGreeting && isOpen && (
+        <div className="greeting-popup">
+          <div className="greeting-content">
+            <div className="greeting-icon">👋</div>
+            <div className="greeting-text">
+              <strong>Hello there!</strong>
+              <p>I'm Ayush's AI assistant. Ask me anything about his portfolio!</p>
+            </div>
+            <button 
+              className="greeting-close" 
+              onClick={() => setShowGreeting(false)}
+              aria-label="Close greeting"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       {showNotification && !isOpen && (
         <div className="chatbot-notification">
           <div className="notification-content">
@@ -469,13 +538,25 @@ function Chatbot() {
                 <p>Ask me anything about his work</p>
               </div>
             </div>
-            <button 
-              className="close-btn"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close chat"
-            >
-              ✕
-            </button>
+            <div className="header-right">
+              <button 
+                className="refresh-btn"
+                onClick={handleRefresh}
+                aria-label="Refresh chat"
+                title="Start new conversation"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                </svg>
+              </button>
+              <button 
+                className="close-btn"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close chat"
+              >
+                ✕
+              </button>
+            </div>
           </div>
 
           <div className="messages-area" ref={messagesContainerRef}>
@@ -557,6 +638,9 @@ function Chatbot() {
                   </svg>
                 )}
               </button>
+            </div>
+            <div className="input-hint">
+              <small>💡 Tip: Try asking about specific technologies or projects!</small>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import Contact from "./components/Contact";
 import Certificate from "./components/Certificate";
 import Resume from "./components/Resume";
 import Projects from "./components/Projects";
+import Education from "./components/Education";
 import Analytics from "./components/Analytics";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -23,6 +24,7 @@ function TitleUpdater() {
       "/": "Portfolio",
       "/about": "About",
       "/projects": "Projects",
+      "/education": "Education",
       "/skills": "Skills",
       "/contact": "Contact",
       "/certificate": "Certificates",
@@ -62,8 +64,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/education" element={<Education />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/certificate" element={<Certificate />} />
           <Route path="/resume" element={<Resume />} />

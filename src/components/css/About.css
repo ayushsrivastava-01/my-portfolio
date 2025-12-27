@@ -265,3 +265,22 @@
     margin-bottom: -8%;
   }
 }
+
+/* ===== EDUCATION BUTTON BELOW QUOTE ===== */
+.education-btn {
+  margin-top: 10px;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid #ffd700;
+  border-radius: 20px;
+  color: #ffd700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.education-btn:hover {
+  background: #ffd700;
+  color: #000;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}

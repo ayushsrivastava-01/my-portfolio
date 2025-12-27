@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom"; // ✅ ADDED
 import "./css/About.css";
 import Lottie from "lottie-react";
 import profileImage from "../assets/ayush.jpg";
-import codingAnimation from "../assets/about.json"; // your Lottie JSON
+import codingAnimation from "../assets/about.json";
 
 const quotes = [
   "Code is like humor. When you have to explain it, it's bad.",
@@ -17,9 +18,7 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
+    transition: { staggerChildren: 0.2 },
   },
 };
 
@@ -34,6 +33,7 @@ const itemVariants = {
 
 const About = () => {
   const [quoteIndex, setQuoteIndex] = useState(0);
+  const navigate = useNavigate(); // ✅ ADDED
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -51,9 +51,10 @@ const About = () => {
       variants={containerVariants}
     >
       <motion.div className="container" variants={itemVariants}>
-        {/* ADDED: Hidden H1 for better SEO structure */}
-        <h1 style={{display: 'none'}}>About Ayush Srivastava - Full Stack Developer</h1>
-        
+        <h1 style={{ display: "none" }}>
+          About Ayush Srivastava - Full Stack Developer
+        </h1>
+
         <h2 className="section-title">
           About <span>Me</span>
         </h2>
@@ -71,11 +72,23 @@ const About = () => {
               ease: "easeInOut",
             }}
           >
-            {/* ADDED: alt text for SEO */}
-            <img src={profileImage} alt="Ayush Srivastava - Full Stack Developer" />
+            <img
+              src={profileImage}
+              alt="Ayush Srivastava - Full Stack Developer"
+            />
             <h3>Ayush Srivastava</h3>
             <p className="title">Full-Stack Developer</p>
+
+            {/* 🔁 CHANGING QUOTE */}
             <p className="quote">"{quotes[quoteIndex]}"</p>
+
+            {/* 🎓 EDUCATION BUTTON — EXACTLY HERE */}
+            <button
+              className="education-btn"
+              onClick={() => navigate("/education")}
+            >
+              View My Education 🎓
+            </button>
           </motion.div>
 
           {/* ================= ABOUT TEXT ================= */}
@@ -99,23 +112,12 @@ const About = () => {
                 gap: "20px",
               }}
             >
-              {/* Lottie Animation on top */}
               <div className="about-lottie">
-                <Lottie
-                  animationData={codingAnimation}
-                  loop={true}
-                />
+                <Lottie animationData={codingAnimation} loop />
               </div>
 
-              {/* Text below animation - ALREADY PERFECT FOR SEO! */}
               <p style={{ textAlign: "center" }}>
-                I'm <strong>Ayush Srivastava</strong>, a Full-Stack
-                Developer passionate about building clean and efficient web
-                experiences. I blend creativity with functionality, constantly
-                exploring the latest tech. I enjoy contributing to open-source
-                projects and leveling up my skills. I believe great code is
-                intuitive and user-focused, turning ideas into impactful digital
-                solutions.
+                I'm <strong>Ayush Srivastava</strong>, a Full-Stack Developer passionate about building clean and efficient web experiences. I blend creativity with functionality, constantly exploring the latest tech. I enjoy contributing to open-source projects and leveling up my skills. I believe great code is intuitive and user-focused, turning ideas into impactful digital solutions.
               </p>
             </div>
           </motion.div>
@@ -142,11 +144,7 @@ const About = () => {
                 text: "Creativity, Integrity, Empathy, and a strong sense of Responsibility in every line of code I write.",
               },
             ].map((card, i) => (
-              <motion.div
-                key={i}
-                className="mission-card"
-                variants={itemVariants}
-              >
+              <motion.div key={i} className="mission-card" variants={itemVariants}>
                 <h4>
                   {card.emoji} {card.title}
                 </h4>
@@ -178,8 +176,8 @@ const About = () => {
               },
               {
                 emoji: "⚙️",
-                title: "Deployment & Optimization",
-                text: "Deploying web apps on platforms like Vercel & Heroku, with focus on performance.",
+                title: "Deployment",
+                text: "Deploying web apps on platforms like Vercel & Netlify, with focus on performance.",
               },
             ].map((service, i) => (
               <motion.div key={i} className="what-card" variants={itemVariants}>

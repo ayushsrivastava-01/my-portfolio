@@ -910,3 +910,223 @@
     box-shadow: 0 12px 40px rgba(255, 107, 107, 0.7);
   }
 }
+
+/* Add these styles to Chatbot.css */
+
+/* Greeting Popup */
+.greeting-popup {
+  position: absolute;
+  bottom: 120px;
+  right: 30px;
+  z-index: 10002;
+  animation: greetingSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes greetingSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.greeting-content {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  min-width: 300px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.greeting-icon {
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.greeting-text {
+  flex: 1;
+}
+
+.greeting-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.greeting-text p {
+  font-size: 12px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.greeting-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.greeting-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Header right buttons */
+.header-right {
+  display: flex;
+  gap: 8px;
+}
+
+.refresh-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1) rotate(90deg);
+}
+
+.refresh-btn:active {
+  transform: scale(0.95) rotate(180deg);
+}
+
+/* Input hint */
+.input-hint {
+  margin-top: 8px;
+  text-align: center;
+}
+
+.input-hint small {
+  color: #718096;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Enhanced abusive message style */
+.message.user .message-bubble.abusive {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Warning animation for abusive words */
+@keyframes warningPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+  }
+}
+
+.message.user .message-bubble.abusive {
+  animation: warningPulse 2s ease-in-out;
+}
+
+/* Responsive for greeting */
+@media (max-width: 768px) {
+  .greeting-popup {
+    bottom: 90px;
+    right: 20px;
+    left: 20px;
+  }
+  
+  .greeting-content {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .greeting-popup {
+    bottom: 80px;
+    right: 15px;
+    left: 15px;
+  }
+  
+  .greeting-content {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+}
+
+/* Auto scroll animation */
+@keyframes autoScroll {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.messages-area:last-child {
+  animation: autoScroll 0.5s ease-in-out;
+}
+
+/* Abusive word detection indicator */
+.abusive-warning {
+  position: absolute;
+  top: -20px;
+  right: 10px;
+  background: #ef4444;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  animation: warningSlide 0.3s ease-out;
+}
+
+@keyframes warningSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
