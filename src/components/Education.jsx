@@ -82,7 +82,7 @@ const Education = () => {
                 </div>
                 
                 <div className="detail-box">
-                  <div className="detail-label">Score</div>
+                  <div className="detail-label">Percentage</div>
                   <div className="detail-value score-highlight">
                     <span className="score-icon">🎯</span>
                     {item.score}

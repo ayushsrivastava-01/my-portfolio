@@ -19,6 +19,7 @@ import C13 from "../assets/C13.png";
 import C14 from "../assets/C14.png";
 import C15 from "../assets/C15.png";
 import C16 from "../assets/C16.png";
+import C17 from "../assets/C17.png";
 
 import P1 from "/certificates/C1.pdf";
 import P2 from "/certificates/C2.pdf";
@@ -36,6 +37,7 @@ import P13 from "/certificates/C13.pdf";
 import P14 from "/certificates/C14.pdf";
 import P15 from "/certificates/C15.pdf";
 import P16 from "/certificates/C16.pdf";
+import P17 from "/certificates/C17.pdf";
 
 const certificates = [
   {
@@ -87,10 +89,10 @@ const certificates = [
     pdf: P9,
   },
   {
-    title: "Career in Tech",
-    issuedBy: "Barrownz Learning Academy",
-    image: C5,
-    pdf: P4,
+    title: "Certificate of Achievement",
+    issuedBy: "MSITM Degree College",
+    image: C17,
+    pdf: P17,
   },
   {
     title: "Intermediate JavaScript",
@@ -133,6 +135,12 @@ const certificates = [
     issuedBy: "HackerRank",
     image: C15,
     pdf: P15,
+  },
+  {
+    title: "Career in Tech",
+    issuedBy: "Barrownz Learning Academy",
+    image: C5,
+    pdf: P4,
   },
 ];
 
