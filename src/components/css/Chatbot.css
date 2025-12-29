@@ -1130,3 +1130,127 @@
     transform: translateY(0);
   }
 }
+
+/* ===================================
+   HEADER STATUS INDICATOR
+   ================================== */
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Status dot - simple version */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.online {
+  background-color: #10b981;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+  animation: pulseOnline 2s infinite;
+}
+
+.status-dot.offline {
+  background-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3);
+}
+
+@keyframes pulseOnline {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  }
+}
+
+/* Status text */
+.status-text {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Header text adjustments */
+.chatbot-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.chatbot-header p {
+  margin: 2px 0 0 0;
+  font-size: 12px;
+  opacity: 0.9;
+  display: none; /* Hide the old subtitle */
+}
+
+/* Enhanced typing indicator */
+.typing-text {
+  font-size: 11px;
+  color: #a0aec0;
+  margin-left: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .header-status {
+    gap: 5px;
+  }
+  
+  .status-text {
+    font-size: 10px;
+  }
+  
+  .chatbot-header h3 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-status {
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .status-text {
+    font-size: 9px;
+  }
+  
+  .chatbot-header h3 {
+    font-size: 15px;
+  }
+}
+
+/* Remove the old status-indicator styles if they exist */
+.status-indicator,
+.connection-quality,
+.last-active {
+  display: none;
+}
+
+/* Remove offline banner styles */
+.offline-banner {
+  display: none;
+}

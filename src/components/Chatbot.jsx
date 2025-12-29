@@ -15,16 +15,19 @@ function Chatbot() {
   const [showNotification, setShowNotification] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [showGreeting, setShowGreeting] = useState(true);
+  const [isOnline, setIsOnline] = useState(true);
+  const [connectionQuality, setConnectionQuality] = useState('excellent');
+  const [lastActive, setLastActive] = useState('Just now');
+  const [showQuickQuestions, setShowQuickQuestions] = useState(false);
 
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const notificationTimerRef = useRef(null);
   const interactionTimerRef = useRef(null);
   const greetingTimerRef = useRef(null);
+  const onlineStatusTimerRef = useRef(null);
 
-  const API_KEY = "API_KEY";
-
-  // Portfolio Data
+  // Portfolio Data (same as before)
   const portfolioData = {
     name: "Ayush Srivastava",
     role: "Full-Stack Developer",
@@ -110,6 +113,57 @@ function Chatbot() {
     "Welcome! 😊 Feel free to ask about Ayush's experience, skills, or projects."
   ];
 
+  // Quick questions
+  const quickQuestions = [
+    { text: "What projects have you built?", emoji: "🚀" },
+    { text: "Show me your skills", emoji: "💻" },
+    { text: "Tell me about your experience", emoji: "👨‍💻" },
+    { text: "Education background?", emoji: "🎓" },
+    { text: "Contact information", emoji: "📧" },
+    { text: "GitHub link?", emoji: "🐙" },
+    { text: "React experience?", emoji: "⚛️" },
+    { text: "Certifications?", emoji: "📜" }
+  ];
+
+  // Online status simulation
+  useEffect(() => {
+    const updateOnlineStatus = () => {
+      // Simulate occasional offline status (1% chance)
+      const isActuallyOnline = Math.random() > 0.01;
+      setIsOnline(isActuallyOnline);
+      
+      // Update connection quality
+      const qualities = ['excellent', 'good', 'average'];
+      const randomQuality = qualities[Math.floor(Math.random() * qualities.length)];
+      setConnectionQuality(randomQuality);
+      
+      // Update last active time
+      const times = ['Just now', 'A moment ago', 'Recently active'];
+      const randomTime = times[Math.floor(Math.random() * times.length)];
+      setLastActive(randomTime);
+    };
+
+    // Initial status
+    updateOnlineStatus();
+
+    // Update status every 10-30 seconds
+    const scheduleUpdate = () => {
+      const delay = 10000 + Math.random() * 20000; // 10-30 seconds
+      onlineStatusTimerRef.current = setTimeout(() => {
+        updateOnlineStatus();
+        scheduleUpdate();
+      }, delay);
+    };
+
+    scheduleUpdate();
+
+    return () => {
+      if (onlineStatusTimerRef.current) {
+        clearTimeout(onlineStatusTimerRef.current);
+      }
+    };
+  }, []);
+
   // Show notification after 3 seconds
   useEffect(() => {
     const showTimer = setTimeout(() => {
@@ -187,6 +241,16 @@ function Chatbot() {
     }
   };
 
+  const closeNotification = () => {
+    setShowNotification(false);
+    if (notificationTimerRef.current) {
+      clearTimeout(notificationTimerRef.current);
+    }
+    if (interactionTimerRef.current) {
+      clearTimeout(interactionTimerRef.current);
+    }
+  };
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -195,13 +259,11 @@ function Chatbot() {
     scrollToBottom();
   }, [messages, typing]);
 
-  // Check for abusive language
   const containsAbusiveLanguage = (message) => {
     const lowerMsg = message.toLowerCase();
     return abusiveWords.some(word => lowerMsg.includes(word));
   };
 
-  // ENHANCED SMART RESPONSE SYSTEM
   const getSmartResponse = (userMessage) => {
     const msg = userMessage.toLowerCase().trim();
     
@@ -375,14 +437,11 @@ function Chatbot() {
     return `I'm not sure what you're asking about. ${randomSuggestion}\n\nOr you can choose from the quick questions below! 👇`;
   };
 
-  // Improved OpenAI API call
-  const callOpenAI = async (userMessage) => {
-    // Always use smart response for now to avoid API issues
-    return getSmartResponse(userMessage);
-  };
-
   const handleSend = async () => {
     if (!input.trim()) return;
+    
+    // Update last active time
+    setLastActive('Just now');
     
     const userMsg = input;
     const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -396,7 +455,7 @@ function Chatbot() {
     
     // Small delay for realism
     setTimeout(async () => {
-      const response = await callOpenAI(userMsg);
+      const response = getSmartResponse(userMsg);
       const responseTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
       
       setMessages(prev => [...prev, { 
@@ -405,10 +464,12 @@ function Chatbot() {
         time: responseTime 
       }]);
       setTyping(false);
+      
+      // Update last active after response
+      setLastActive('Just now');
     }, 500);
   };
 
-  // Refresh conversation
   const handleRefresh = () => {
     setMessages([
       { 
@@ -426,30 +487,6 @@ function Chatbot() {
     greetingTimerRef.current = setTimeout(() => {
       setShowGreeting(false);
     }, 5000);
-  };
-
-  // Quick questions
-  const quickQuestions = [
-    { text: "What projects have you built?", emoji: "🚀" },
-    { text: "Show me your skills", emoji: "💻" },
-    { text: "Tell me about your experience", emoji: "👨‍💻" },
-    { text: "Education background?", emoji: "🎓" },
-    { text: "Contact information", emoji: "📧" },
-    { text: "GitHub link?", emoji: "🐙" },
-    { text: "React experience?", emoji: "⚛️" },
-    { text: "Certifications?", emoji: "📜" }
-  ];
-
-  const [showQuickQuestions, setShowQuickQuestions] = useState(false);
-
-  const closeNotification = () => {
-    setShowNotification(false);
-    if (notificationTimerRef.current) {
-      clearTimeout(notificationTimerRef.current);
-    }
-    if (interactionTimerRef.current) {
-      clearTimeout(interactionTimerRef.current);
-    }
   };
 
   return (
@@ -535,7 +572,13 @@ function Chatbot() {
               </div>
               <div>
                 <h3>Ayush's Portfolio Assistant</h3>
-                <p>Ask me anything about his work</p>
+                {/* ONLINE STATUS INDICATOR RIGHT BELOW THE HEADER TEXT */}
+                <div className="header-status">
+                  <div className={`status-dot ${isOnline ? 'online' : 'offline'}`}></div>
+                  <span className="status-text">
+                    {isOnline ? 'Online • AI Assistant Ready' : 'Offline • Still responding'}
+                  </span>
+                </div>
               </div>
             </div>
             <div className="header-right">
@@ -578,7 +621,9 @@ function Chatbot() {
                   <span></span>
                   <span></span>
                 </div>
-                <span>Thinking...</span>
+                <span className="typing-text">
+                  {isOnline ? 'AI Assistant is typing...' : 'Thinking...'}
+                </span>
               </div>
             )}
             <div ref={messagesEndRef} />
