@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/Resume.css';
 import resumePDF from '../assets/Ayush_Srivastava_Resume.pdf'; 
 import Lottie from 'lottie-react';
 import paperAnimation from '../assets/resume.json'; 
 
 const Resume = () => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [showMobilePreview, setShowMobilePreview] = useState(false);
+
+  useEffect(() => {
+    // Check if device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Google Docs viewer for mobile (better compatibility)
+  const googleDocsViewerURL = `https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + resumePDF)}&embedded=true`;
+
   return (
     <section className="resume-section" id="resume">
       {/* Resume Preview Container */}
@@ -19,14 +37,62 @@ const Resume = () => {
           <div className="preview-tag">Live Preview</div>
         </div>
         
-        {/* PDF Preview - Actual PDF embed */}
+        {/* PDF Preview - Mobile & Desktop different handling */}
         <div className="pdf-preview-wrapper">
-          <iframe
-            src={resumePDF}
-            className="pdf-preview-full"
-            title="Resume Preview"
-            loading="lazy"
-          />
+          {isMobile ? (
+            // Mobile View - Click to preview or show simplified view
+            <div className="mobile-preview-container">
+              {showMobilePreview ? (
+                <iframe
+                  src={googleDocsViewerURL}
+                  className="pdf-preview-full"
+                  title="Resume Preview"
+                  loading="lazy"
+                />
+              ) : (
+                <div 
+                  className="mobile-preview-placeholder"
+                  onClick={() => setShowMobilePreview(true)}
+                >
+                  <div className="mobile-preview-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                      <line x1="16" y1="13" x2="8" y2="13" />
+                      <line x1="16" y1="17" x2="8" y2="17" />
+                      <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                  </div>
+                  <div className="mobile-preview-text">
+                    <h4>Tap to Preview Resume</h4>
+                    <p>Click here to load the resume preview</p>
+                  </div>
+                  <div className="mobile-preview-cta">
+                    <span>Tap to Load →</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            // Desktop View - Direct PDF embed
+            <object
+              data={resumePDF}
+              type="application/pdf"
+              className="pdf-preview-full"
+            >
+              <div className="fallback-preview">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+                <p>Your browser doesn't support PDF preview.</p>
+                <p>Use the buttons below to download or view.</p>
+              </div>
+            </object>
+          )}
         </div>
         
         <div className="preview-info-grid">

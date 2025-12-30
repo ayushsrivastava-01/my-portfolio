@@ -610,3 +610,116 @@
     padding: 5px 12px;
   }
 }
+
+/* Mobile Preview Styles */
+.mobile-preview-container {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.mobile-preview-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(30, 30, 47, 0.8);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.mobile-preview-placeholder:hover {
+  border-color: rgba(255, 0, 204, 0.4);
+  background: rgba(40, 40, 60, 0.9);
+}
+
+.mobile-preview-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff00cc, #3333ff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.mobile-preview-icon svg {
+  width: 40px;
+  height: 40px;
+  color: white;
+}
+
+.mobile-preview-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.mobile-preview-text h4 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.mobile-preview-text p {
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.mobile-preview-cta {
+  background: rgba(51, 51, 255, 0.2);
+  color: #6666ff;
+  padding: 10px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: 1px solid rgba(51, 51, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.mobile-preview-placeholder:hover .mobile-preview-cta {
+  background: rgba(51, 51, 255, 0.3);
+  transform: translateX(5px);
+}
+
+/* Fallback for unsupported browsers */
+.fallback-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.fallback-preview svg {
+  width: 80px;
+  height: 80px;
+  color: #6666ff;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.fallback-preview p {
+  color: #aaa;
+  margin-bottom: 10px;
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 768px) {
+  .pdf-preview-wrapper {
+    min-height: 400px;
+  }
+  
+  .pdf-preview-full {
+    height: 500px;
+  }
+}
