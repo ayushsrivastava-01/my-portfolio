@@ -1,5 +1,3 @@
-/* Resume.css */
-
 .resume-section {
   min-height: 80vh;
   padding: 5rem 2rem;
@@ -13,134 +11,24 @@
   overflow: hidden;
 }
 
-/* ===================== RESUME PREVIEW CONTAINER ===================== */
-.resume-preview-container {
-  background: rgba(40, 40, 60, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 30px;
-  width: 100%;
-  max-width: 900px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  animation: fadeUp 1s ease-in-out forwards;
-}
-
-.preview-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.preview-lottie {
-  width: 120px;
-  height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 5px 15px rgba(255, 0, 204, 0.3));
-  animation: floatUp 3s ease-in-out infinite;
-}
-
-@keyframes floatUp {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.preview-title {
-  flex: 1;
-  text-align: left;
-}
-
-.preview-title h3 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin-bottom: 5px;
-  color: #fff;
+/* Headings */
+.resume-title {
+  font-size: 3rem;
+  margin-bottom: 1.2rem; 
   background: linear-gradient(90deg, #ff00cc, #3333ff);
-  -webkit-background-clip: text;
+  -webkit-background-clip: text; 
   background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 0.5px;
-}
-
-.preview-tag {
-  background: rgba(255, 0, 204, 0.2);
-  color: #ff66cc;
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  border: 1px solid rgba(255, 0, 204, 0.3);
-  white-space: nowrap;
-}
-
-/* PDF Preview Styles */
-.pdf-preview-wrapper {
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 20px;
-  background: rgba(20, 20, 30, 0.8);
-  min-height: 500px;
-}
-
-.pdf-preview-full {
-  width: 100%;
-  height: 600px;
-  border: none;
-}
-
-/* Preview Info Grid */
-.preview-info-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.info-item {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 12px;
-  border-radius: 8px;
-  text-align: center;
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.info-item:hover {
-  transform: translateY(-3px);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.info-label {
-  display: block;
-  font-size: 0.85rem;
-  color: #aaa;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.info-value {
-  display: block;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #fff;
+  -webkit-text-fill-color: transparent; 
+  color: transparent;
+  font-weight: bold;
+  animation: fadeUp 1s ease-in-out forwards;
 }
 
 /* Paragraph */
 .resume-description {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: #ccc;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   max-width: 600px;
   animation: fadeUp 1.2s ease-in-out forwards;
 }
@@ -153,7 +41,6 @@
   justify-content: center;
   animation: fadeUp 1.4s ease-in-out forwards;
   width: 100%;
-  margin-bottom: 30px;
 }
 
 /* Download button container for tooltip */
@@ -388,119 +275,95 @@
   animation: fadeUp 0.8s ease forwards;
 }
 
-/* ===================== UPDATE INFO BOX - BOTTOM ===================== */
-.resume-update-info {
-  background: rgba(30, 30, 47, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
+/* Heading + Lottie */
+.resume-title-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.resume-title-container .lottie-icon {
+  width: 150px;
+  height: 200px;
+  margin-bottom: -5%;
+}
+
+/* ===================== LATEST UPDATE FOOTER - SABSE NICHE ===================== */
+.latest-update-footer {
+  margin-top: 40px;
   padding: 15px 30px;
-  margin-top: 30px;
+  background: linear-gradient(90deg, rgba(255, 0, 204, 0.1), rgba(51, 51, 255, 0.1));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  box-shadow: 
+    0 5px 20px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  animation: fadeUp 1.6s ease forwards, floatFooter 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.latest-update-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+}
+
+.update-text {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-  animation: fadeUp 1.6s ease forwards;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-.update-badge,
-.update-date {
-  display: flex;
-  align-items: center;
   gap: 10px;
-  padding: 8px 20px;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 0.95rem;
+  position: relative;
+  z-index: 2;
 }
 
-.update-badge {
-  background: rgba(255, 0, 204, 0.15);
-  color: #ff66cc;
-  border: 1px solid rgba(255, 0, 204, 0.3);
+.update-text::before {
+  content: "🚀";
+  font-size: 1.2rem;
+  animation: rocketFloat 2s ease-in-out infinite;
 }
 
-.update-date {
-  background: rgba(51, 51, 255, 0.15);
-  color: #6666ff;
-  border: 1px solid rgba(51, 51, 255, 0.3);
-}
-
-.update-icon {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-}
-
-.update-badge .update-icon {
-  animation: spinSlow 4s linear infinite;
-}
-
-@keyframes spinSlow {
-  0% {
-    transform: rotate(0deg);
+@keyframes floatFooter {
+  0%, 100% {
+    transform: translateY(0);
   }
-  100% {
-    transform: rotate(360deg);
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes rocketFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(-5deg);
+  }
+  75% {
+    transform: translateY(3px) rotate(5deg);
   }
 }
 
 /* Responsive adjustments */
-@media screen and (max-width: 1000px) {
-  .resume-preview-container {
-    max-width: 95%;
-  }
-  
-  .pdf-preview-wrapper {
-    min-height: 450px;
-  }
-  
-  .pdf-preview-full {
-    height: 500px;
-  }
-}
-
 @media screen and (max-width: 768px) {
-  .resume-preview-container {
-    padding: 15px;
-    margin-bottom: 25px;
+  .resume-title {
+    font-size: 2.3rem;
   }
-  
-  .preview-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-  
-  .preview-lottie {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .preview-title {
-    text-align: center;
-  }
-  
-  .preview-title h3 {
-    font-size: 1.8rem;
-  }
-  
-  .pdf-preview-wrapper {
-    min-height: 400px;
-  }
-  
-  .pdf-preview-full {
-    height: 450px;
-  }
-  
-  .preview-info-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
+
   .resume-description {
-    font-size: 1.1rem;
+    font-size: 1rem;
     padding: 0 1rem;
   }
 
@@ -518,36 +381,25 @@
     margin: 0 auto;
   }
 
-  .resume-update-info {
-    padding: 12px 20px;
-    gap: 15px;
-    margin-top: 20px;
+  .latest-update-footer {
+    margin-top: 30px;
+    padding: 12px 25px;
   }
   
-  .update-badge,
-  .update-date {
-    font-size: 0.85rem;
-    padding: 6px 15px;
+  .update-text {
+    font-size: 0.9rem;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .resume-section {
-    padding: 3rem 1.5rem;
+  .resume-title {
+    font-size: 2rem;
+    margin-top: 17%;
   }
 
-  .preview-lottie {
-    width: 80px;
-    height: 80px;
-  }
-  
-  .preview-title h3 {
-    font-size: 1.5rem;
-  }
-  
-  .preview-tag {
-    font-size: 0.9rem;
-    padding: 6px 15px;
+  .resume-title-container .lottie-icon {
+    width: 100px;
+    height: 100px;
   }
 
   .resume-buttons {
@@ -562,25 +414,19 @@
     margin: 0 auto;
   }
 
-  .pdf-preview-wrapper {
-    min-height: 350px;
-  }
-  
-  .pdf-preview-full {
-    height: 400px;
-  }
-
-  .resume-update-info {
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
+  .latest-update-footer {
     margin-top: 25px;
+    padding: 10px 20px;
   }
   
-  .update-badge,
-  .update-date {
-    width: 100%;
-    justify-content: center;
+  .update-text {
+    font-size: 0.85rem;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .update-text::before {
+    font-size: 1rem;
   }
 }
 
@@ -604,122 +450,7 @@
     bottom: calc(100% + 8px);
   }
   
-  .update-badge,
-  .update-date {
+  .update-text {
     font-size: 0.8rem;
-    padding: 5px 12px;
-  }
-}
-
-/* Mobile Preview Styles */
-.mobile-preview-container {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-}
-
-.mobile-preview-placeholder {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  background: rgba(30, 30, 47, 0.8);
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px dashed rgba(255, 255, 255, 0.2);
-}
-
-.mobile-preview-placeholder:hover {
-  border-color: rgba(255, 0, 204, 0.4);
-  background: rgba(40, 40, 60, 0.9);
-}
-
-.mobile-preview-icon {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, #ff00cc, #3333ff);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.mobile-preview-icon svg {
-  width: 40px;
-  height: 40px;
-  color: white;
-}
-
-.mobile-preview-text {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.mobile-preview-text h4 {
-  font-size: 1.3rem;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-.mobile-preview-text p {
-  color: #aaa;
-  font-size: 0.9rem;
-}
-
-.mobile-preview-cta {
-  background: rgba(51, 51, 255, 0.2);
-  color: #6666ff;
-  padding: 10px 25px;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 1rem;
-  border: 1px solid rgba(51, 51, 255, 0.4);
-  transition: all 0.3s ease;
-}
-
-.mobile-preview-placeholder:hover .mobile-preview-cta {
-  background: rgba(51, 51, 255, 0.3);
-  transform: translateX(5px);
-}
-
-/* Fallback for unsupported browsers */
-.fallback-preview {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  text-align: center;
-}
-
-.fallback-preview svg {
-  width: 80px;
-  height: 80px;
-  color: #6666ff;
-  margin-bottom: 20px;
-  opacity: 0.5;
-}
-
-.fallback-preview p {
-  color: #aaa;
-  margin-bottom: 10px;
-}
-
-/* Mobile responsive adjustments */
-@media screen and (max-width: 768px) {
-  .pdf-preview-wrapper {
-    min-height: 400px;
-  }
-  
-  .pdf-preview-full {
-    height: 500px;
   }
 }
