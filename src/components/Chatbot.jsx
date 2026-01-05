@@ -35,8 +35,8 @@ function Chatbot() {
     skills: {
       frontend: ["React", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap"],
       backend: ["Node.js", "Express.js", "PHP", "Java", "Python"],
-      database: ["MySQL", "SQLite", "Firebase"],
-      tools: ["Git", "VS Code", "Docker", "AWS Basics", "Postman", "Figma"],
+      database: ["MySQL", "SQLite", "Oracle"],
+      tools: ["Git", "VS Code", "AWS Basics", "Postman", "Figma"],
       soft: ["Problem Solving", "Communication", "Teamwork", "Adaptability"]
     },
     projects: [
@@ -70,12 +70,12 @@ function Chatbot() {
       {
         role: "Web Development Intern",
         company: "Edureka",
-        duration: "3 months"
+        // duration: "3 months"
       },
       {
         role: "Software Engineer Intern",
         company: "HackerRank",
-        duration: "2 months"
+        // duration: "2 months"
       }
     ],
     education: {
@@ -98,7 +98,7 @@ function Chatbot() {
 
   // Abusive words detection
   const abusiveWords = [
-    'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'pussy', 
+    'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 
     'ass', 'bhenchod', 'madarchod', 'chutiya', 'gandu', 'lawde', 'lund',
     'motherfucker', 'fucker', 'bullshit', 'damn', 'hell', 'idiot', 'stupid',
     'retard', 'moron', 'dumb', 'fat', 'ugly', 'loser', 'wtf', 'omg'
