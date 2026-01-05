@@ -35,14 +35,14 @@ function Chatbot() {
     skills: {
       frontend: ["React", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap"],
       backend: ["Node.js", "Express.js", "PHP", "Java", "Python"],
-      database: ["MySQL", "MongoDB", "SQLite", "Firebase"],
+      database: ["MySQL", "SQLite", "Firebase"],
       tools: ["Git", "VS Code", "Docker", "AWS Basics", "Postman", "Figma"],
       soft: ["Problem Solving", "Communication", "Teamwork", "Adaptability"]
     },
     projects: [
       {
         name: "Real Estate Webapp",
-        tech: ["React", "Node.js", "MongoDB"],
+        tech: ["React", "Node.js", "MySQL"],
         description: "Full-stack property listing platform"
       },
       {
@@ -378,8 +378,8 @@ function Chatbot() {
     }
     
     // Handle specific technology queries
-    if (/(react|javascript|node|python|java|php|html|css|sql|mongodb|mysql|tailwind|express)/.test(msg)) {
-      const tech = msg.match(/(react|javascript|node|python|java|php|html|css|sql|mongodb|mysql|tailwind|express)/i)?.[0] || 'these technologies';
+    if (/(react|javascript|node|python|java|php|html|css|sql|mysql|tailwind|express)/.test(msg)) {
+      const tech = msg.match(/(react|javascript|node|python|java|php|html|css|sql|mysql|tailwind|express)/i)?.[0] || 'these technologies';
       const techUpper = tech.charAt(0).toUpperCase() + tech.slice(1);
       
       // Check if this tech is in skills
@@ -390,7 +390,7 @@ function Chatbot() {
       ];
       
       if (allSkills.map(s => s.toLowerCase()).includes(tech)) {
-        return `**${techUpper} Experience:** ✅\nAyush has hands-on experience with ${techUpper} in multiple projects. For example:\n• Real Estate Webapp uses ${tech === 'react' || tech === 'node' || tech === 'mongodb' ? techUpper : 'relevant technologies'}\n• Has certifications involving ${techUpper}\n• Regular practice with ${techUpper} development`;
+        return `**${techUpper} Experience:** ✅\nAyush has hands-on experience with ${techUpper} in multiple projects. For example:\n• Real Estate Webapp uses ${tech === 'react' || tech === 'node' || tech === 'mysql' ? techUpper : 'relevant technologies'}\n• Has certifications involving ${techUpper}\n• Regular practice with ${techUpper} development`;
       }
     }
     
