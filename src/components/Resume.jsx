@@ -62,7 +62,7 @@ const Resume = () => {
 
       {/* NEW: Latest Update Info - SABSE NICHE */}
       <div className="latest-update-footer animate-fade-up">
-        <span className="update-text">Latest Updated resume as of December 2025</span>
+        <span className="update-text">Latest Updated resume as of May 2026</span>
       </div>
     </section>
   );
