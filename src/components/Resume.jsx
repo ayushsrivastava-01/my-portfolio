@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/Resume.css';
 import resumePDF from '../assets/Ayush_Srivastava_Resume.pdf'; 
 import Lottie from 'lottie-react';
 import paperAnimation from '../assets/resume.json'; 
 
 const Resume = () => {
+  const [yesterdayDate, setYesterdayDate] = useState('');
+
+  useEffect(() => {
+    const getYesterdayDate = () => {
+      const today = new Date();
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return yesterday.toLocaleDateString('en-US', options);
+    };
+    
+    setYesterdayDate(getYesterdayDate());
+  }, []);
+
   return (
     <section className="resume-section" id="resume">
       <div className="resume-title-container animate-fade-up">
@@ -60,9 +75,11 @@ const Resume = () => {
         </a>
       </div>
 
-      {/* NEW: Latest Update Info - SABSE NICHE */}
+      {/* Latest Update Info - Dynamic Date */}
       <div className="latest-update-footer animate-fade-up">
-        <span className="update-text">Latest Updated resume as of May 2026</span>
+        <span className="update-text">
+          Latest Updated resume as of {yesterdayDate}
+        </span>
       </div>
     </section>
   );

@@ -84,7 +84,7 @@
   visibility: visible;
 }
 
-/* ✅ Force both buttons to have same size and layout */
+/* Force both buttons to have same size and layout */
 .download-button,
 .view-button {
   width: 260px;
