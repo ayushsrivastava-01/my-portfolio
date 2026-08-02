@@ -154,7 +154,7 @@ export const handler = async function(event, context) {
                 text-align: left;
               }
               
-              /* Social Icons Box - FULL WIDTH */
+              /* Social Icons Box - FULL WIDTH NO VACANT SPACE */
               .social-box {
                 background: rgba(255,255,255,0.02);
                 border: 1px solid rgba(255,255,255,0.04);
@@ -167,15 +167,18 @@ export const handler = async function(event, context) {
               
               .social-links {
                 display: flex;
-                justify-content: flex-start;
-                gap: 12px;
-                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 8px;
+                flex-wrap: nowrap;
+                width: 100%;
               }
+              
               .social-btn {
                 display: inline-flex;
                 align-items: center;
+                justify-content: center;
                 gap: 6px;
-                padding: 6px 14px;
+                padding: 8px 0;
                 border-radius: 100px;
                 background: rgba(255,255,255,0.03);
                 border: 1px solid rgba(255,255,255,0.06);
@@ -185,6 +188,10 @@ export const handler = async function(event, context) {
                 font-weight: 500;
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 cursor: pointer;
+                flex: 1;
+                min-width: 0;
+                justify-content: center;
+                white-space: nowrap;
               }
               .social-btn .icon {
                 width: 16px;
@@ -248,12 +255,12 @@ export const handler = async function(event, context) {
                 .header-center h1 { font-size: 20px; }
                 .social-box { padding: 8px 10px; }
                 .social-btn {
-                  padding: 5px 10px;
+                  padding: 6px 0;
                   font-size: 11px;
                 }
                 .social-btn .icon { width: 14px; height: 14px; }
                 .social-btn .text { font-size: 11px; }
-                .social-links { gap: 8px; }
+                .social-links { gap: 6px; }
               }
             </style>
           </head>
