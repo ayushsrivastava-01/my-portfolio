@@ -33,7 +33,7 @@ export const handler = async function(event, context) {
             name: name
           }
         ],
-        subject: `Re: Your message to Ayush Srivastava`,
+        subject: `Thanks for reaching out, ${name}`,
         htmlContent: `
           <!DOCTYPE html>
           <html>
@@ -46,8 +46,8 @@ export const handler = async function(event, context) {
               * { margin: 0; padding: 0; box-sizing: border-box; }
               
               body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-                background: #f0f2f5;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+                background: #0a0a14;
                 padding: 40px 20px;
                 line-height: 1.6;
               }
@@ -56,41 +56,39 @@ export const handler = async function(event, context) {
               .container {
                 max-width: 560px;
                 margin: 0 auto;
-                background: #ffffff;
-                border-radius: 16px;
+                background: #12121f;
+                border-radius: 20px;
                 overflow: hidden;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
               }
               
               /* ── Header ── */
               .header {
-                background: linear-gradient(135deg, #1a1a2e, #16213e);
+                background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
                 padding: 32px 40px 28px;
                 text-align: center;
                 position: relative;
-              }
-              
-              .header::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 4px;
-                background: linear-gradient(90deg, #7c4dff, #ff6b6b, #7c4dff);
-                background-size: 200% 100%;
-                animation: shimmer 3s ease-in-out infinite;
-              }
-              
-              @keyframes shimmer {
-                0%, 100% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
+                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
               }
               
               .header-icon {
-                font-size: 42px;
-                margin-bottom: 6px;
-                display: block;
+                display: inline-block;
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, rgba(124,77,255,0.15), rgba(124,77,255,0.05));
+                border: 2px solid rgba(124,77,255,0.15);
+                padding: 12px;
+                margin-bottom: 12px;
+                overflow: hidden;
+              }
+              
+              .header-icon img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
               }
               
               .header h1 {
@@ -101,10 +99,26 @@ export const handler = async function(event, context) {
               }
               
               .header p {
-                color: rgba(255, 255, 255, 0.6);
+                color: rgba(255, 255, 255, 0.4);
                 font-size: 14px;
                 font-weight: 400;
                 margin-top: 4px;
+              }
+              
+              .header-glow {
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #7c4dff, #ff6b6b, #7c4dff, transparent);
+                background-size: 200% 100%;
+                animation: glowMove 4s ease-in-out infinite;
+              }
+              
+              @keyframes glowMove {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
               }
               
               /* ── Body ── */
@@ -115,30 +129,33 @@ export const handler = async function(event, context) {
               .greeting {
                 font-size: 17px;
                 font-weight: 600;
-                color: #1a1a2e;
+                color: #e8e8f0;
                 margin-bottom: 12px;
               }
               
               .greeting span {
-                color: #7c4dff;
+                background: linear-gradient(135deg, #9b7ff4, #ff6b7a);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
               }
               
               .text {
-                color: #4a4a6a;
+                color: #8a8aaa;
                 font-size: 15px;
                 line-height: 1.8;
                 margin-bottom: 10px;
               }
               
               .text strong {
-                color: #1a1a2e;
+                color: #e8e8f0;
                 font-weight: 600;
               }
               
               /* ── Message Box ── */
               .message-box {
-                background: #f8f7ff;
-                border: 1px solid #e8e6ff;
+                background: rgba(124, 77, 255, 0.04);
+                border: 1px solid rgba(124, 77, 255, 0.08);
                 border-radius: 12px;
                 padding: 16px 20px;
                 margin: 16px 0 20px;
@@ -148,16 +165,27 @@ export const handler = async function(event, context) {
               .message-box::before {
                 content: '"';
                 position: absolute;
-                top: 4px;
+                top: 0px;
                 left: 12px;
                 font-size: 32px;
-                color: #d5cfff;
+                color: rgba(124, 77, 255, 0.15);
                 font-family: Georgia, serif;
                 line-height: 1;
               }
               
+              .message-label {
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: #7c4dff;
+                font-weight: 600;
+                margin-bottom: 6px;
+                display: block;
+                padding-left: 4px;
+              }
+              
               .message-box p {
-                color: #2a2a4a;
+                color: #c8c8e0;
                 font-style: italic;
                 font-size: 14px;
                 line-height: 1.7;
@@ -167,8 +195,8 @@ export const handler = async function(event, context) {
               
               /* ── Timeline Box ── */
               .timeline {
-                background: #f8faff;
-                border: 1px solid #e8edff;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(255, 255, 255, 0.04);
                 border-radius: 12px;
                 padding: 16px 20px;
                 margin: 16px 0 20px;
@@ -187,27 +215,28 @@ export const handler = async function(event, context) {
               }
               
               .timeline-content .label {
-                font-size: 11px;
+                font-size: 10px;
                 text-transform: uppercase;
-                letter-spacing: 1px;
-                color: #8888bb;
+                letter-spacing: 1.5px;
+                color: #55556a;
                 font-weight: 600;
               }
               
               .timeline-content .value {
                 font-size: 14px;
-                color: #1a1a2e;
-                font-weight: 500;
+                color: #c8c8e0;
+                font-weight: 400;
               }
               
               .timeline-content .value strong {
-                color: #7c4dff;
+                color: #3ecf8e;
+                font-weight: 600;
               }
               
               /* ── Divider ── */
               .divider {
                 height: 1px;
-                background: #eef0f5;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
                 margin: 20px 0;
               }
               
@@ -217,9 +246,11 @@ export const handler = async function(event, context) {
               }
               
               .social-label {
-                font-size: 13px;
-                color: #8888aa;
+                font-size: 12px;
+                color: #55556a;
                 font-weight: 500;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
                 display: block;
                 margin-bottom: 12px;
               }
@@ -236,44 +267,55 @@ export const handler = async function(event, context) {
                 gap: 6px;
                 padding: 8px 18px;
                 border-radius: 100px;
-                background: #f5f5ff;
-                border: 1px solid #e8e6ff;
-                color: #4a4a6a;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                color: #8a8aaa;
                 text-decoration: none;
                 font-size: 13px;
                 font-weight: 500;
-                transition: all 0.25s ease;
+                transition: all 0.3s ease;
               }
               
               .social-link:hover {
-                background: #7c4dff;
-                border-color: #7c4dff;
+                background: rgba(124, 77, 255, 0.1);
+                border-color: rgba(124, 77, 255, 0.2);
                 color: #ffffff;
                 transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(124, 77, 255, 0.25);
               }
               
-              .social-link.insta:hover { background: #E4405F; border-color: #E4405F; }
-              .social-link.linkedin:hover { background: #0A66C2; border-color: #0A66C2; }
-              .social-link.github:hover { background: #1a1a2e; border-color: #1a1a2e; }
+              .social-link.insta:hover { 
+                background: rgba(228, 64, 95, 0.12); 
+                border-color: #E4405F; 
+                color: #E4405F; 
+              }
+              .social-link.linkedin:hover { 
+                background: rgba(10, 102, 194, 0.12); 
+                border-color: #0A66C2; 
+                color: #0A66C2; 
+              }
+              .social-link.github:hover { 
+                background: rgba(255, 255, 255, 0.06); 
+                border-color: rgba(255, 255, 255, 0.2); 
+                color: #ffffff; 
+              }
               
               /* ── Footer ── */
               .footer {
-                background: #fafafe;
+                background: rgba(255, 255, 255, 0.01);
                 padding: 24px 40px 28px;
                 text-align: center;
-                border-top: 1px solid #eef0f5;
+                border-top: 1px solid rgba(255, 255, 255, 0.04);
               }
               
               .footer-name {
                 font-size: 17px;
                 font-weight: 700;
-                color: #1a1a2e;
+                color: #e8e8f0;
               }
               
               .footer-title {
                 font-size: 13px;
-                color: #8888aa;
+                color: #55556a;
                 margin-top: 2px;
               }
               
@@ -287,12 +329,12 @@ export const handler = async function(event, context) {
               
               .footer-email {
                 font-size: 13px;
-                color: #8888aa;
+                color: #55556a;
                 margin-top: 4px;
               }
               
               .footer-email a {
-                color: #7c4dff;
+                color: #9b7ff4;
                 text-decoration: none;
                 font-weight: 500;
               }
@@ -301,10 +343,35 @@ export const handler = async function(event, context) {
                 text-decoration: underline;
               }
               
+              /* ── Badge ── */
+              .badge {
+                display: inline-block;
+                background: rgba(62, 207, 142, 0.08);
+                border: 1px solid rgba(62, 207, 142, 0.12);
+                border-radius: 100px;
+                padding: 4px 14px;
+                font-size: 12px;
+                color: #3ecf8e;
+                font-weight: 500;
+                margin-top: 12px;
+              }
+              
+              .badge::before {
+                content: '●';
+                margin-right: 6px;
+                animation: pulse 2s ease-in-out infinite;
+              }
+              
+              @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.3; }
+              }
+              
               /* ── Responsive ── */
               @media (max-width: 480px) {
                 .header { padding: 24px 20px 20px; }
                 .header h1 { font-size: 20px; }
+                .header-icon { width: 52px; height: 52px; padding: 10px; }
                 .body { padding: 24px 20px 20px; }
                 .footer { padding: 20px; }
                 .social-link { padding: 6px 14px; font-size: 12px; }
@@ -316,9 +383,12 @@ export const handler = async function(event, context) {
             <div class="container">
               <!-- Header -->
               <div class="header">
-                <span class="header-icon">📬</span>
-                <h1>Message Received</h1>
+                <div class="header-icon">
+                  <img src="/icon.png" alt="Ayush Srivastava">
+                </div>
+                <h1>Thanks for Reaching Out</h1>
                 <p>I'll get back to you within 24 hours</p>
+                <div class="header-glow"></div>
               </div>
               
               <!-- Body -->
@@ -331,6 +401,7 @@ export const handler = async function(event, context) {
                 
                 <!-- Message Box -->
                 <div class="message-box">
+                  <span class="message-label">📝 Your Query</span>
                   <p>${message}</p>
                 </div>
                 
@@ -364,6 +435,7 @@ export const handler = async function(event, context) {
                 <div class="footer-email">
                   📧 <a href="mailto:srivastava999ayush@gmail.com">srivastava999ayush@gmail.com</a>
                 </div>
+                <div class="badge">✅ Response within 24 hours</div>
               </div>
             </div>
           </body>

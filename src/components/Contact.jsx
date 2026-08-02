@@ -219,13 +219,13 @@ const Contact = () => {
           <h3 className="get-in-touch">Get in touch</h3>
           <p className="touch-text">Discuss your project or opportunity</p>
 
-          <a href="mailto:ayushsrivastava1854@gmail.com" className="email-row">
+          <a href="mailto:srivastava999ayush@gmail.com" className="email-row">
             <div className="email-icon-wrap">
               <svg viewBox="0 0 24 24" className="email-svg">
                 <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
               </svg>
             </div>
-            <span className="email-text">ayushsrivastava1854@gmail.com</span>
+            <span className="email-text">srivastava999ayush@gmail.com</span>
           </a>
 
           <div className="info-divider"></div>
