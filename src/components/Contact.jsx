@@ -33,9 +33,6 @@ const Contact = () => {
     message: false
   });
 
-  // Character count state
-  const [charCount, setCharCount] = useState(0);
-
   useEffect(() => {
     setTimeout(() => setAnimate(true), 100);
   }, []);
@@ -78,11 +75,6 @@ const Contact = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Update character count for message
-    if (name === "message") {
-      setCharCount(value.length);
-    }
     
     let error = "";
     if (name === "name") error = validateName(value);
@@ -167,6 +159,7 @@ const Contact = () => {
       
       if (!emailResponse.ok) {
         console.error('Auto-reply email failed:', emailResult);
+        // Don't throw, just log - form submission was successful
       } else {
         console.log('Auto-reply email sent:', emailResult);
       }
@@ -176,7 +169,6 @@ const Contact = () => {
       setFormData({ name: "", email: "", message: "" });
       setErrors({ name: "", email: "", message: "" });
       setTouched({ name: false, email: false, message: false });
-      setCharCount(0);
       
       // Auto hide success message after 5 seconds
       setTimeout(() => setFormSubmitted(false), 5000);
@@ -246,19 +238,7 @@ const Contact = () => {
                 onMouseEnter={() => setHoveredSocial(social.name)}
                 onMouseLeave={() => setHoveredSocial(null)}
               >
-                <a 
-                  href={social.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="social-btn"
-                  style={{
-                    '--hover-color': social.color,
-                    color: hoveredSocial === social.name ? social.color : undefined,
-                    borderColor: hoveredSocial === social.name ? social.color : undefined,
-                    background: hoveredSocial === social.name ? `${social.color}15` : undefined,
-                    transform: hoveredSocial === social.name ? 'translateY(-5px) scale(1.1)' : undefined,
-                  }}
-                >
+                <a href={social.url} target="_blank" rel="noopener noreferrer" className="social-btn">
                   <social.icon />
                 </a>
                 {hoveredSocial === social.name && (
@@ -283,115 +263,96 @@ const Contact = () => {
           {formSubmitted ? (
             <div className="thank-you-message">
               <Lottie animationData={successAnimation} loop={false} style={{ height: 120, margin: "0 auto 1rem" }} />
-              <h4>🎉 Message Sent Successfully!</h4>
+              <h4>Message Sent Successfully</h4>
               <p>Thank you for reaching out. I will respond promptly.</p>
               <p className="success-note">✅ A confirmation email has been sent to your email address.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="contact-form">
+            <form onSubmit={handleSubmit}>
               <input type="hidden" name="form-name" value="contact" />
               <div style={{ display: "none" }}><input name="bot-field" /></div>
 
               <div className="form-row">
                 <div className="form-group">
                   <label className="field-label">Full Name</label>
-                  <div className="input-wrapper">
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={`field-input ${touched.name && errors.name ? "error-input" : ""} ${touched.name && !errors.name && formData.name ? "valid-input" : ""}`}
-                      placeholder="Enter your full name"
-                    />
-                    {touched.name && !errors.name && formData.name && (
-                      <span className="input-icon valid-icon">✓</span>
-                    )}
-                    {touched.name && errors.name && (
-                      <span className="input-icon error-icon">✗</span>
-                    )}
-                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`field-input ${touched.name && errors.name ? "error-input" : ""} ${touched.name && !errors.name && formData.name ? "valid-input" : ""}`}
+                    placeholder="Enter your full name"
+                  />
                   {touched.name && errors.name && (
                     <div className="error-message">{errors.name}</div>
+                  )}
+                  {!errors.name && formData.name && touched.name && (
+                    <div className="valid-message">✓</div>
                   )}
                 </div>
 
                 <div className="form-group">
                   <label className="field-label">Email Address</label>
-                  <div className="input-wrapper">
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      className={`field-input ${touched.email && errors.email ? "error-input" : ""} ${touched.email && !errors.email && formData.email ? "valid-input" : ""}`}
-                      placeholder="your@email.com"
-                    />
-                    {touched.email && !errors.email && formData.email && (
-                      <span className="input-icon valid-icon">✓</span>
-                    )}
-                    {touched.email && errors.email && (
-                      <span className="input-icon error-icon">✗</span>
-                    )}
-                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={`field-input ${touched.email && errors.email ? "error-input" : ""} ${touched.email && !errors.email && formData.email ? "valid-input" : ""}`}
+                    placeholder="your@email.com"
+                  />
                   {touched.email && errors.email && (
                     <div className="error-message">{errors.email}</div>
+                  )}
+                  {!errors.email && formData.email && touched.email && (
+                    <div className="valid-message">✓</div>
                   )}
                 </div>
               </div>
 
               <div className="form-group">
                 <label className="field-label">Message</label>
-                <div className="input-wrapper">
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className={`field-input field-textarea ${touched.message && errors.message ? "error-input" : ""} ${touched.message && !errors.message && formData.message ? "valid-input" : ""}`}
-                    rows={5}
-                    placeholder="Please describe your query or project in detail..."
-                  />
-                </div>
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={`field-input field-textarea ${touched.message && errors.message ? "error-input" : ""} ${touched.message && !errors.message && formData.message ? "valid-input" : ""}`}
+                  rows={5}
+                  placeholder="Please describe your query or project in detail..."
+                />
                 {touched.message && errors.message && (
                   <div className="error-message">{errors.message}</div>
+                )}
+                {!errors.message && formData.message && touched.message && (
+                  <div className="valid-message">✓</div>
                 )}
               </div>
 
               <div className="form-footer">
                 <div className="char-counter">
-                  <span className={`char-count ${charCount > 900 ? "char-warn" : ""} ${charCount > 1000 ? "char-error" : ""}`}>
-                    {charCount} / 1000 characters
+                  <span className={`char-count ${formData.message.length > 900 ? "char-warn" : ""} ${formData.message.length > 1000 ? "char-error" : ""}`}>
+                    {formData.message.length} / 1000 characters
                   </span>
-                  {charCount > 900 && charCount <= 1000 && (
-                    <span className="char-warning-text">⚠ Approaching limit</span>
+                  {formData.message.length > 900 && formData.message.length <= 1000 && (
+                    <span className="char-warning-text">⚠ Approaching character limit</span>
                   )}
-                  {charCount > 1000 && (
-                    <span className="char-error-text">✗ Limit exceeded</span>
-                  )}
-                  {charCount > 0 && charCount <= 900 && (
-                    <span className="char-good-text">✓ Good</span>
+                  {formData.message.length > 1000 && (
+                    <span className="char-error-text">✗ Character limit exceeded</span>
                   )}
                 </div>
               </div>
 
-              <button 
-                type="submit" 
-                className={`submit-btn ${loading ? "loading" : ""}`} 
-                disabled={loading}
-              >
+              <button type="submit" className={`submit-btn ${loading ? "loading" : ""}`} disabled={loading}>
                 {loading ? (
                   <>
                     <span className="spinner"></span>
-                    Sending...
+                    Processing...
                   </>
                 ) : (
-                  <>
-                    <span className="btn-icon">✉️</span>
-                    Send Message
-                  </>
+                  "Submit Message"
                 )}
               </button>
             </form>
