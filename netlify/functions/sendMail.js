@@ -13,7 +13,6 @@ export const handler = async function(event, context) {
     const formData = JSON.parse(event.body);
     const { name, email, message } = formData;
 
-    // 📧 1️⃣ User ko auto-reply email
     const userEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -57,10 +56,10 @@ export const handler = async function(event, context) {
               }
               h1 {
                 color: #ffffff;
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 700;
-                letter-spacing: -0.3px;
-                margin-bottom: 6px;
+                letter-spacing: -0.5px;
+                margin-bottom: 4px;
               }
               .sub {
                 color: rgba(255,255,255,0.3);
@@ -80,7 +79,7 @@ export const handler = async function(event, context) {
                 color: #8a8aaa;
                 font-size: 15px;
                 line-height: 1.8;
-                margin-bottom: 12px;
+                margin-bottom: 8px;
               }
               .text strong {
                 color: #e8e8f0;
@@ -92,27 +91,65 @@ export const handler = async function(event, context) {
                 margin: 16px 0 20px;
                 border-radius: 0 8px 8px 0;
               }
+              .message-label {
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: #7c4dff;
+                font-weight: 600;
+                display: block;
+                margin-bottom: 4px;
+              }
               .message-box p {
                 color: #c8c8e0;
                 font-size: 14px;
                 line-height: 1.6;
                 margin: 0;
               }
+              .timeline {
+                background: rgba(255,255,255,0.02);
+                border: 1px solid rgba(255,255,255,0.04);
+                border-radius: 10px;
+                padding: 14px 18px;
+                margin: 16px 0 20px;
+              }
+              .timeline-label {
+                font-size: 10px;
+                text-transform: uppercase;
+                letter-spacing: 1.5px;
+                color: #55556a;
+                font-weight: 600;
+              }
+              .timeline-value {
+                color: #c8c8e0;
+                font-size: 14px;
+                margin-top: 2px;
+              }
+              .timeline-value strong {
+                color: #3ecf8e;
+              }
               .divider {
                 height: 1px;
                 background: rgba(255,255,255,0.04);
                 margin: 20px 0;
               }
+              .social-label {
+                color: #55556a;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                display: block;
+                margin-bottom: 10px;
+              }
               .social-links {
                 display: flex;
-                gap: 16px;
+                gap: 20px;
                 flex-wrap: wrap;
-                margin: 4px 0 6px;
               }
               .social-links a {
                 color: #8a8aaa;
                 text-decoration: none;
-                font-size: 13px;
+                font-size: 14px;
                 transition: color 0.2s;
               }
               .social-links a:hover {
@@ -122,10 +159,11 @@ export const handler = async function(event, context) {
                 margin-top: 24px;
                 padding-top: 20px;
                 border-top: 1px solid rgba(255,255,255,0.04);
+                text-align: center;
               }
               .footer-name {
                 color: #e8e8f0;
-                font-size: 16px;
+                font-size: 17px;
                 font-weight: 600;
               }
               .footer-title {
@@ -136,7 +174,7 @@ export const handler = async function(event, context) {
               .footer-regards {
                 color: #8a8aaa;
                 font-size: 14px;
-                margin-top: 12px;
+                margin-top: 10px;
               }
               .footer-email {
                 color: #55556a;
@@ -175,12 +213,18 @@ export const handler = async function(event, context) {
               </p>
               
               <div class="message-box">
+                <span class="message-label">Your Message</span>
                 <p>${message}</p>
+              </div>
+              
+              <div class="timeline">
+                <div class="timeline-label">Next Steps</div>
+                <div class="timeline-value">I'll review your message and reply within <strong>24 hours</strong></div>
               </div>
               
               <div class="divider"></div>
               
-              <div style="color: #55556a; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Connect with me</div>
+              <span class="social-label">Connect with me</span>
               <div class="social-links">
                 <a href="https://www.instagram.com/ayushsrivastava_01">Instagram</a>
                 <a href="https://www.linkedin.com/in/ayush-srivastava01">LinkedIn</a>
@@ -207,7 +251,6 @@ export const handler = async function(event, context) {
       })
     });
 
-    // 📧 2️⃣ Tujhe notification
     const adminEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
