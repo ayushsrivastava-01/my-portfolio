@@ -166,32 +166,32 @@ export const handler = async function(event, context) {
               .social-links {
                 display: flex;
                 justify-content: flex-start;
-                gap: 16px;
+                gap: 12px;
                 flex-wrap: wrap;
               }
               .social-btn {
                 display: inline-flex;
                 align-items: center;
-                gap: 8px;
-                padding: 8px 18px;
+                gap: 6px;
+                padding: 6px 14px;
                 border-radius: 100px;
                 background: rgba(255,255,255,0.03);
                 border: 1px solid rgba(255,255,255,0.06);
                 color: #8a8aaa;
                 text-decoration: none;
-                font-size: 13px;
+                font-size: 12px;
                 font-weight: 500;
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 cursor: pointer;
               }
               .social-btn .icon {
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
                 flex-shrink: 0;
                 transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
               }
               .social-btn .text {
-                font-size: 13px;
+                font-size: 12px;
                 transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
               }
               .social-btn:hover {
@@ -219,6 +219,12 @@ export const handler = async function(event, context) {
                 color: #12121f;
                 box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
               }
+              .social-btn.threads:hover {
+                background: #000000;
+                border-color: #000000;
+                color: #ffffff;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+              }
               .footer {
                 margin-top: 28px;
                 padding-top: 20px;
@@ -238,14 +244,14 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 .header-center h1 { font-size: 20px; }
-                .social-box { padding: 8px 12px; }
+                .social-box { padding: 8px 10px; }
                 .social-btn {
-                  padding: 6px 14px;
-                  font-size: 12px;
+                  padding: 5px 10px;
+                  font-size: 11px;
                 }
-                .social-btn .icon { width: 16px; height: 16px; }
-                .social-btn .text { font-size: 12px; }
-                .social-links { gap: 10px; }
+                .social-btn .icon { width: 14px; height: 14px; }
+                .social-btn .text { font-size: 11px; }
+                .social-links { gap: 8px; }
               }
             </style>
           </head>
@@ -296,6 +302,12 @@ export const handler = async function(event, context) {
                       <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.577C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
                     </svg>
                     <span class="text">GitHub</span>
+                  </a>
+                  <a href="https://www.threads.net/@ayushsrivastava_01" class="social-btn threads">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/>
+                    </svg>
+                    <span class="text">Threads</span>
                   </a>
                 </div>
               </div>
