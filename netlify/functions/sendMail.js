@@ -67,6 +67,11 @@ export const handler = async function(event, context) {
                 font-weight: 700;
                 letter-spacing: -0.5px;
               }
+              .header-center .sub {
+                color: rgba(255,255,255,0.3);
+                font-size: 14px;
+                margin-top: 4px;
+              }
               .greeting {
                 color: #e8e8f0;
                 font-size: 16px;
@@ -110,29 +115,35 @@ export const handler = async function(event, context) {
                 line-height: 1.6;
                 margin: 0;
               }
-              .timeline {
-                background: rgba(255,255,255,0.02);
-                border: 1px solid rgba(255,255,255,0.04);
-                border-radius: 10px;
+              
+              /* Next Steps - Same as Message Box */
+              .next-box {
+                background: rgba(62,207,142,0.04);
+                border-left: 3px solid #3ecf8e;
                 padding: 14px 18px;
                 margin: 16px 0 22px;
+                border-radius: 0 8px 8px 0;
                 text-align: left;
               }
-              .timeline-label {
-                font-size: 10px;
+              .next-label {
+                font-size: 11px;
                 text-transform: uppercase;
-                letter-spacing: 1.5px;
-                color: #55556a;
+                letter-spacing: 2px;
+                color: #3ecf8e;
                 font-weight: 600;
+                display: block;
+                margin-bottom: 4px;
               }
-              .timeline-value {
+              .next-box p {
                 color: #c8c8e0;
                 font-size: 14px;
-                margin-top: 2px;
+                line-height: 1.6;
+                margin: 0;
               }
-              .timeline-value strong {
+              .next-box p strong {
                 color: #3ecf8e;
               }
+              
               .divider {
                 height: 1px;
                 background: rgba(255,255,255,0.04);
@@ -148,7 +159,7 @@ export const handler = async function(event, context) {
               .social-links {
                 display: flex;
                 justify-content: flex-start;
-                gap: 48px;
+                gap: 40px;
                 flex-wrap: wrap;
               }
               .social-links a {
@@ -159,6 +170,9 @@ export const handler = async function(event, context) {
                 padding: 6px 0;
                 transition: all 0.3s ease;
                 position: relative;
+                display: flex;
+                align-items: center;
+                gap: 6px;
               }
               .social-links a::after {
                 content: '';
@@ -175,6 +189,9 @@ export const handler = async function(event, context) {
               }
               .social-links a:hover::after {
                 width: 100%;
+              }
+              .social-links a .emoji {
+                font-size: 18px;
               }
               .social-links a.insta:hover { color: #E4405F; }
               .social-links a.insta:hover::after { background: #E4405F; }
@@ -202,16 +219,17 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 .header-center h1 { font-size: 20px; }
-                .social-links { gap: 24px; }
+                .social-links { gap: 20px; }
                 .social-links a { font-size: 13px; }
               }
             </style>
           </head>
           <body>
             <div class="container">
-              <!-- CENTER HEADING -->
+              <!-- CENTER HEADING - Changed -->
               <div class="header-center">
-                <h1>Thanks for Reaching Out</h1>
+                <h1>Message Received ✉️</h1>
+                <div class="sub">I'll get back to you soon</div>
               </div>
               
               <!-- LEFT ALIGNED EVERYTHING ELSE -->
@@ -226,18 +244,25 @@ export const handler = async function(event, context) {
                 <p>${message}</p>
               </div>
               
-              <div class="timeline">
-                <div class="timeline-label">Next Steps</div>
-                <div class="timeline-value">I'll review your message and reply within <strong>24 hours</strong></div>
+              <!-- Next Steps - Same UI as Message Box -->
+              <div class="next-box">
+                <span class="next-label">Next Steps</span>
+                <p>I'll review your message and reply within <strong>24 hours</strong></p>
               </div>
               
               <div class="divider"></div>
               
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               <div class="social-links">
-                <a href="https://www.instagram.com/ayushsrivastava_01" class="insta">Instagram</a>
-                <a href="https://www.linkedin.com/in/ayush-srivastava01" class="linkedin">LinkedIn</a>
-                <a href="https://github.com/ayushsrivastava-01" class="github">GitHub</a>
+                <a href="https://www.instagram.com/ayushsrivastava_01" class="insta">
+                  <span class="emoji">📸</span> Instagram
+                </a>
+                <a href="https://www.linkedin.com/in/ayush-srivastava01" class="linkedin">
+                  <span class="emoji">💼</span> LinkedIn
+                </a>
+                <a href="https://github.com/ayushsrivastava-01" class="github">
+                  <span class="emoji">🐙</span> GitHub
+                </a>
               </div>
               
               <div class="footer">
