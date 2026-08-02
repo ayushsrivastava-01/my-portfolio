@@ -16,6 +16,7 @@ export const handler = async function(event, context) {
     // Sirf first name extract karo
     const firstName = name.trim().split(' ')[0];
 
+    // 📧 1️⃣ User ko auto-reply email
     const userEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -115,8 +116,6 @@ export const handler = async function(event, context) {
                 line-height: 1.6;
                 margin: 0;
               }
-              
-              /* Next Steps - Same as Message Box */
               .next-box {
                 background: rgba(62,207,142,0.04);
                 border-left: 3px solid #3ecf8e;
@@ -143,7 +142,6 @@ export const handler = async function(event, context) {
               .next-box p strong {
                 color: #3ecf8e;
               }
-              
               .divider {
                 height: 1px;
                 background: rgba(255,255,255,0.04);
@@ -159,7 +157,7 @@ export const handler = async function(event, context) {
               .social-links {
                 display: flex;
                 justify-content: flex-start;
-                gap: 40px;
+                gap: 24px;
                 flex-wrap: wrap;
               }
               .social-links a {
@@ -167,39 +165,11 @@ export const handler = async function(event, context) {
                 text-decoration: none;
                 font-size: 14px;
                 font-weight: 500;
-                padding: 6px 0;
-                transition: all 0.3s ease;
-                position: relative;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-              }
-              .social-links a::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: #7c4dff;
-                transition: width 0.3s ease;
+                transition: color 0.3s ease;
               }
               .social-links a:hover {
-                color: #ffffff;
+                color: #9b7ff4;
               }
-              .social-links a:hover::after {
-                width: 100%;
-              }
-              .social-links a .emoji {
-                font-size: 18px;
-              }
-              .social-links a.insta:hover { color: #E4405F; }
-              .social-links a.insta:hover::after { background: #E4405F; }
-              .social-links a.linkedin:hover { color: #0A66C2; }
-              .social-links a.linkedin:hover::after { background: #0A66C2; }
-              .social-links a.github:hover { color: #ffffff; }
-              .social-links a.github:hover::after { background: #ffffff; }
-              
               .footer {
                 margin-top: 28px;
                 padding-top: 20px;
@@ -219,20 +189,16 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 .header-center h1 { font-size: 20px; }
-                .social-links { gap: 20px; }
-                .social-links a { font-size: 13px; }
               }
             </style>
           </head>
           <body>
             <div class="container">
-              <!-- CENTER HEADING - Changed -->
               <div class="header-center">
-                <h1>Message Received ✉️</h1>
-                <div class="sub">I'll get back to you soon</div>
+                <h1>~ Message Received ~</h1>
+                <div class="sub">I'll get back to you soon!</div>
               </div>
               
-              <!-- LEFT ALIGNED EVERYTHING ELSE -->
               <div class="greeting">Hi <span>${firstName}</span>,</div>
               
               <p class="text">
@@ -244,7 +210,6 @@ export const handler = async function(event, context) {
                 <p>${message}</p>
               </div>
               
-              <!-- Next Steps - Same UI as Message Box -->
               <div class="next-box">
                 <span class="next-label">Next Steps</span>
                 <p>I'll review your message and reply within <strong>24 hours</strong></p>
@@ -254,15 +219,9 @@ export const handler = async function(event, context) {
               
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               <div class="social-links">
-                <a href="https://www.instagram.com/ayushsrivastava_01" class="insta">
-                  <span class="emoji">📸</span> Instagram
-                </a>
-                <a href="https://www.linkedin.com/in/ayush-srivastava01" class="linkedin">
-                  <span class="emoji">💼</span> LinkedIn
-                </a>
-                <a href="https://github.com/ayushsrivastava-01" class="github">
-                  <span class="emoji">🐙</span> GitHub
-                </a>
+                <a href="https://www.instagram.com/ayushsrivastava_01">Instagram</a>
+                <a href="https://www.linkedin.com/in/ayush-srivastava01">LinkedIn</a>
+                <a href="https://github.com/ayushsrivastava-01">GitHub</a>
               </div>
               
               <div class="footer">
@@ -280,6 +239,7 @@ export const handler = async function(event, context) {
       })
     });
 
+    // 📧 2️⃣ Admin notification
     const adminEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -288,7 +248,7 @@ export const handler = async function(event, context) {
       },
       body: JSON.stringify({
         sender: {
-          name: 'Portfolio Contact Form',
+          name: 'Portfolio Form',
           email: 'srivastava999ayush@gmail.com'
         },
         to: [
@@ -297,7 +257,7 @@ export const handler = async function(event, context) {
             name: 'Ayush'
           }
         ],
-        subject: `New Portfolio Message from ${name}`,
+        subject: `🔔 New Portfolio Message from ${name}`,
         htmlContent: `
           <h2>New Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
@@ -331,7 +291,7 @@ export const handler = async function(event, context) {
     console.error('Function Error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ success: false, error: 'Internal server error' })
+      body: JSON.stringify({ success: false, error: error.message })
     };
   }
 };

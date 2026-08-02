@@ -12,21 +12,18 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState(null);
   
-  // Form state
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
   });
   
-  // Error state
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     message: ""
   });
   
-  // Touched state
   const [touched, setTouched] = useState({
     name: false,
     email: false,
@@ -37,7 +34,6 @@ const Contact = () => {
     setTimeout(() => setAnimate(true), 100);
   }, []);
 
-  // Validation functions
   const validateName = (name) => {
     if (!name) return "Full name is required";
     if (name.trim().length < 2) return "Name must contain at least 2 characters";
@@ -71,7 +67,6 @@ const Contact = () => {
     return "";
   };
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -84,7 +79,6 @@ const Contact = () => {
     setErrors(prev => ({ ...prev, [name]: error }));
   };
 
-  // Handle blur
   const handleBlur = (e) => {
     const { name } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
@@ -103,6 +97,7 @@ const Contact = () => {
       .join("&");
   };
 
+  // 🔥 FIXED: Auto-reply with Brevo
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -127,7 +122,8 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("/", {
+      // 1️⃣ Netlify Form submit
+      const formResponse = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({
@@ -138,18 +134,38 @@ const Contact = () => {
         }),
       });
 
-      if (response.ok) {
-        setFormSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
-        setErrors({ name: "", email: "", message: "" });
-        setTouched({ name: false, email: false, message: false });
-        setTimeout(() => setFormSubmitted(false), 5000);
-      } else {
-        alert("Submission failed. Please try again.");
+      if (!formResponse.ok) {
+        throw new Error('Form submission failed');
       }
+
+      // 2️⃣ Auto-reply email via Netlify Function
+      const emailResponse = await fetch("/.netlify/functions/sendMail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      const emailResult = await emailResponse.json();
+      
+      if (!emailResponse.ok) {
+        console.error('Auto-reply email failed:', emailResult);
+      } else {
+        console.log('Auto-reply email sent:', emailResult);
+      }
+
+      setFormSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+      setErrors({ name: "", email: "", message: "" });
+      setTouched({ name: false, email: false, message: false });
+      setTimeout(() => setFormSubmitted(false), 5000);
+
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("Network error. Please check your connection.");
+      alert("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -165,7 +181,6 @@ const Contact = () => {
 
   return (
     <div className="contact-section">
-      {/* Header */}
       <div className={`contact-header ${animate ? "show" : ""}`}>
         <div className="contact-label">
           <span className="label-dot"></span>
@@ -181,10 +196,7 @@ const Contact = () => {
         </p>
       </div>
 
-      {/* Grid */}
       <div className={`contact-container ${animate ? "show" : ""}`}>
-
-        {/* LEFT: Info Card */}
         <div className="contact-box info-box">
           <div className="lottie-icon-top">
             <Lottie animationData={emailAnimation} loop={true} />
@@ -193,13 +205,13 @@ const Contact = () => {
           <h3 className="get-in-touch">Get in touch</h3>
           <p className="touch-text">Discuss your project or opportunity</p>
 
-          <a href="mailto:ayushsrivastava1854@gmail.com" className="email-row">
+          <a href="mailto:srivastava999ayush@gmail.com" className="email-row">
             <div className="email-icon-wrap">
               <svg viewBox="0 0 24 24" className="email-svg">
                 <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
               </svg>
             </div>
-            <span className="email-text">ayushsrivastava1854@gmail.com</span>
+            <span className="email-text">srivastava999ayush@gmail.com</span>
           </a>
 
           <div className="info-divider"></div>
@@ -230,7 +242,6 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* RIGHT: Form Card */}
         <div className="contact-box form-box">
           <h3 className="form-title">Send a Message</h3>
 
