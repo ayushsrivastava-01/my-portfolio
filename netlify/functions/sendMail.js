@@ -51,8 +51,8 @@ export const handler = async function(event, context) {
                 background: #12121f;
                 border-radius: 16px;
                 padding: 40px 45px;
-                border: 1px solid rgba(255,255,255,0.06);
-                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                border: 2px solid rgba(124, 77, 255, 0.15);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(124, 77, 255, 0.03);
                 text-align: center;
               }
               h1 {
@@ -137,7 +137,7 @@ export const handler = async function(event, context) {
                 color: #8a8aaa;
                 font-size: 14px;
                 display: block;
-                margin-bottom: 12px;
+                margin-bottom: 14px;
                 font-weight: 400;
               }
               .social-label em {
@@ -147,24 +147,46 @@ export const handler = async function(event, context) {
               .social-links {
                 display: flex;
                 justify-content: center;
-                gap: 28px;
+                gap: 32px;
                 flex-wrap: wrap;
               }
               .social-links a {
                 color: #8a8aaa;
                 text-decoration: none;
                 font-size: 14px;
-                transition: color 0.2s;
-                padding: 4px 0;
+                font-weight: 500;
+                padding: 6px 0;
+                transition: all 0.3s ease;
+                position: relative;
+              }
+              .social-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #7c4dff;
+                transition: width 0.3s ease;
               }
               .social-links a:hover {
-                color: #9b7ff4;
+                color: #ffffff;
               }
+              .social-links a:hover::after {
+                width: 100%;
+              }
+              .social-links a.insta:hover { color: #E4405F; }
+              .social-links a.insta:hover::after { background: #E4405F; }
+              .social-links a.linkedin:hover { color: #0A66C2; }
+              .social-links a.linkedin:hover::after { background: #0A66C2; }
+              .social-links a.github:hover { color: #ffffff; }
+              .social-links a.github:hover::after { background: #ffffff; }
+              
               .footer {
-                margin-top: 24px;
+                margin-top: 28px;
                 padding-top: 20px;
-                border-top: 1px solid rgba(255,255,255,0.04);
-                text-align: center;
+                border-top: 2px solid rgba(124, 77, 255, 0.08);
+                text-align: left;
               }
               .footer-regards {
                 color: #8a8aaa;
@@ -176,20 +198,10 @@ export const handler = async function(event, context) {
                 font-size: 17px;
                 font-weight: 600;
               }
-              .badge {
-                display: inline-block;
-                background: rgba(62,207,142,0.06);
-                border: 1px solid rgba(62,207,142,0.08);
-                border-radius: 100px;
-                padding: 4px 14px;
-                font-size: 12px;
-                color: #3ecf8e;
-                margin-top: 12px;
-              }
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 h1 { font-size: 20px; }
-                .social-links { gap: 16px; }
+                .social-links { gap: 18px; }
                 .social-links a { font-size: 13px; }
               }
             </style>
@@ -218,15 +230,14 @@ export const handler = async function(event, context) {
               
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               <div class="social-links">
-                <a href="https://www.instagram.com/ayushsrivastava_01">Instagram</a>
-                <a href="https://www.linkedin.com/in/ayush-srivastava01">LinkedIn</a>
-                <a href="https://github.com/ayushsrivastava-01">GitHub</a>
+                <a href="https://www.instagram.com/ayushsrivastava_01" class="insta">Instagram</a>
+                <a href="https://www.linkedin.com/in/ayush-srivastava01" class="linkedin">LinkedIn</a>
+                <a href="https://github.com/ayushsrivastava-01" class="github">GitHub</a>
               </div>
               
               <div class="footer">
                 <div class="footer-regards">Regards,</div>
                 <div class="footer-name">Ayush Srivastava</div>
-                <div class="badge">Response within 24 hours</div>
               </div>
             </div>
           </body>
