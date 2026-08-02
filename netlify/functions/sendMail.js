@@ -282,7 +282,7 @@ export const handler = async function(event, context) {
               
               <div class="divider"></div>
               
-              <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
+              <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media.</span>
               
               <!-- Social Icons Box - FULL WIDTH -->
               <div class="social-box">
