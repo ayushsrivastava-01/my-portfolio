@@ -58,30 +58,11 @@ export const handler = async function(event, context) {
                 box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
               }
               
-              /* ── Header ── */
               .header {
                 background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
                 padding: 40px 40px 30px;
                 text-align: center;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-                position: relative;
-              }
-              
-              .header::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                right: 0;
-                height: 3px;
-                background: linear-gradient(90deg, #7c4dff, #ff6b6b, #7c4dff);
-                background-size: 200% 100%;
-                animation: glow 4s ease-in-out infinite;
-              }
-              
-              @keyframes glow {
-                0%, 100% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
               }
               
               .header-logo {
@@ -114,7 +95,6 @@ export const handler = async function(event, context) {
                 margin-top: 6px;
               }
               
-              /* ── Body ── */
               .body {
                 padding: 35px 40px 30px;
               }
@@ -127,10 +107,7 @@ export const handler = async function(event, context) {
               }
               
               .greeting span {
-                background: linear-gradient(135deg, #9b7ff4, #ff6b7a);
-                -webkit-background-clip: text;
-                background-clip: text;
-                color: transparent;
+                color: #9b7ff4;
               }
               
               .text {
@@ -144,7 +121,6 @@ export const handler = async function(event, context) {
                 color: #e8e8f0;
               }
               
-              /* ── Message Box ── */
               .message-box {
                 background: rgba(124, 77, 255, 0.04);
                 border: 1px solid rgba(124, 77, 255, 0.08);
@@ -166,13 +142,11 @@ export const handler = async function(event, context) {
               
               .message-box p {
                 color: #c8c8e0;
-                font-style: italic;
                 font-size: 15px;
                 line-height: 1.7;
                 margin: 0;
               }
               
-              /* ── Timeline ── */
               .timeline {
                 background: rgba(255, 255, 255, 0.02);
                 border: 1px solid rgba(255, 255, 255, 0.04);
@@ -218,14 +192,12 @@ export const handler = async function(event, context) {
                 color: #3ecf8e;
               }
               
-              /* ── Divider ── */
               .divider {
                 height: 1px;
                 background: rgba(255, 255, 255, 0.04);
                 margin: 22px 0;
               }
               
-              /* ── Social ── */
               .social-section {
                 margin-top: 4px;
               }
@@ -289,7 +261,6 @@ export const handler = async function(event, context) {
                 color: #ffffff; 
               }
               
-              /* ── Footer ── */
               .footer {
                 background: rgba(255, 255, 255, 0.01);
                 padding: 28px 40px 32px;
@@ -343,10 +314,6 @@ export const handler = async function(event, context) {
                 text-decoration: none;
               }
               
-              .footer-email a:hover {
-                text-decoration: underline;
-              }
-              
               .badge {
                 display: inline-block;
                 background: rgba(62, 207, 142, 0.06);
@@ -380,7 +347,6 @@ export const handler = async function(event, context) {
           </head>
           <body>
             <div class="container">
-              <!-- Header -->
               <div class="header">
                 <div class="header-logo">
                   <img src="https://ayushsrivastava.netlify.app/icon.png" alt="Ayush Srivastava">
@@ -389,7 +355,6 @@ export const handler = async function(event, context) {
                 <p>I'll get back to you within 24 hours</p>
               </div>
               
-              <!-- Body -->
               <div class="body">
                 <div class="greeting">Hi <span>${name}</span>,</div>
                 
@@ -441,7 +406,6 @@ export const handler = async function(event, context) {
                 </div>
               </div>
               
-              <!-- Footer -->
               <div class="footer">
                 <div class="footer-name">Ayush Srivastava</div>
                 <div class="footer-title">Full Stack Developer</div>
