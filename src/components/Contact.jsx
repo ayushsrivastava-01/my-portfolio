@@ -250,7 +250,7 @@ const Contact = () => {
               <Lottie animationData={successAnimation} loop={false} style={{ height: 120, margin: "0 auto 1rem" }} />
               <h4>Message Sent Successfully</h4>
               <p>Thank you for reaching out. I will respond promptly.</p>
-              <p className="success-note">A confirmation has been sent to your email address.</p>
+              <p className="success-note">✅ A confirmation has been sent to your email address.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
