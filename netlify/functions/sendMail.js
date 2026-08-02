@@ -13,6 +13,9 @@ export const handler = async function(event, context) {
     const formData = JSON.parse(event.body);
     const { name, email, message } = formData;
 
+    // Sirf first name extract karo
+    const firstName = name.trim().split(' ')[0];
+
     const userEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -27,10 +30,10 @@ export const handler = async function(event, context) {
         to: [
           {
             email: email,
-            name: name
+            name: firstName
           }
         ],
-        subject: `Thanks for reaching out, ${name}`,
+        subject: `Thanks for reaching out, ${firstName}`,
         htmlContent: `
           <!DOCTYPE html>
           <html>
@@ -51,22 +54,25 @@ export const handler = async function(event, context) {
                 background: #12121f;
                 border-radius: 16px;
                 padding: 40px 45px;
-                border: 2px solid rgba(124, 77, 255, 0.15);
-                box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(124, 77, 255, 0.03);
-                text-align: center;
+                border: 2px solid rgba(124, 77, 255, 0.12);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.5);
               }
-              h1 {
+              .header-center {
+                text-align: center;
+                margin-bottom: 24px;
+              }
+              .header-center h1 {
                 color: #ffffff;
                 font-size: 24px;
                 font-weight: 700;
                 letter-spacing: -0.5px;
-                margin-bottom: 4px;
               }
               .greeting {
                 color: #e8e8f0;
                 font-size: 16px;
                 font-weight: 500;
-                margin: 20px 0 12px;
+                margin-bottom: 12px;
+                text-align: left;
               }
               .greeting span {
                 color: #9b7ff4;
@@ -75,8 +81,8 @@ export const handler = async function(event, context) {
                 color: #8a8aaa;
                 font-size: 15px;
                 line-height: 1.8;
-                margin-bottom: 8px;
-                text-align: center;
+                margin-bottom: 10px;
+                text-align: left;
               }
               .text strong {
                 color: #e8e8f0;
@@ -84,11 +90,10 @@ export const handler = async function(event, context) {
               .message-box {
                 background: rgba(124,77,255,0.04);
                 border-left: 3px solid #7c4dff;
-                border-right: 3px solid #7c4dff;
                 padding: 14px 18px;
                 margin: 16px 0 20px;
-                border-radius: 8px;
-                text-align: center;
+                border-radius: 0 8px 8px 0;
+                text-align: left;
               }
               .message-label {
                 font-size: 11px;
@@ -110,8 +115,8 @@ export const handler = async function(event, context) {
                 border: 1px solid rgba(255,255,255,0.04);
                 border-radius: 10px;
                 padding: 14px 18px;
-                margin: 16px 0 20px;
-                text-align: center;
+                margin: 16px 0 22px;
+                text-align: left;
               }
               .timeline-label {
                 font-size: 10px;
@@ -131,22 +136,18 @@ export const handler = async function(event, context) {
               .divider {
                 height: 1px;
                 background: rgba(255,255,255,0.04);
-                margin: 20px 0;
+                margin: 22px 0;
               }
               .social-label {
                 color: #8a8aaa;
                 font-size: 14px;
                 display: block;
                 margin-bottom: 14px;
-                font-weight: 400;
-              }
-              .social-label em {
-                color: #9b7ff4;
-                font-style: normal;
+                text-align: left;
               }
               .social-links {
                 display: flex;
-                justify-content: center;
+                justify-content: flex-start;
                 gap: 32px;
                 flex-wrap: wrap;
               }
@@ -200,7 +201,7 @@ export const handler = async function(event, context) {
               }
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
-                h1 { font-size: 20px; }
+                .header-center h1 { font-size: 20px; }
                 .social-links { gap: 18px; }
                 .social-links a { font-size: 13px; }
               }
@@ -208,9 +209,13 @@ export const handler = async function(event, context) {
           </head>
           <body>
             <div class="container">
-              <h1>Thanks for Reaching Out</h1>
+              <!-- CENTER HEADING -->
+              <div class="header-center">
+                <h1>Thanks for Reaching Out</h1>
+              </div>
               
-              <div class="greeting">Hi <span>${name}</span>,</div>
+              <!-- LEFT ALIGNED EVERYTHING ELSE -->
+              <div class="greeting">Hi <span>${firstName}</span>,</div>
               
               <p class="text">
                 Thank you for reaching out to me. I have received your message.
@@ -267,7 +272,7 @@ export const handler = async function(event, context) {
             name: 'Ayush'
           }
         ],
-        subject: `New Portfolio Message from ${name}`,
+        subject: `New Portfolio Message from ${firstName}`,
         htmlContent: `
           <h2>New Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
