@@ -151,24 +151,56 @@ export const handler = async function(event, context) {
                 color: #8a8aaa;
                 font-size: 14px;
                 display: block;
-                margin-bottom: 14px;
+                margin-bottom: 16px;
                 text-align: left;
               }
               .social-links {
                 display: flex;
                 justify-content: flex-start;
-                gap: 24px;
+                gap: 32px;
                 flex-wrap: wrap;
               }
-              .social-links a {
+              .social-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 10px 24px;
+                border-radius: 100px;
+                background: rgba(255,255,255,0.03);
+                border: 1px solid rgba(255,255,255,0.06);
                 color: #8a8aaa;
                 text-decoration: none;
                 font-size: 14px;
                 font-weight: 500;
-                transition: color 0.3s ease;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               }
-              .social-links a:hover {
-                color: #9b7ff4;
+              .social-btn .icon {
+                font-size: 18px;
+              }
+              .social-btn .text {
+                font-size: 14px;
+              }
+              .social-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+              }
+              .social-btn.insta:hover {
+                background: #E4405F;
+                border-color: #E4405F;
+                color: #ffffff;
+                box-shadow: 0 8px 25px rgba(228, 64, 95, 0.3);
+              }
+              .social-btn.linkedin:hover {
+                background: #0A66C2;
+                border-color: #0A66C2;
+                color: #ffffff;
+                box-shadow: 0 8px 25px rgba(10, 102, 194, 0.3);
+              }
+              .social-btn.github:hover {
+                background: #ffffff;
+                border-color: #ffffff;
+                color: #12121f;
+                box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
               }
               .footer {
                 margin-top: 28px;
@@ -189,6 +221,13 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 .header-center h1 { font-size: 20px; }
+                .social-btn {
+                  padding: 8px 16px;
+                  font-size: 13px;
+                }
+                .social-btn .icon { font-size: 16px; }
+                .social-btn .text { font-size: 13px; }
+                .social-links { gap: 16px; }
               }
             </style>
           </head>
@@ -219,9 +258,18 @@ export const handler = async function(event, context) {
               
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               <div class="social-links">
-                <a href="https://www.instagram.com/ayushsrivastava_01">Instagram</a>
-                <a href="https://www.linkedin.com/in/ayush-srivastava01">LinkedIn</a>
-                <a href="https://github.com/ayushsrivastava-01">GitHub</a>
+                <a href="https://www.instagram.com/ayushsrivastava_01" class="social-btn insta">
+                  <span class="icon">📸</span>
+                  <span class="text">Instagram</span>
+                </a>
+                <a href="https://www.linkedin.com/in/ayush-srivastava01" class="social-btn linkedin">
+                  <span class="icon">💼</span>
+                  <span class="text">LinkedIn</span>
+                </a>
+                <a href="https://github.com/ayushsrivastava-01" class="social-btn github">
+                  <span class="icon">🐙</span>
+                  <span class="text">GitHub</span>
+                </a>
               </div>
               
               <div class="footer">
