@@ -150,58 +150,74 @@ export const handler = async function(event, context) {
                 color: #8a8aaa;
                 font-size: 14px;
                 display: block;
-                margin-bottom: 16px;
+                margin-bottom: 14px;
                 text-align: left;
               }
+              
+              /* Social Icons Box */
+              .social-box {
+                background: rgba(255,255,255,0.02);
+                border: 1px solid rgba(255,255,255,0.04);
+                border-radius: 12px;
+                padding: 12px 16px;
+                display: inline-block;
+              }
+              
               .social-links {
                 display: flex;
                 justify-content: flex-start;
-                gap: 32px;
+                gap: 16px;
                 flex-wrap: wrap;
               }
               .social-btn {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                padding: 10px 24px;
+                padding: 8px 18px;
                 border-radius: 100px;
                 background: rgba(255,255,255,0.03);
                 border: 1px solid rgba(255,255,255,0.06);
                 color: #8a8aaa;
                 text-decoration: none;
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 500;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                cursor: pointer;
               }
               .social-btn .icon {
-                width: 20px;
-                height: 20px;
+                width: 18px;
+                height: 18px;
                 flex-shrink: 0;
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
               }
               .social-btn .text {
-                font-size: 14px;
+                font-size: 13px;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
               }
               .social-btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+                transform: translateY(-3px) scale(1.02);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+              }
+              .social-btn:hover .icon {
+                transform: scale(1.15) rotate(-5deg);
               }
               .social-btn.insta:hover {
                 background: #E4405F;
                 border-color: #E4405F;
                 color: #ffffff;
-                box-shadow: 0 8px 25px rgba(228, 64, 95, 0.3);
+                box-shadow: 0 8px 25px rgba(228, 64, 95, 0.35);
               }
               .social-btn.linkedin:hover {
                 background: #0A66C2;
                 border-color: #0A66C2;
                 color: #ffffff;
-                box-shadow: 0 8px 25px rgba(10, 102, 194, 0.3);
+                box-shadow: 0 8px 25px rgba(10, 102, 194, 0.35);
               }
               .social-btn.github:hover {
                 background: #ffffff;
                 border-color: #ffffff;
                 color: #12121f;
-                box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+                box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
               }
               .footer {
                 margin-top: 28px;
@@ -222,13 +238,14 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 .header-center h1 { font-size: 20px; }
+                .social-box { padding: 8px 12px; }
                 .social-btn {
-                  padding: 8px 16px;
-                  font-size: 13px;
+                  padding: 6px 14px;
+                  font-size: 12px;
                 }
                 .social-btn .icon { width: 16px; height: 16px; }
-                .social-btn .text { font-size: 13px; }
-                .social-links { gap: 16px; }
+                .social-btn .text { font-size: 12px; }
+                .social-links { gap: 10px; }
               }
             </style>
           </head>
@@ -258,25 +275,29 @@ export const handler = async function(event, context) {
               <div class="divider"></div>
               
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
-              <div class="social-links">
-                <a href="https://www.instagram.com/ayushsrivastava_01" class="social-btn insta">
-                  <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
-                  </svg>
-                  <span class="text">Instagram</span>
-                </a>
-                <a href="https://www.linkedin.com/in/ayush-srivastava01" class="social-btn linkedin">
-                  <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                  <span class="text">LinkedIn</span>
-                </a>
-                <a href="https://github.com/ayushsrivastava-01" class="social-btn github">
-                  <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.577C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                  </svg>
-                  <span class="text">GitHub</span>
-                </a>
+              
+              <!-- Social Icons Box -->
+              <div class="social-box">
+                <div class="social-links">
+                  <a href="https://www.instagram.com/ayushsrivastava_01" class="social-btn insta">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
+                    </svg>
+                    <span class="text">Instagram</span>
+                  </a>
+                  <a href="https://www.linkedin.com/in/ayush-srivastava01" class="social-btn linkedin">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    <span class="text">LinkedIn</span>
+                  </a>
+                  <a href="https://github.com/ayushsrivastava-01" class="social-btn github">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.399 3-.399s2.04.132 3 .399c2.292-1.552 3.3-1.23 3.3-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.694.825.577C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                    </svg>
+                    <span class="text">GitHub</span>
+                  </a>
+                </div>
               </div>
               
               <div class="footer">
