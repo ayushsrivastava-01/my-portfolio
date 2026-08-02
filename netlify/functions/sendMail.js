@@ -33,7 +33,7 @@ export const handler = async function(event, context) {
             name: firstName
           }
         ],
-        subject: `Thanks for reaching out, ${firstName}`,
+        subject: `Thanks for reaching out, ${name}`,
         htmlContent: `
           <!DOCTYPE html>
           <html>
@@ -148,7 +148,7 @@ export const handler = async function(event, context) {
               .social-links {
                 display: flex;
                 justify-content: flex-start;
-                gap: 32px;
+                gap: 48px;
                 flex-wrap: wrap;
               }
               .social-links a {
@@ -202,7 +202,7 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 .header-center h1 { font-size: 20px; }
-                .social-links { gap: 18px; }
+                .social-links { gap: 24px; }
                 .social-links a { font-size: 13px; }
               }
             </style>
@@ -272,7 +272,7 @@ export const handler = async function(event, context) {
             name: 'Ayush'
           }
         ],
-        subject: `New Portfolio Message from ${firstName}`,
+        subject: `New Portfolio Message from ${name}`,
         htmlContent: `
           <h2>New Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
