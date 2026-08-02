@@ -53,6 +53,7 @@ export const handler = async function(event, context) {
                 padding: 40px 45px;
                 border: 1px solid rgba(255,255,255,0.06);
                 box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+                text-align: center;
               }
               h1 {
                 color: #ffffff;
@@ -61,16 +62,11 @@ export const handler = async function(event, context) {
                 letter-spacing: -0.5px;
                 margin-bottom: 4px;
               }
-              .sub {
-                color: rgba(255,255,255,0.3);
-                font-size: 14px;
-                margin-bottom: 24px;
-              }
               .greeting {
                 color: #e8e8f0;
                 font-size: 16px;
                 font-weight: 500;
-                margin-bottom: 12px;
+                margin: 20px 0 12px;
               }
               .greeting span {
                 color: #9b7ff4;
@@ -80,6 +76,7 @@ export const handler = async function(event, context) {
                 font-size: 15px;
                 line-height: 1.8;
                 margin-bottom: 8px;
+                text-align: center;
               }
               .text strong {
                 color: #e8e8f0;
@@ -87,9 +84,11 @@ export const handler = async function(event, context) {
               .message-box {
                 background: rgba(124,77,255,0.04);
                 border-left: 3px solid #7c4dff;
+                border-right: 3px solid #7c4dff;
                 padding: 14px 18px;
                 margin: 16px 0 20px;
-                border-radius: 0 8px 8px 0;
+                border-radius: 8px;
+                text-align: center;
               }
               .message-label {
                 font-size: 11px;
@@ -112,6 +111,7 @@ export const handler = async function(event, context) {
                 border-radius: 10px;
                 padding: 14px 18px;
                 margin: 16px 0 20px;
+                text-align: center;
               }
               .timeline-label {
                 font-size: 10px;
@@ -134,16 +134,20 @@ export const handler = async function(event, context) {
                 margin: 20px 0;
               }
               .social-label {
-                color: #55556a;
-                font-size: 12px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
+                color: #8a8aaa;
+                font-size: 14px;
                 display: block;
-                margin-bottom: 10px;
+                margin-bottom: 12px;
+                font-weight: 400;
+              }
+              .social-label em {
+                color: #9b7ff4;
+                font-style: normal;
               }
               .social-links {
                 display: flex;
-                gap: 20px;
+                justify-content: center;
+                gap: 28px;
                 flex-wrap: wrap;
               }
               .social-links a {
@@ -151,6 +155,7 @@ export const handler = async function(event, context) {
                 text-decoration: none;
                 font-size: 14px;
                 transition: color 0.2s;
+                padding: 4px 0;
               }
               .social-links a:hover {
                 color: #9b7ff4;
@@ -161,29 +166,15 @@ export const handler = async function(event, context) {
                 border-top: 1px solid rgba(255,255,255,0.04);
                 text-align: center;
               }
+              .footer-regards {
+                color: #8a8aaa;
+                font-size: 14px;
+                margin-bottom: 2px;
+              }
               .footer-name {
                 color: #e8e8f0;
                 font-size: 17px;
                 font-weight: 600;
-              }
-              .footer-title {
-                color: #55556a;
-                font-size: 13px;
-                margin-top: 2px;
-              }
-              .footer-regards {
-                color: #8a8aaa;
-                font-size: 14px;
-                margin-top: 10px;
-              }
-              .footer-email {
-                color: #55556a;
-                font-size: 13px;
-                margin-top: 4px;
-              }
-              .footer-email a {
-                color: #9b7ff4;
-                text-decoration: none;
               }
               .badge {
                 display: inline-block;
@@ -198,18 +189,19 @@ export const handler = async function(event, context) {
               @media (max-width: 480px) {
                 .container { padding: 24px 20px; }
                 h1 { font-size: 20px; }
+                .social-links { gap: 16px; }
+                .social-links a { font-size: 13px; }
               }
             </style>
           </head>
           <body>
             <div class="container">
               <h1>Thanks for Reaching Out</h1>
-              <div class="sub">I'll get back to you within 24 hours</div>
               
               <div class="greeting">Hi <span>${name}</span>,</div>
               
               <p class="text">
-                Thank you for reaching out to me. I have received your message and will respond to you within <strong>24 hours</strong>.
+                Thank you for reaching out to me. I have received your message.
               </p>
               
               <div class="message-box">
@@ -224,7 +216,7 @@ export const handler = async function(event, context) {
               
               <div class="divider"></div>
               
-              <span class="social-label">Connect with me</span>
+              <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               <div class="social-links">
                 <a href="https://www.instagram.com/ayushsrivastava_01">Instagram</a>
                 <a href="https://www.linkedin.com/in/ayush-srivastava01">LinkedIn</a>
@@ -232,12 +224,8 @@ export const handler = async function(event, context) {
               </div>
               
               <div class="footer">
-                <div class="footer-name">Ayush Srivastava</div>
-                <div class="footer-title">Full Stack Developer</div>
                 <div class="footer-regards">Regards,</div>
-                <div class="footer-email">
-                  <a href="mailto:srivastava999ayush@gmail.com">srivastava999ayush@gmail.com</a>
-                </div>
+                <div class="footer-name">Ayush Srivastava</div>
                 <div class="badge">Response within 24 hours</div>
               </div>
             </div>
