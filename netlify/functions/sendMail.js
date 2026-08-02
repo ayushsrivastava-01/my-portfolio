@@ -234,8 +234,8 @@ export const handler = async function(event, context) {
           <body>
             <div class="container">
               <div class="header-center">
-                <h1>Message Received ✉️</h1>
-                <div class="sub">I'll get back to you soon</div>
+                <h1>~ Message Received ~</h1>
+                <div class="sub">I'll get back to you soon!</div>
               </div>
               
               <div class="greeting">Hi <span>${firstName}</span>,</div>
@@ -259,15 +259,15 @@ export const handler = async function(event, context) {
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               <div class="social-links">
                 <a href="https://www.instagram.com/ayushsrivastava_01" class="social-btn insta">
-                  <span class="icon">📸</span>
+                  <span class="icon"></span>
                   <span class="text">Instagram</span>
                 </a>
                 <a href="https://www.linkedin.com/in/ayush-srivastava01" class="social-btn linkedin">
-                  <span class="icon">💼</span>
+                  <span class="icon"></span>
                   <span class="text">LinkedIn</span>
                 </a>
                 <a href="https://github.com/ayushsrivastava-01" class="social-btn github">
-                  <span class="icon">🐙</span>
+                  <span class="icon"></span>
                   <span class="text">GitHub</span>
                 </a>
               </div>

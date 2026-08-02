@@ -640,3 +640,118 @@
     font-size: 0.65rem;
   }
 }
+
+/* ─── Input Wrapper for Icons ───────────────────────── */
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-wrapper .field-input {
+  padding-right: 40px;
+}
+
+.input-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.input-icon.valid-icon {
+  color: #3ecf8e;
+  opacity: 1;
+  animation: iconPop 0.3s ease;
+}
+
+.input-icon.error-icon {
+  color: #ff4a57;
+  opacity: 1;
+  animation: iconPop 0.3s ease;
+}
+
+@keyframes iconPop {
+  0% { transform: translateY(-50%) scale(0.5); opacity: 0; }
+  100% { transform: translateY(-50%) scale(1); opacity: 1; }
+}
+
+/* ─── Textarea Specific ─────────────────────────────── */
+.field-textarea {
+  min-height: 130px;
+  resize: vertical;
+  font-family: 'DM Sans', sans-serif;
+  padding-right: 16px !important;
+}
+
+/* ─── Form Enhancements ─────────────────────────────── */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ─── Button Icon ────────────────────────────────────── */
+.btn-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* ─── Character Counter Status ──────────────────────── */
+.char-good-text {
+  font-size: 0.65rem;
+  color: #3ecf8e;
+  animation: fadeIn 0.3s ease;
+}
+
+/* ─── Social Icon Hover Glow ────────────────────────── */
+.social-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+}
+
+.social-btn::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: var(--hover-color, transparent);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.social-btn:hover::after {
+  opacity: 0.1;
+  transform: scale(1.1);
+}
+
+/* ─── Thank You Message Enhancements ────────────────── */
+.thank-you-message h4 {
+  background: linear-gradient(135deg, #3ecf8e, #7c4dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+/* ─── Responsive Fixes ───────────────────────────────── */
+@media screen and (max-width: 480px) {
+  .input-wrapper .field-input {
+    padding-right: 36px;
+    font-size: 14px;
+  }
+  
+  .input-icon {
+    font-size: 12px;
+    right: 10px;
+  }
+  
+  .submit-btn {
+    font-size: 0.85rem;
+    padding: 0.75rem;
+  }
+}
