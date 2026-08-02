@@ -1,6 +1,7 @@
-const fetch = require('node-fetch');
+// ✅ No require needed - Node 18+ has built-in fetch
+// ✅ ES Module syntax - export const handler
 
-exports.handler = async function(event, context) {
+export const handler = async function(event, context) {
   // Sirf POST requests handle karo
   if (event.httpMethod !== 'POST') {
     return { 
@@ -14,7 +15,7 @@ exports.handler = async function(event, context) {
     const formData = JSON.parse(event.body);
     const { name, email, message } = formData;
 
-    // 📧 1️⃣ User ko auto-reply email (jo form bhar raha hai)
+    // 📧 1️⃣ User ko auto-reply email
     const userEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -24,11 +25,11 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({
         sender: {
           name: 'Ayush Srivastava',
-          email: 'srivastava999ayush@gmail.com'  // ✅ Verified sender
+          email: 'srivastava999ayush@gmail.com'
         },
         to: [
           {
-            email: email,  // User ka email
+            email: email,
             name: name
           }
         ],
@@ -46,7 +47,6 @@ exports.handler = async function(event, context) {
               .divider { height: 2px; background: linear-gradient(90deg, transparent, #7c4dff, #ff4a57, transparent); margin: 20px 0; }
               .message-box { background: rgba(255,255,255,0.03); border-radius: 12px; padding: 20px; margin: 20px 0; border-left: 3px solid #7c4dff; }
               .footer { text-align: center; margin-top: 30px; color: #7a7a90; font-size: 14px; }
-              .highlight { color: #9b7ff4; }
               .social { margin-top: 20px; }
             </style>
           </head>
@@ -81,7 +81,7 @@ exports.handler = async function(event, context) {
                 <div class="footer">
                   <p>Best regards,<br>
                   <strong style="color: #fff;">Ayush Srivastava</strong><br>
-                  <span style="font-size: 12px;">Portfolio: <a href="https://ayushsrivastava.netlify.app" style="color: #9b7ff4; text-decoration: none;">ayushsrivastava.netlify.app</a></span></p>
+                  <span style="font-size: 12px;">Portfolio: ayushsrivastava.netlify.app</span></p>
                 </div>
               </div>
             </div>
@@ -95,7 +95,7 @@ exports.handler = async function(event, context) {
       })
     });
 
-    // 📧 2️⃣ Tujhe notification email (admin)
+    // 📧 2️⃣ Tujhe notification email
     const adminEmailResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
@@ -105,11 +105,11 @@ exports.handler = async function(event, context) {
       body: JSON.stringify({
         sender: {
           name: 'Portfolio Contact Form',
-          email: 'srivastava999ayush@gmail.com'  // ✅ Verified sender
+          email: 'srivastava999ayush@gmail.com'
         },
         to: [
           {
-            email: 'srivastava999ayush@gmail.com',  // Tera email
+            email: 'srivastava999ayush@gmail.com',
             name: 'Ayush'
           }
         ],
@@ -155,8 +155,6 @@ exports.handler = async function(event, context) {
       
       console.error('User Email Status:', userOk);
       console.error('Admin Email Status:', adminOk);
-      console.error('User Email Error:', userError);
-      console.error('Admin Email Error:', adminError);
       
       return {
         statusCode: 500,
