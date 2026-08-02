@@ -39,26 +39,34 @@ export const handler = async function(event, context) {
           <html>
           <head>
             <style>
-              body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 40px 20px; }
-              .container { max-width: 550px; margin: 0 auto; background: #ffffff; border-radius: 12px; padding: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-              h2 { color: #1a1a2e; margin-bottom: 10px; }
-              .message-box { background: #f8f8ff; padding: 16px 20px; border-radius: 8px; border-left: 4px solid #7c4dff; margin: 20px 0; }
-              .message-box p { color: #333; font-style: italic; margin: 0; }
-              .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px; }
-              .social { margin: 16px 0; }
-              .social a { color: #7c4dff; text-decoration: none; margin-right: 16px; }
-              .badge { display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 4px 12px; border-radius: 20px; font-size: 13px; }
+              body { font-family: 'Segoe UI', Arial, sans-serif; background: #0a0a14; padding: 40px 20px; }
+              .container { max-width: 550px; margin: 0 auto; background: #14142a; border-radius: 16px; padding: 40px; border: 1px solid rgba(255,255,255,0.06); }
+              h2 { color: #ffffff; font-size: 24px; margin-bottom: 8px; }
+              .sub { color: #8888aa; font-size: 14px; margin-bottom: 20px; }
+              p { color: #c8c8e0; line-height: 1.7; }
+              .message-box { background: rgba(124,77,255,0.06); border: 1px solid rgba(124,77,255,0.12); border-radius: 12px; padding: 16px 20px; margin: 20px 0; }
+              .message-box p { color: #d8d8f0; font-style: italic; margin: 0; }
+              .divider { height: 1px; background: rgba(255,255,255,0.06); margin: 24px 0; }
+              .social a { color: #9b7ff4; text-decoration: none; margin-right: 20px; font-size: 14px; }
+              .badge { display: inline-block; background: rgba(62,207,142,0.12); border: 1px solid rgba(62,207,142,0.2); color: #3ecf8e; padding: 4px 14px; border-radius: 20px; font-size: 13px; }
+              .footer { margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); color: #666688; font-size: 13px; }
+              .footer strong { color: #ffffff; }
             </style>
           </head>
           <body>
             <div class="container">
               <h2>Hi ${name}! 👋</h2>
+              <div class="sub">Thanks for connecting with me</div>
               
-              <p>Thank you for reaching out through my portfolio. I've received your message and will get back to you within <strong>24 hours</strong>.</p>
+              <p>I've received your message and will get back to you within <strong style="color: #fff;">24 hours</strong>.</p>
               
               <div class="message-box">
                 <p>"${message}"</p>
               </div>
+              
+              <div class="badge">✅ Response within 24 hours</div>
+              
+              <div class="divider"></div>
               
               <div class="social">
                 <a href="https://www.instagram.com/ayushsrivastava_01">📸 Instagram</a>
@@ -66,11 +74,8 @@ export const handler = async function(event, context) {
                 <a href="https://github.com/ayushsrivastava-01">🐙 GitHub</a>
               </div>
               
-              <div class="badge">✅ Response within 24 hours</div>
-              
               <div class="footer">
-                <strong>Ayush Srivastava</strong><br>
-                <span style="color: #999;">Full Stack Developer</span>
+                <strong>Ayush Srivastava</strong> · Full Stack Developer
               </div>
             </div>
           </body>
@@ -101,9 +106,9 @@ export const handler = async function(event, context) {
             name: 'Ayush'
           }
         ],
-        subject: `🔔 New Message from ${name}`,
+        subject: `🔔 New Portfolio Message from ${name}`,
         htmlContent: `
-          <h2>New Portfolio Message</h2>
+          <h2>🔥 New Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
           <p><strong>Message:</strong></p>
