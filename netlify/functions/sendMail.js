@@ -154,13 +154,15 @@ export const handler = async function(event, context) {
                 text-align: left;
               }
               
-              /* Social Icons Box */
+              /* Social Icons Box - FULL WIDTH */
               .social-box {
                 background: rgba(255,255,255,0.02);
                 border: 1px solid rgba(255,255,255,0.04);
                 border-radius: 12px;
                 padding: 12px 16px;
-                display: inline-block;
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
               }
               
               .social-links {
@@ -282,7 +284,7 @@ export const handler = async function(event, context) {
               
               <span class="social-label">✨ In the meantime, feel free to explore my work and connect with me on social media</span>
               
-              <!-- Social Icons Box -->
+              <!-- Social Icons Box - FULL WIDTH -->
               <div class="social-box">
                 <div class="social-links">
                   <a href="https://www.instagram.com/ayushsrivastava_01" class="social-btn insta">
