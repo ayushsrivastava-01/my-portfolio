@@ -103,6 +103,7 @@ const Contact = () => {
       .join("&");
   };
 
+  // 🔥 UPDATED HANDLE SUBMIT - Auto-reply with Brevo
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -127,7 +128,8 @@ const Contact = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("/", {
+      // 1️⃣ Netlify Form submit
+      const formResponse = await fetch("/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({
@@ -138,18 +140,42 @@ const Contact = () => {
         }),
       });
 
-      if (response.ok) {
-        setFormSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
-        setErrors({ name: "", email: "", message: "" });
-        setTouched({ name: false, email: false, message: false });
-        setTimeout(() => setFormSubmitted(false), 5000);
-      } else {
-        alert("Submission failed. Please try again.");
+      if (!formResponse.ok) {
+        throw new Error('Form submission failed');
       }
+
+      // 2️⃣ Auto-reply email via Netlify Function
+      const emailResponse = await fetch("/.netlify/functions/sendMail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      const emailResult = await emailResponse.json();
+      
+      if (!emailResponse.ok) {
+        console.error('Auto-reply email failed:', emailResult);
+        // Don't throw, just log - form submission was successful
+      } else {
+        console.log('Auto-reply email sent:', emailResult);
+      }
+
+      // Success
+      setFormSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+      setErrors({ name: "", email: "", message: "" });
+      setTouched({ name: false, email: false, message: false });
+      
+      // Auto hide success message after 5 seconds
+      setTimeout(() => setFormSubmitted(false), 5000);
+
     } catch (error) {
       console.error("Form submission error:", error);
-      alert("Network error. Please check your connection.");
+      alert("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -239,7 +265,7 @@ const Contact = () => {
               <Lottie animationData={successAnimation} loop={false} style={{ height: 120, margin: "0 auto 1rem" }} />
               <h4>Message Sent Successfully</h4>
               <p>Thank you for reaching out. I will respond promptly.</p>
-              <p className="success-note">A confirmation has been sent to your email address.</p>
+              <p className="success-note">✅ A confirmation email has been sent to your email address.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
