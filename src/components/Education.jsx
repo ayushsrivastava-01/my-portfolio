@@ -4,6 +4,15 @@ import "./css/Education.css"
 
 const education = [
   {
+    degree: "Master of Computer Applications (MCA)",
+    institute: "Integral University, Lucknow",
+    date: "2026 - 2028",
+    score: "⚡ Ongoing",
+    status: "Pursuing",
+    icon: "👨‍🎓",
+    isPursuing: true,
+  },
+  {
     degree: "Bachelor of Computer Applications (BCA)",
     institute: "Meena Shah Institute of Technology & Management, Gonda, UP",
     date: "September 2022 - August 2025",
@@ -53,19 +62,24 @@ const Education = () => {
         {education.map((item, index) => (
           <motion.div
             key={index}
-            className="single-line-item"
+            className={`single-line-item ${item.isPursuing ? 'pursuing-item' : ''}`}
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: index * 0.15 }}
             viewport={{ once: true }}
           >
             <div className="dot-on-line">
-              <div className="line-dot">{item.icon}</div>
+              <div className={`line-dot ${item.isPursuing ? 'pursuing-dot' : ''}`}>
+                {item.icon}
+              </div>
             </div>
 
-            <div className="education-card">
+            <div className={`education-card ${item.isPursuing ? 'pursuing-card' : ''}`}>
               <div className="card-top">
-                <h3 className="degree">{item.degree}</h3>
+                <h3 className="degree">
+                  {item.degree}
+                  {item.isPursuing && <span className="pursuing-badge">● Current</span>}
+                </h3>
                 <div className="institute-info">
                   <span className="institute-icon">🏛️</span>
                   <span className="institute">{item.institute}</span>
@@ -82,15 +96,15 @@ const Education = () => {
                 </div>
                 
                 <div className="detail-box">
-                  <div className="detail-label">Percentage</div>
-                  <div className="detail-value score-highlight">
-                    <span className="score-icon">🎯</span>
+                  <div className="detail-label">{item.isPursuing ? 'Status' : 'Percentage'}</div>
+                  <div className={`detail-value ${item.isPursuing ? 'pursuing-score' : 'score-highlight'}`}>
+                    <span className="score-icon">{item.isPursuing ? '' : '🎯'}</span>
                     {item.score}
                   </div>
                 </div>
               </div>
 
-              <div className="status-tag">
+              <div className={`status-tag ${item.isPursuing ? 'pursuing-status' : ''}`}>
                 <span className="status-indicator" />
                 {item.status}
               </div>
