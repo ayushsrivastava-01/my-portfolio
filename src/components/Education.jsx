@@ -6,7 +6,7 @@ const education = [
   {
     degree: "Master of Computer Applications (MCA)",
     institute: "Integral University, Lucknow",
-    date: "2026 - 2028",
+    date: "July 2026 - July 2028",
     score: "⚡ Ongoing",
     status: "Pursuing",
     icon: "👨‍🎓",
