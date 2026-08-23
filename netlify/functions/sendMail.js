@@ -32,35 +32,46 @@ export const handler = async (event) => {
     const firstName = cleanName.split(' ')[0];
 
     // ---------------------------------------------------------
-    // GEMINI
+    // GEMINI - MODEL CHANGE
     // ---------------------------------------------------------
 
-    const geminiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
-      {
-        method: "POST",
+    // Try different models if one fails
+    const models = [
+      "gemini-2.0-flash-exp",
+      "gemini-1.5-flash",
+      "gemini-pro"
+    ];
 
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY,
-        },
+    let geminiData = null;
+    let geminiResponse = null;
+    let lastError = null;
 
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [
-              {
-                text: portfolioKnowledge,
+    for (const model of models) {
+      try {
+        console.log(`🔄 Trying model: ${model}`);
+        
+        geminiResponse = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": process.env.GEMINI_API_KEY,
+            },
+            body: JSON.stringify({
+              systemInstruction: {
+                parts: [
+                  {
+                    text: portfolioKnowledge,
+                  },
+                ],
               },
-            ],
-          },
-
-          contents: [
-            {
-              role: "user",
-
-              parts: [
+              contents: [
                 {
-                  text: `
+                  role: "user",
+                  parts: [
+                    {
+                      text: `
 A visitor has contacted Ayush through his portfolio.
 
 Visitor name:
@@ -87,35 +98,49 @@ If the information is not available in the knowledge base, honestly say that the
 Keep the response concise, natural, friendly and professional.
 
 Return ONLY the email reply text.
-                  `,
+                      `,
+                    },
+                  ],
                 },
               ],
-            },
-          ],
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 500,
+              },
+            }),
+          }
+        );
 
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 500,
-          },
-        }),
+        geminiData = await geminiResponse.json();
+
+        if (geminiResponse.ok) {
+          console.log(`✅ Model ${model} worked!`);
+          break;
+        } else {
+          console.error(`❌ Model ${model} failed:`, geminiData?.error?.message || "Unknown error");
+          lastError = geminiData?.error?.message || "Unknown error";
+          geminiData = null;
+          geminiResponse = null;
+        }
+      } catch (err) {
+        console.error(`❌ Model ${model} error:`, err.message);
+        lastError = err.message;
+        geminiData = null;
+        geminiResponse = null;
       }
-    );
+    }
 
-    const geminiData = await geminiResponse.json();
-
-    if (!geminiResponse.ok) {
-      console.error(
-        "❌ GEMINI API ERROR:",
-        JSON.stringify(geminiData, null, 2)
-      );
+    // If all models failed
+    if (!geminiResponse || !geminiResponse.ok || !geminiData) {
+      console.error("❌ ALL GEMINI MODELS FAILED");
+      console.error("Last error:", lastError);
 
       return {
         statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "AI response generation failed.",
-          details:
-            geminiData?.error?.message || "Unknown Gemini API error",
+          error: "AI response generation failed. Please try again later.",
+          details: lastError || "All Gemini models failed",
         }),
       };
     }
