@@ -4,7 +4,10 @@ export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({ success: false, error: "Method Not Allowed" }),
+      body: JSON.stringify({
+        success: false,
+        error: "Method Not Allowed",
+      }),
     };
   }
 
@@ -21,92 +24,75 @@ export const handler = async (event) => {
       };
     }
 
-    // ✅ IMMEDIATE RESPONSE - User ko 200 bhejo
-    const response = {
-      statusCode: 200,
-      body: JSON.stringify({
-        success: true,
-        message: "Message received! You'll get a reply shortly.",
-      }),
-    };
-
-    // 🔥 Background me email bhejo (Non-blocking)
-    processEmail(name, email, message).catch((err) =>
-      console.error("Background email error:", err)
-    );
-
-    return response;
-  } catch (error) {
-    console.error("Handler Error:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ success: false, error: "Internal server error" }),
-    };
-  }
-};
-
-// ---------------------------------------------------------
-// BACKGROUND EMAIL PROCESSING
-// ---------------------------------------------------------
-
-async function processEmail(name, email, message) {
-  try {
     const cleanName = name.trim();
     const cleanEmail = email.trim();
     const cleanMessage = message.trim();
-    const firstName = cleanName.split(" ")[0];
-
-    console.log(`⏳ Processing email for ${cleanName}...`);
 
     // ---------------------------------------------------------
-    // 1. GEMINI
+    // GEMINI
     // ---------------------------------------------------------
-
-    const startTime = Date.now();
 
     const geminiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
       {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
           "x-goog-api-key": process.env.GEMINI_API_KEY,
         },
+
         body: JSON.stringify({
           systemInstruction: {
-            parts: [{ text: portfolioKnowledge }],
+            parts: [
+              {
+                text: portfolioKnowledge,
+              },
+            ],
           },
+
           contents: [
             {
               role: "user",
+
               parts: [
                 {
                   text: `
 A visitor has contacted Ayush through his portfolio.
 
-Visitor name: ${cleanName}
-Visitor's question/message: ${cleanMessage}
+Visitor name:
+${cleanName}
+
+Visitor's question/message:
+${cleanMessage}
 
 IMPORTANT:
 Answer the visitor's actual question directly.
+
 Do not simply acknowledge the message.
+
 Do not say "I received your message".
+
 Do not say "Ayush will get back to you".
 
 Use the portfolio knowledge provided in the system instructions.
+
 If the question is about Ayush's skills, technologies, projects or Spring Boot experience, answer specifically using that information.
-If the information is not available, honestly say that and suggest contacting Ayush directly.
+
+If the information is not available in the knowledge base, honestly say that the information is not available and suggest contacting Ayush directly through his portfolio.
 
 Keep the response concise, natural, friendly and professional.
+
 Return ONLY the email reply text.
                   `,
                 },
               ],
             },
           ],
+
           generationConfig: {
             temperature: 0.3,
-            maxOutputTokens: 500, // ✅ Faster
+            maxOutputTokens: 1000,
           },
         }),
       }
@@ -115,43 +101,79 @@ Return ONLY the email reply text.
     const geminiData = await geminiResponse.json();
 
     if (!geminiResponse.ok) {
-      console.error("❌ GEMINI ERROR:", JSON.stringify(geminiData, null, 2));
-      return;
+      console.error(
+        "❌ GEMINI API ERROR:",
+        JSON.stringify(geminiData, null, 2)
+      );
+
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "AI response generation failed.",
+          details:
+            geminiData?.error?.message || "Unknown Gemini API error",
+        }),
+      };
     }
 
     const aiReply =
       geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!aiReply) {
-      console.error("❌ GEMINI EMPTY RESPONSE:", JSON.stringify(geminiData, null, 2));
-      return;
+      console.error(
+        "❌ GEMINI RETURNED NO TEXT:",
+        JSON.stringify(geminiData, null, 2)
+      );
+
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "Gemini returned an empty response.",
+        }),
+      };
     }
 
-    console.log(`✅ Gemini done in ${Date.now() - startTime}ms`);
+    console.log("✅ AI REPLY GENERATED:");
+    console.log(aiReply);
 
     // ---------------------------------------------------------
-    // 2. BREVO
+    // BREVO HELPER
     // ---------------------------------------------------------
 
     const sendBrevoEmail = async (payload) => {
       return fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
           "api-key": process.env.BREVO_API_KEY,
         },
+
         body: JSON.stringify(payload),
       });
     };
 
-    // Visitor email
+    // ---------------------------------------------------------
+    // 1. SEND AI-GENERATED REPLY TO VISITOR
+    // ---------------------------------------------------------
+
     const userEmailResponse = await sendBrevoEmail({
       sender: {
         name: "Ayush Srivastava",
         email: "srivastava999ayush@gmail.com",
       },
-      to: [{ email: cleanEmail, name: firstName }],
-      subject: `Thanks for reaching out, ${firstName}`,
+
+      to: [
+        {
+          email: cleanEmail,
+          name: cleanName,
+        },
+      ],
+
+      subject: `Thanks for reaching out, ${cleanName}`,
+
       htmlContent: `
         <!DOCTYPE html>
         <html>
@@ -197,7 +219,9 @@ Return ONLY the email reply text.
               margin-bottom: 12px;
               text-align: left;
             }
-            .greeting span { color: #9b7ff4; }
+            .greeting span {
+              color: #9b7ff4;
+            }
             .query-box {
               background: rgba(255, 74, 87, 0.04);
               border-left: 3px solid #ff4a57;
@@ -288,7 +312,7 @@ Return ONLY the email reply text.
               <div class="sub">Here's my response to your query</div>
             </div>
             
-            <div class="greeting">Hi <span>${firstName}</span>,</div>
+            <div class="greeting">Hi <span>${cleanName}</span>,</div>
             
             <div class="query-box">
               <span class="query-label">📝 Your Query</span>
@@ -305,6 +329,7 @@ Return ONLY the email reply text.
             <div class="footer">
               <div class="footer-regards">Regards,</div>
               <div class="footer-name">Ayush Srivastava</div>
+              
               <div class="footer-disclaimer">
                 ⚡ This is an automated reply generated by AI.<br>
                 If you have any further questions, feel free to reply to this email.
@@ -314,20 +339,32 @@ Return ONLY the email reply text.
         </body>
         </html>
       `,
+
       replyTo: {
         name: "Ayush Srivastava",
         email: "srivastava999ayush@gmail.com",
       },
     });
 
-    // Admin email
+    // ---------------------------------------------------------
+    // 2. SEND NOTIFICATION ONLY TO AYUSH
+    // ---------------------------------------------------------
+
     const adminEmailResponse = await sendBrevoEmail({
       sender: {
         name: "Portfolio Contact Form",
         email: "srivastava999ayush@gmail.com",
       },
-      to: [{ email: "srivastava999ayush@gmail.com", name: "Ayush" }],
+
+      to: [
+        {
+          email: "srivastava999ayush@gmail.com",
+          name: "Ayush",
+        },
+      ],
+
       subject: `🔔 New Portfolio Message from ${cleanName}`,
+
       htmlContent: `
         <!DOCTYPE html>
         <html>
@@ -485,7 +522,9 @@ Return ONLY the email reply text.
               color: #55556a;
               font-size: 13px;
             }
-            .footer strong { color: #e8e8f0; }
+            .footer strong {
+              color: #e8e8f0;
+            }
             @media (max-width: 480px) {
               .container { padding: 20px; }
               .header-center h1 { font-size: 18px; }
@@ -541,17 +580,44 @@ Return ONLY the email reply text.
     });
 
     if (!userEmailResponse.ok) {
-      console.error("❌ USER EMAIL FAILED:", await userEmailResponse.text());
-      return;
+      const errorText = await userEmailResponse.text();
+      console.error("❌ USER EMAIL FAILED:", errorText);
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "AI reply was generated but visitor email could not be sent.",
+        }),
+      };
     }
 
     if (!adminEmailResponse.ok) {
-      console.error("❌ ADMIN EMAIL FAILED:", await adminEmailResponse.text());
-      return;
+      const errorText = await adminEmailResponse.text();
+      console.error("❌ ADMIN EMAIL FAILED:", errorText);
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "Visitor reply was sent but admin notification failed.",
+        }),
+      };
     }
 
-    console.log(`✅ Emails sent successfully to ${cleanName} (${Date.now() - startTime}ms total)`);
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: true,
+        message: "AI-generated reply sent successfully.",
+      }),
+    };
   } catch (error) {
-    console.error("❌ Background Process Error:", error);
+    console.error("❌ FUNCTION ERROR:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        success: false,
+        error: "Internal server error.",
+      }),
+    };
   }
-}
+};
