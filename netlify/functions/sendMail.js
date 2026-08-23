@@ -298,7 +298,7 @@ Return ONLY the email reply text.
               padding-top: 12px;
               border-top: 1px solid rgba(255,255,255,0.06);
               text-align: center;
-              font-size: 8px;
+              font-size: 10px;
               color: #55556a;
               line-height: 1.6;
             }
