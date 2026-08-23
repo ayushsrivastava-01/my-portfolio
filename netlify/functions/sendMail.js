@@ -34,13 +34,13 @@ export const handler = async (event) => {
     console.log("💬 Message:", cleanMessage);
 
     // ---------------------------------------------------------
-    // GEMINI - TRY BOTH MODELS
+    // GEMINI - ✅ CORRECT MODELS
     // ---------------------------------------------------------
 
     let aiReply = null;
     let geminiError = null;
 
-    const models = ["gemini-1.5-flash", "gemini-pro"];
+    const models = ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-1.5-flash-8b"];
     
     for (const model of models) {
       try {
