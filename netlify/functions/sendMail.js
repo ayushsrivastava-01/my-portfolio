@@ -4,10 +4,7 @@ export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({
-        success: false,
-        error: "Method Not Allowed",
-      }),
+      body: JSON.stringify({ success: false, error: "Method Not Allowed" }),
     };
   }
 
@@ -27,63 +24,43 @@ export const handler = async (event) => {
     const cleanName = name.trim();
     const cleanEmail = email.trim();
     const cleanMessage = message.trim();
+    const firstName = cleanName.split(" ")[0];
 
-    // 🔥 SIRF FIRST NAME EXTRACT
-    const firstName = cleanName.split(' ')[0];
+    console.log("🚀 PROCESSING EMAIL FOR:", cleanName);
 
     // ---------------------------------------------------------
-    // GEMINI
+    // 1️⃣ GEMINI API CALL
     // ---------------------------------------------------------
 
     const geminiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent",
       {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
           "x-goog-api-key": process.env.GEMINI_API_KEY,
         },
-
         body: JSON.stringify({
           systemInstruction: {
-            parts: [
-              {
-                text: portfolioKnowledge,
-              },
-            ],
+            parts: [{ text: portfolioKnowledge }],
           },
-
           contents: [
             {
               role: "user",
-
               parts: [
                 {
                   text: `
 A visitor has contacted Ayush through his portfolio.
 
-Visitor name:
-${cleanName}
-
-Visitor's question/message:
-${cleanMessage}
+Visitor name: ${cleanName}
+Visitor's question/message: ${cleanMessage}
 
 IMPORTANT:
 Answer the visitor's actual question directly.
+Do NOT add "Regards", "Best Regards", "Thanks", or any closing text.
+Just give the direct answer.
 
-Do not simply acknowledge the message.
-
-Do not say "I received your message".
-
-Do not say "Ayush will get back to you".
-
-Use the portfolio knowledge provided in the system instructions.
-
-If the question is about Ayush's skills, technologies, projects or Spring Boot experience, answer specifically using that information.
-
-If the information is not available in the knowledge base, honestly say that the information is not available and suggest contacting Ayush directly through his portfolio.
-
+Use the portfolio knowledge provided.
 Keep the response concise, natural, friendly and professional.
 
 Return ONLY the email reply text.
@@ -92,10 +69,9 @@ Return ONLY the email reply text.
               ],
             },
           ],
-
           generationConfig: {
             temperature: 0.3,
-            maxOutputTokens: 1000,
+            maxOutputTokens: 500,
           },
         }),
       }
@@ -104,79 +80,43 @@ Return ONLY the email reply text.
     const geminiData = await geminiResponse.json();
 
     if (!geminiResponse.ok) {
-      console.error(
-        "❌ GEMINI API ERROR:",
-        JSON.stringify(geminiData, null, 2)
-      );
-
+      console.error("❌ GEMINI API ERROR:", JSON.stringify(geminiData, null, 2));
       return {
         statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "AI response generation failed.",
-          details:
-            geminiData?.error?.message || "Unknown Gemini API error",
+          error: "Gemini API failed",
+          details: geminiData?.error?.message || "Unknown error",
         }),
       };
     }
 
-    const aiReply =
-      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    const aiReply = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!aiReply) {
-      console.error(
-        "❌ GEMINI RETURNED NO TEXT:",
-        JSON.stringify(geminiData, null, 2)
-      );
-
+      console.error("❌ GEMINI EMPTY RESPONSE:", JSON.stringify(geminiData, null, 2));
       return {
         statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "Gemini returned an empty response.",
+          error: "Gemini returned empty response",
         }),
       };
     }
 
-    console.log("✅ AI REPLY GENERATED:");
-    console.log(aiReply);
+    console.log("✅ GEMINI REPLY GENERATED:", aiReply);
 
     // ---------------------------------------------------------
-    // BREVO HELPER
+    // 2️⃣ BREVO - USER EMAIL
     // ---------------------------------------------------------
 
-    const sendBrevoEmail = async (payload) => {
-      return fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": process.env.BREVO_API_KEY,
-        },
-
-        body: JSON.stringify(payload),
-      });
-    };
-
-    // ---------------------------------------------------------
-    // 1. SEND AI-GENERATED REPLY TO VISITOR
-    // ---------------------------------------------------------
-
-    const userEmailResponse = await sendBrevoEmail({
+    const userEmailPayload = {
       sender: {
         name: "Ayush Srivastava",
         email: "srivastava999ayush@gmail.com",
       },
-
-      to: [
-        {
-          email: cleanEmail,
-          name: firstName,
-        },
-      ],
-
-      subject: `Thanks for reaching out, ${firstName}`,
-
+      to: [{ email: cleanEmail, name: firstName }],
+      subject: `Re: Your message to Ayush Srivastava`,
       htmlContent: `
         <!DOCTYPE html>
         <html>
@@ -222,9 +162,7 @@ Return ONLY the email reply text.
               margin-bottom: 12px;
               text-align: left;
             }
-            .greeting span {
-              color: #9b7ff4;
-            }
+            .greeting span { color: #9b7ff4; }
             .query-box {
               background: rgba(255, 74, 87, 0.04);
               border-left: 3px solid #ff4a57;
@@ -314,25 +252,19 @@ Return ONLY the email reply text.
               <h1>~ Message Received ~</h1>
               <div class="sub">Here's my response to your query</div>
             </div>
-            
             <div class="greeting">Hi <span>${firstName}</span>,</div>
-            
             <div class="query-box">
               <span class="query-label">📝 Your Query</span>
               <p>${cleanMessage}</p>
             </div>
-            
             <div class="reply-box">
               <span class="reply-label">💬 My Response</span>
               <p>${aiReply}</p>
             </div>
-            
             <div class="divider"></div>
-            
             <div class="footer">
               <div class="footer-regards">Regards,</div>
               <div class="footer-name">Ayush Srivastava</div>
-              
               <div class="footer-disclaimer">
                 ⚡ This is an automated reply generated by AI.<br>
                 If you have any further questions, feel free to reply to this email.
@@ -342,32 +274,48 @@ Return ONLY the email reply text.
         </body>
         </html>
       `,
-
       replyTo: {
         name: "Ayush Srivastava",
         email: "srivastava999ayush@gmail.com",
       },
+    };
+
+    console.log("📤 SENDING USER EMAIL TO:", cleanEmail);
+    const userEmailResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": process.env.BREVO_API_KEY,
+      },
+      body: JSON.stringify(userEmailPayload),
     });
 
+    if (!userEmailResponse.ok) {
+      const errorText = await userEmailResponse.text();
+      console.error("❌ USER EMAIL FAILED:", errorText);
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "User email failed",
+          details: errorText,
+        }),
+      };
+    }
+
+    console.log("✅ USER EMAIL SENT");
+
     // ---------------------------------------------------------
-    // 2. SEND NOTIFICATION ONLY TO AYUSH
+    // 3️⃣ BREVO - ADMIN EMAIL
     // ---------------------------------------------------------
 
-    const adminEmailResponse = await sendBrevoEmail({
+    const adminEmailPayload = {
       sender: {
         name: "Portfolio Contact Form",
         email: "srivastava999ayush@gmail.com",
       },
-
-      to: [
-        {
-          email: "srivastava999ayush@gmail.com",
-          name: "Ayush",
-        },
-      ],
-
+      to: [{ email: "srivastava999ayush@gmail.com", name: "Ayush" }],
       subject: `🔔 New Portfolio Message from ${cleanName}`,
-
       htmlContent: `
         <!DOCTYPE html>
         <html>
@@ -525,9 +473,7 @@ Return ONLY the email reply text.
               color: #55556a;
               font-size: 13px;
             }
-            .footer strong {
-              color: #e8e8f0;
-            }
+            .footer strong { color: #e8e8f0; }
             @media (max-width: 480px) {
               .container { padding: 20px; }
               .header-center h1 { font-size: 18px; }
@@ -541,35 +487,28 @@ Return ONLY the email reply text.
               <span class="badge">🔔 New Submission</span>
               <h1>Someone Just Reached Out!</h1>
             </div>
-            
             <div class="detail-box">
               <span class="detail-label">👤 Name</span>
               <div class="detail-value">${cleanName}</div>
             </div>
-            
             <div class="detail-box">
               <span class="detail-label">📧 Email</span>
               <div class="detail-value">
                 <a href="mailto:${cleanEmail}">${cleanEmail}</a>
               </div>
             </div>
-            
             <div class="message-box">
               <span class="message-label">💬 Visitor Message</span>
               <p>${cleanMessage}</p>
             </div>
-            
             <div class="ai-box">
               <span class="ai-label">🤖 AI Reply Sent</span>
               <p>${aiReply}</p>
             </div>
-            
             <div class="divider"></div>
-            
             <div class="action-box">
               <a href="mailto:${cleanEmail}" class="action-btn">✉️ Reply to ${cleanName}</a>
             </div>
-            
             <div class="footer">
               <div>This is an automated notification from your portfolio.</div>
               <div style="margin-top:4px; color:#3a3a5a; font-size:12px;">
@@ -580,19 +519,17 @@ Return ONLY the email reply text.
         </body>
         </html>
       `,
-    });
+    };
 
-    if (!userEmailResponse.ok) {
-      const errorText = await userEmailResponse.text();
-      console.error("❌ USER EMAIL FAILED:", errorText);
-      return {
-        statusCode: 502,
-        body: JSON.stringify({
-          success: false,
-          error: "AI reply was generated but visitor email could not be sent.",
-        }),
-      };
-    }
+    console.log("📤 SENDING ADMIN EMAIL TO: srivastava999ayush@gmail.com");
+    const adminEmailResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": process.env.BREVO_API_KEY,
+      },
+      body: JSON.stringify(adminEmailPayload),
+    });
 
     if (!adminEmailResponse.ok) {
       const errorText = await adminEmailResponse.text();
@@ -601,10 +538,13 @@ Return ONLY the email reply text.
         statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "Visitor reply was sent but admin notification failed.",
+          error: "Admin email failed",
+          details: errorText,
         }),
       };
     }
+
+    console.log("✅ ADMIN EMAIL SENT");
 
     return {
       statusCode: 200,
@@ -619,7 +559,7 @@ Return ONLY the email reply text.
       statusCode: 500,
       body: JSON.stringify({
         success: false,
-        error: "Internal server error.",
+        error: error.message || "Internal server error",
       }),
     };
   }
