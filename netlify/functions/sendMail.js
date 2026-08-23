@@ -34,13 +34,18 @@ export const handler = async (event) => {
     console.log("💬 Message:", cleanMessage);
 
     // ---------------------------------------------------------
-    // GEMINI - ✅ 2.0 MODELS
+    // GEMINI - ✅ LATEST MODELS
     // ---------------------------------------------------------
 
     let aiReply = null;
     let geminiError = null;
 
-    const models = ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-2.0-pro"];
+    const models = [
+      "gemini-3.7-flash",
+      "gemini-3.6-flash",
+      "gemini-3.5-flash",
+      "gemini-2.5-flash"
+    ];
     
     for (const model of models) {
       try {
