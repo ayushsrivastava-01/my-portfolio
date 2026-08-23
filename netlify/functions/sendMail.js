@@ -32,46 +32,35 @@ export const handler = async (event) => {
     const firstName = cleanName.split(' ')[0];
 
     // ---------------------------------------------------------
-    // GEMINI - MODEL CHANGE
+    // GEMINI
     // ---------------------------------------------------------
 
-    // Try different models if one fails
-    const models = [
-      "gemini-2.0-flash-exp",
-      "gemini-1.5-flash",
-      "gemini-pro"
-    ];
+    const geminiResponse = await fetch(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
+      {
+        method: "POST",
 
-    let geminiData = null;
-    let geminiResponse = null;
-    let lastError = null;
+        headers: {
+          "Content-Type": "application/json",
+          "x-goog-api-key": process.env.GEMINI_API_KEY,
+        },
 
-    for (const model of models) {
-      try {
-        console.log(`🔄 Trying model: ${model}`);
-        
-        geminiResponse = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "x-goog-api-key": process.env.GEMINI_API_KEY,
-            },
-            body: JSON.stringify({
-              systemInstruction: {
-                parts: [
-                  {
-                    text: portfolioKnowledge,
-                  },
-                ],
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [
+              {
+                text: portfolioKnowledge,
               },
-              contents: [
+            ],
+          },
+
+          contents: [
+            {
+              role: "user",
+
+              parts: [
                 {
-                  role: "user",
-                  parts: [
-                    {
-                      text: `
+                  text: `
 A visitor has contacted Ayush through his portfolio.
 
 Visitor name:
@@ -98,49 +87,35 @@ If the information is not available in the knowledge base, honestly say that the
 Keep the response concise, natural, friendly and professional.
 
 Return ONLY the email reply text.
-                      `,
-                    },
-                  ],
+                  `,
                 },
               ],
-              generationConfig: {
-                temperature: 0.3,
-                maxOutputTokens: 500,
-              },
-            }),
-          }
-        );
+            },
+          ],
 
-        geminiData = await geminiResponse.json();
-
-        if (geminiResponse.ok) {
-          console.log(`✅ Model ${model} worked!`);
-          break;
-        } else {
-          console.error(`❌ Model ${model} failed:`, geminiData?.error?.message || "Unknown error");
-          lastError = geminiData?.error?.message || "Unknown error";
-          geminiData = null;
-          geminiResponse = null;
-        }
-      } catch (err) {
-        console.error(`❌ Model ${model} error:`, err.message);
-        lastError = err.message;
-        geminiData = null;
-        geminiResponse = null;
+          generationConfig: {
+            temperature: 0.3,
+            maxOutputTokens: 1000,
+          },
+        }),
       }
-    }
+    );
 
-    // If all models failed
-    if (!geminiResponse || !geminiResponse.ok || !geminiData) {
-      console.error("❌ ALL GEMINI MODELS FAILED");
-      console.error("Last error:", lastError);
+    const geminiData = await geminiResponse.json();
+
+    if (!geminiResponse.ok) {
+      console.error(
+        "❌ GEMINI API ERROR:",
+        JSON.stringify(geminiData, null, 2)
+      );
 
       return {
         statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "AI response generation failed. Please try again later.",
-          details: lastError || "All Gemini models failed",
+          error: "AI response generation failed.",
+          details:
+            geminiData?.error?.message || "Unknown Gemini API error",
         }),
       };
     }
@@ -221,30 +196,30 @@ Return ONLY the email reply text.
               margin: 0 auto;
               background: #12121f;
               border-radius: 16px;
-              padding: 35px 40px;
+              padding: 40px 45px;
               border: 2px solid rgba(124, 77, 255, 0.12);
               box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             }
             .header-center {
               text-align: center;
-              margin-bottom: 22px;
+              margin-bottom: 24px;
             }
             .header-center h1 {
               color: #ffffff;
-              font-size: 22px;
+              font-size: 24px;
               font-weight: 700;
               letter-spacing: -0.5px;
             }
             .header-center .sub {
               color: rgba(255,255,255,0.3);
-              font-size: 13px;
+              font-size: 14px;
               margin-top: 4px;
             }
             .greeting {
               color: #e8e8f0;
-              font-size: 15px;
+              font-size: 16px;
               font-weight: 500;
-              margin-bottom: 10px;
+              margin-bottom: 12px;
               text-align: left;
             }
             .greeting span {
@@ -253,8 +228,8 @@ Return ONLY the email reply text.
             .query-box {
               background: rgba(255, 74, 87, 0.04);
               border-left: 3px solid #ff4a57;
-              padding: 12px 16px;
-              margin: 10px 0 14px;
+              padding: 14px 18px;
+              margin: 12px 0 16px;
               border-radius: 0 8px 8px 0;
               text-align: left;
             }
@@ -269,7 +244,7 @@ Return ONLY the email reply text.
             }
             .query-box p {
               color: #c8c8e0;
-              font-size: 13px;
+              font-size: 14px;
               line-height: 1.6;
               margin: 0;
               font-style: italic;
@@ -277,8 +252,8 @@ Return ONLY the email reply text.
             .reply-box {
               background: rgba(124, 77, 255, 0.04);
               border-left: 3px solid #7c4dff;
-              padding: 12px 16px;
-              margin: 10px 0 18px;
+              padding: 14px 18px;
+              margin: 12px 0 20px;
               border-radius: 0 8px 8px 0;
               text-align: left;
             }
@@ -293,18 +268,18 @@ Return ONLY the email reply text.
             }
             .reply-box p {
               color: #c8c8e0;
-              font-size: 13px;
+              font-size: 14px;
               line-height: 1.6;
               margin: 0;
             }
             .divider {
               height: 1px;
               background: rgba(255,255,255,0.04);
-              margin: 18px 0;
+              margin: 20px 0;
             }
             .footer {
-              margin-top: 18px;
-              padding-top: 12px;
+              margin-top: 20px;
+              padding-top: 16px;
               border-top: 2px solid rgba(124, 77, 255, 0.08);
               text-align: left;
             }
@@ -316,26 +291,20 @@ Return ONLY the email reply text.
             .footer-name {
               color: #e8e8f0;
               font-size: 14px;
-              font-weight: 700;
+              font-weight: 600;
             }
             .footer-disclaimer {
-              margin-top: 12px;
-              padding-top: 10px;
-              border-top: 1px solid rgba(255,255,255,0.04);
+              margin-top: 16px;
+              padding-top: 12px;
+              border-top: 1px solid rgba(255,255,255,0.06);
               text-align: center;
-              font-size: 11px;
+              font-size: 10px;
               color: #55556a;
-              line-height: 1.5;
+              line-height: 1.6;
             }
             @media (max-width: 480px) {
               .container { padding: 24px 20px; }
               .header-center h1 { font-size: 20px; }
-              .header-center .sub { font-size: 12px; }
-              .greeting { font-size: 14px; }
-              .query-box p, .reply-box p { font-size: 12px; }
-              .footer-regards { font-size: 12px; }
-              .footer-name { font-size: 14px; }
-              .footer-disclaimer { font-size: 10px; }
             }
           </style>
         </head>
