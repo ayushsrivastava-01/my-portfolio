@@ -11,229 +11,467 @@ const Contact = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hoveredSocial, setHoveredSocial] = useState(null);
-  
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
-  
+
   const [errors, setErrors] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
-  
+
   const [touched, setTouched] = useState({
     name: false,
     email: false,
-    message: false
+    message: false,
   });
 
   useEffect(() => {
-    setTimeout(() => setAnimate(true), 100);
+    const timer = setTimeout(() => setAnimate(true), 100);
+
+    return () => clearTimeout(timer);
   }, []);
+
+  // ==========================================
+  // VALIDATION
+  // ==========================================
 
   const validateName = (name) => {
     if (!name) return "Full name is required";
-    if (name.trim().length < 2) return "Name must contain at least 2 characters";
-    if (name.trim().length > 50) return "Name cannot exceed 50 characters";
-    if (/[0-9]/.test(name)) return "Name should not contain numeric characters";
+
+    if (name.trim().length < 2) {
+      return "Name must contain at least 2 characters";
+    }
+
+    if (name.trim().length > 50) {
+      return "Name cannot exceed 50 characters";
+    }
+
+    if (/[0-9]/.test(name)) {
+      return "Name should not contain numeric characters";
+    }
+
     return "";
   };
 
   const validateEmail = (email) => {
     if (!email) return "Email address is required";
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) return "Please enter a valid email address";
-    
-    const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "icloud.com", "protonmail.com"];
+
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address";
+    }
+
+    const validDomains = [
+      "gmail.com",
+      "yahoo.com",
+      "outlook.com",
+      "hotmail.com",
+      "icloud.com",
+      "protonmail.com",
+    ];
+
     const domain = email.split("@")[1];
-    if (domain && !validDomains.includes(domain.toLowerCase())) {
+
+    if (
+      domain &&
+      !validDomains.includes(domain.toLowerCase())
+    ) {
       return `Email domain must be one of: ${validDomains.join(", ")}`;
     }
+
     return "";
   };
 
   const validateMessage = (message) => {
     if (!message) return "Message cannot be empty";
-    if (message.trim().length < 10) return "Message must contain at least 10 characters";
-    if (message.length > 1000) return "Message cannot exceed 1000 characters";
-    if (message.trim() === "") return "Please enter a meaningful message";
-    
-    const spamKeywords = ["http://", "https://", "www.", ".com", "buy now", "click here", "make money", "earn fast"];
-    const hasSpam = spamKeywords.some(keyword => message.toLowerCase().includes(keyword));
-    if (hasSpam) return "Message contains promotional content. Please remove.";
+
+    if (message.trim().length < 10) {
+      return "Message must contain at least 10 characters";
+    }
+
+    if (message.length > 1000) {
+      return "Message cannot exceed 1000 characters";
+    }
+
+    if (message.trim() === "") {
+      return "Please enter a meaningful message";
+    }
+
+    const spamKeywords = [
+      "http://",
+      "https://",
+      "www.",
+      ".com",
+      "buy now",
+      "click here",
+      "make money",
+      "earn fast",
+    ];
+
+    const hasSpam = spamKeywords.some((keyword) =>
+      message.toLowerCase().includes(keyword)
+    );
+
+    if (hasSpam) {
+      return "Message contains promotional content. Please remove.";
+    }
+
     return "";
   };
 
+  // ==========================================
+  // HANDLE INPUT CHANGE
+  // ==========================================
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
     let error = "";
-    if (name === "name") error = validateName(value);
-    if (name === "email") error = validateEmail(value);
-    if (name === "message") error = validateMessage(value);
-    
-    setErrors(prev => ({ ...prev, [name]: error }));
+
+    if (name === "name") {
+      error = validateName(value);
+    }
+
+    if (name === "email") {
+      error = validateEmail(value);
+    }
+
+    if (name === "message") {
+      error = validateMessage(value);
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
+
+  // ==========================================
+  // HANDLE BLUR
+  // ==========================================
 
   const handleBlur = (e) => {
     const { name } = e.target;
-    setTouched(prev => ({ ...prev, [name]: true }));
-    
+
+    setTouched((prev) => ({
+      ...prev,
+      [name]: true,
+    }));
+
     let error = "";
-    if (name === "name") error = validateName(formData.name);
-    if (name === "email") error = validateEmail(formData.email);
-    if (name === "message") error = validateMessage(formData.message);
-    
-    setErrors(prev => ({ ...prev, [name]: error }));
+
+    if (name === "name") {
+      error = validateName(formData.name);
+    }
+
+    if (name === "email") {
+      error = validateEmail(formData.email);
+    }
+
+    if (name === "message") {
+      error = validateMessage(formData.message);
+    }
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: error,
+    }));
   };
 
-  const encode = (data) => {
-    return Object.keys(data)
-      .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-  };
+  // ==========================================
+  // SUBMIT FORM
+  // ==========================================
 
-  // 🔥 FIXED: Auto-reply with Brevo
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    setTouched({ name: true, email: true, message: true });
-    
+
+    // Mark all fields as touched
+    setTouched({
+      name: true,
+      email: true,
+      message: true,
+    });
+
+    // Validate everything
     const nameError = validateName(formData.name);
     const emailError = validateEmail(formData.email);
     const messageError = validateMessage(formData.message);
-    
+
     setErrors({
       name: nameError,
       email: emailError,
-      message: messageError
+      message: messageError,
     });
-    
+
+    // Stop if validation fails
     if (nameError || emailError || messageError) {
       const firstError = document.querySelector(".error-message");
-      if (firstError) firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      if (firstError) {
+        firstError.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }
+
       return;
     }
-    
+
     setLoading(true);
 
     try {
-      // 1️⃣ Netlify Form submit
-      const formResponse = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({
-          "form-name": "contact",
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
-        }),
-      });
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        message: formData.message.trim(),
+      };
 
-      if (!formResponse.ok) {
-        throw new Error('Form submission failed');
+      console.log("Sending contact form:", payload);
+
+      // ==========================================
+      // CALL NETLIFY FUNCTION
+      // ==========================================
+
+      const response = await fetch(
+        "/.netlify/functions/sendMail",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      // Try to parse JSON response
+      let result;
+
+      try {
+        result = await response.json();
+      } catch {
+        result = {};
       }
 
-      // 2️⃣ Auto-reply email via Netlify Function
-      const emailResponse = await fetch("/.netlify/functions/sendMail", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          message: formData.message.trim(),
-        }),
-      });
+      console.log("sendMail response:", result);
 
-      const emailResult = await emailResponse.json();
-      
-      if (!emailResponse.ok) {
-        console.error('Auto-reply email failed:', emailResult);
-      } else {
-        console.log('Auto-reply email sent:', emailResult);
+      // ==========================================
+      // CHECK FUNCTION RESPONSE
+      // ==========================================
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.error ||
+            "Unable to send your message. Please try again."
+        );
       }
+
+      // ==========================================
+      // SUCCESS
+      // ==========================================
 
       setFormSubmitted(true);
-      setFormData({ name: "", email: "", message: "" });
-      setErrors({ name: "", email: "", message: "" });
-      setTouched({ name: false, email: false, message: false });
-      setTimeout(() => setFormSubmitted(false), 5000);
 
+      setFormData({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      setErrors({
+        name: "",
+        email: "",
+        message: "",
+      });
+
+      setTouched({
+        name: false,
+        email: false,
+        message: false,
+      });
+
+      setTimeout(() => {
+        setFormSubmitted(false);
+      }, 5000);
     } catch (error) {
-      console.error("Form submission error:", error);
-      alert("Something went wrong. Please try again.");
+      console.error("Contact form error:", error);
+
+      alert(
+        error.message ||
+          "Something went wrong. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
 
+  // ==========================================
+  // SOCIAL LINKS
+  // ==========================================
+
   const socialLinks = [
-    { name: "Instagram", icon: FaInstagram, url: "https://www.instagram.com/ayushsrivastava_01", color: "#E4405F" },
-    { name: "LinkedIn", icon: FaLinkedin, url: "https://www.linkedin.com/in/ayush-srivastava01", color: "#0A66C2" },
-    { name: "Telegram", icon: FaTelegram, url: "https://telegram.me/ayushsrivastava_01", color: "#26A5E4" },
-    { name: "GitHub", icon: FaGithub, url: "https://github.com/ayushsrivastava-01", color: "#333333" },
-    { name: "Threads", icon: FaThreads, url: "https://www.threads.net/@ayushsrivastava_01", color: "#000000" },
+    {
+      name: "Instagram",
+      icon: FaInstagram,
+      url: "https://www.instagram.com/ayushsrivastava_01",
+      color: "#E4405F",
+    },
+    {
+      name: "LinkedIn",
+      icon: FaLinkedin,
+      url: "https://www.linkedin.com/in/ayush-srivastava01",
+      color: "#0A66C2",
+    },
+    {
+      name: "Telegram",
+      icon: FaTelegram,
+      url: "https://telegram.me/ayushsrivastava_01",
+      color: "#26A5E4",
+    },
+    {
+      name: "GitHub",
+      icon: FaGithub,
+      url: "https://github.com/ayushsrivastava-01",
+      color: "#333333",
+    },
+    {
+      name: "Threads",
+      icon: FaThreads,
+      url: "https://www.threads.net/@ayushsrivastava_01",
+      color: "#000000",
+    },
   ];
+
+  // ==========================================
+  // UI
+  // ==========================================
 
   return (
     <div className="contact-section">
-      <div className={`contact-header ${animate ? "show" : ""}`}>
+
+      {/* HEADER */}
+      <div
+        className={`contact-header ${
+          animate ? "show" : ""
+        }`}
+      >
         <div className="contact-label">
           <span className="label-dot"></span>
+
           Contact
+
           <span className="label-dot"></span>
         </div>
+
         <h2 className="contact-heading">
           {"Let's "}
           <em>Connect</em>
         </h2>
+
         <p className="contact-subheading">
-          {"Begin a conversation — I look forward to hearing from you."}
+          Begin a conversation — I look forward to hearing from you.
         </p>
       </div>
 
-      <div className={`contact-container ${animate ? "show" : ""}`}>
+      {/* CONTAINER */}
+      <div
+        className={`contact-container ${
+          animate ? "show" : ""
+        }`}
+      >
+
+        {/* =====================================
+            LEFT INFORMATION BOX
+        ====================================== */}
+
         <div className="contact-box info-box">
+
           <div className="lottie-icon-top">
-            <Lottie animationData={emailAnimation} loop={true} />
+            <Lottie
+              animationData={emailAnimation}
+              loop={true}
+            />
           </div>
 
-          <h3 className="get-in-touch">Get in touch</h3>
-          <p className="touch-text">Discuss your project or opportunity</p>
+          <h3 className="get-in-touch">
+            Get in touch
+          </h3>
 
-          <a href="mailto:srivastava999ayush@gmail.com" className="email-row">
+          <p className="touch-text">
+            Discuss your project or opportunity
+          </p>
+
+          <a
+            href="mailto:srivastava999ayush@gmail.com"
+            className="email-row"
+          >
             <div className="email-icon-wrap">
-              <svg viewBox="0 0 24 24" className="email-svg">
+              <svg
+                viewBox="0 0 24 24"
+                className="email-svg"
+              >
                 <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
               </svg>
             </div>
-            <span className="email-text">srivastava999ayush@gmail.com</span>
+
+            <span className="email-text">
+              srivastava999ayush@gmail.com
+            </span>
           </a>
 
           <div className="info-divider"></div>
 
+          {/* SOCIAL ICONS */}
+
           <div className="social-icons">
-            {socialLinks.map((social) => (
-              <div
-                key={social.name}
-                className="social-tooltip-wrapper"
-                onMouseEnter={() => setHoveredSocial(social.name)}
-                onMouseLeave={() => setHoveredSocial(null)}
-              >
-                <a href={social.url} target="_blank" rel="noopener noreferrer" className="social-btn">
-                  <social.icon />
-                </a>
-                {hoveredSocial === social.name && (
-                  <span className="social-tooltip" style={{ background: social.color }}>
-                    {social.name}
-                  </span>
-                )}
-              </div>
-            ))}
+
+            {socialLinks.map((social) => {
+              const Icon = social.icon;
+
+              return (
+                <div
+                  key={social.name}
+                  className="social-tooltip-wrapper"
+                  onMouseEnter={() =>
+                    setHoveredSocial(social.name)
+                  }
+                  onMouseLeave={() =>
+                    setHoveredSocial(null)
+                  }
+                >
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-btn"
+                  >
+                    <Icon />
+                  </a>
+
+                  {hoveredSocial === social.name && (
+                    <span
+                      className="social-tooltip"
+                      style={{
+                        background: social.color,
+                      }}
+                    >
+                      {social.name}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+
           </div>
 
           <div className="response-time">
@@ -242,95 +480,230 @@ const Contact = () => {
           </div>
         </div>
 
+        {/* =====================================
+            RIGHT FORM BOX
+        ====================================== */}
+
         <div className="contact-box form-box">
-          <h3 className="form-title">Send a Message</h3>
+
+          <h3 className="form-title">
+            Send a Message
+          </h3>
 
           {formSubmitted ? (
             <div className="thank-you-message">
-              <Lottie animationData={successAnimation} loop={false} style={{ height: 120, margin: "0 auto 1rem" }} />
-              <h4>Message Sent Successfully</h4>
-              <p>Thank you for reaching out. I will respond promptly.</p>
-              <p className="success-note">✅ A confirmation has been sent to your email address.</p>
+
+              <Lottie
+                animationData={successAnimation}
+                loop={false}
+                style={{
+                  height: 120,
+                  margin: "0 auto 1rem",
+                }}
+              />
+
+              <h4>
+                Message Sent Successfully
+              </h4>
+
+              <p>
+                Thank you for reaching out. I will respond promptly.
+              </p>
+
+              <p className="success-note">
+                ✅ A confirmation has been sent to your email address.
+              </p>
+
             </div>
           ) : (
+
             <form onSubmit={handleSubmit}>
-              <input type="hidden" name="form-name" value="contact" />
-              <div style={{ display: "none" }}><input name="bot-field" /></div>
+
+              {/* NAME + EMAIL */}
 
               <div className="form-row">
+
+                {/* NAME */}
+
                 <div className="form-group">
-                  <label className="field-label">Full Name</label>
+
+                  <label className="field-label">
+                    Full Name
+                  </label>
+
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`field-input ${touched.name && errors.name ? "error-input" : ""} ${touched.name && !errors.name && formData.name ? "valid-input" : ""}`}
+                    className={`field-input ${
+                      touched.name && errors.name
+                        ? "error-input"
+                        : ""
+                    } ${
+                      touched.name &&
+                      !errors.name &&
+                      formData.name
+                        ? "valid-input"
+                        : ""
+                    }`}
                     placeholder="Enter your full name"
                   />
+
                   {touched.name && errors.name && (
-                    <div className="error-message">{errors.name}</div>
+                    <div className="error-message">
+                      {errors.name}
+                    </div>
                   )}
-                  {!errors.name && formData.name && touched.name && (
-                    <div className="valid-message">✓</div>
-                  )}
+
+                  {!errors.name &&
+                    formData.name &&
+                    touched.name && (
+                      <div className="valid-message">
+                        ✓
+                      </div>
+                    )}
+
                 </div>
 
+                {/* EMAIL */}
+
                 <div className="form-group">
-                  <label className="field-label">Email Address</label>
+
+                  <label className="field-label">
+                    Email Address
+                  </label>
+
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    className={`field-input ${touched.email && errors.email ? "error-input" : ""} ${touched.email && !errors.email && formData.email ? "valid-input" : ""}`}
+                    className={`field-input ${
+                      touched.email && errors.email
+                        ? "error-input"
+                        : ""
+                    } ${
+                      touched.email &&
+                      !errors.email &&
+                      formData.email
+                        ? "valid-input"
+                        : ""
+                    }`}
                     placeholder="your@email.com"
                   />
+
                   {touched.email && errors.email && (
-                    <div className="error-message">{errors.email}</div>
+                    <div className="error-message">
+                      {errors.email}
+                    </div>
                   )}
-                  {!errors.email && formData.email && touched.email && (
-                    <div className="valid-message">✓</div>
-                  )}
+
+                  {!errors.email &&
+                    formData.email &&
+                    touched.email && (
+                      <div className="valid-message">
+                        ✓
+                      </div>
+                    )}
+
                 </div>
               </div>
 
+              {/* MESSAGE */}
+
               <div className="form-group">
-                <label className="field-label">Message</label>
+
+                <label className="field-label">
+                  Message
+                </label>
+
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={`field-input field-textarea ${touched.message && errors.message ? "error-input" : ""} ${touched.message && !errors.message && formData.message ? "valid-input" : ""}`}
+                  className={`field-input field-textarea ${
+                    touched.message && errors.message
+                      ? "error-input"
+                      : ""
+                  } ${
+                    touched.message &&
+                    !errors.message &&
+                    formData.message
+                      ? "valid-input"
+                      : ""
+                  }`}
                   rows={5}
                   placeholder="Please describe your query or project in detail..."
                 />
-                {touched.message && errors.message && (
-                  <div className="error-message">{errors.message}</div>
-                )}
-                {!errors.message && formData.message && touched.message && (
-                  <div className="valid-message">✓</div>
-                )}
+
+                {touched.message &&
+                  errors.message && (
+                    <div className="error-message">
+                      {errors.message}
+                    </div>
+                  )}
+
+                {!errors.message &&
+                  formData.message &&
+                  touched.message && (
+                    <div className="valid-message">
+                      ✓
+                    </div>
+                  )}
+
               </div>
+
+              {/* CHARACTER COUNTER */}
 
               <div className="form-footer">
+
                 <div className="char-counter">
-                  <span className={`char-count ${formData.message.length > 900 ? "char-warn" : ""} ${formData.message.length > 1000 ? "char-error" : ""}`}>
+
+                  <span
+                    className={`char-count ${
+                      formData.message.length > 900
+                        ? "char-warn"
+                        : ""
+                    } ${
+                      formData.message.length > 1000
+                        ? "char-error"
+                        : ""
+                    }`}
+                  >
                     {formData.message.length} / 1000 characters
                   </span>
-                  {formData.message.length > 900 && formData.message.length <= 1000 && (
-                    <span className="char-warning-text">⚠ Approaching character limit</span>
-                  )}
+
+                  {formData.message.length > 900 &&
+                    formData.message.length <= 1000 && (
+                      <span className="char-warning-text">
+                        ⚠ Approaching character limit
+                      </span>
+                    )}
+
                   {formData.message.length > 1000 && (
-                    <span className="char-error-text">✗ Character limit exceeded</span>
+                    <span className="char-error-text">
+                      ✗ Character limit exceeded
+                    </span>
                   )}
+
                 </div>
+
               </div>
 
-              <button type="submit" className={`submit-btn ${loading ? "loading" : ""}`} disabled={loading}>
+              {/* SUBMIT */}
+
+              <button
+                type="submit"
+                className={`submit-btn ${
+                  loading ? "loading" : ""
+                }`}
+                disabled={loading}
+              >
+
                 {loading ? (
                   <>
                     <span className="spinner"></span>
@@ -339,9 +712,12 @@ const Contact = () => {
                 ) : (
                   "Submit Message"
                 )}
+
               </button>
+
             </form>
           )}
+
         </div>
       </div>
     </div>
