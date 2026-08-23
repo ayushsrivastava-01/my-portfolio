@@ -32,11 +32,14 @@ export const handler = async (event) => {
     const firstName = cleanName.split(' ')[0];
 
     // ---------------------------------------------------------
-    // GEMINI
+    // GEMINI - ✅ CORRECT MODEL
     // ---------------------------------------------------------
 
+    // Available models: gemini-2.0-flash-exp, gemini-1.5-flash, gemini-pro
+    const model = "gemini-2.0-flash-exp"; // ✅ Latest working model
+
     const geminiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent",
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
       {
         method: "POST",
 
@@ -95,7 +98,7 @@ Return ONLY the email reply text.
 
           generationConfig: {
             temperature: 0.3,
-            maxOutputTokens: 1000,
+            maxOutputTokens: 500,
           },
         }),
       }
@@ -196,30 +199,30 @@ Return ONLY the email reply text.
               margin: 0 auto;
               background: #12121f;
               border-radius: 16px;
-              padding: 40px 45px;
+              padding: 35px 40px;
               border: 2px solid rgba(124, 77, 255, 0.12);
               box-shadow: 0 20px 60px rgba(0,0,0,0.5);
             }
             .header-center {
               text-align: center;
-              margin-bottom: 24px;
+              margin-bottom: 22px;
             }
             .header-center h1 {
               color: #ffffff;
-              font-size: 24px;
+              font-size: 22px;
               font-weight: 700;
               letter-spacing: -0.5px;
             }
             .header-center .sub {
               color: rgba(255,255,255,0.3);
-              font-size: 14px;
+              font-size: 13px;
               margin-top: 4px;
             }
             .greeting {
               color: #e8e8f0;
-              font-size: 16px;
+              font-size: 15px;
               font-weight: 500;
-              margin-bottom: 12px;
+              margin-bottom: 10px;
               text-align: left;
             }
             .greeting span {
@@ -228,8 +231,8 @@ Return ONLY the email reply text.
             .query-box {
               background: rgba(255, 74, 87, 0.04);
               border-left: 3px solid #ff4a57;
-              padding: 14px 18px;
-              margin: 12px 0 16px;
+              padding: 12px 16px;
+              margin: 10px 0 14px;
               border-radius: 0 8px 8px 0;
               text-align: left;
             }
@@ -244,7 +247,7 @@ Return ONLY the email reply text.
             }
             .query-box p {
               color: #c8c8e0;
-              font-size: 14px;
+              font-size: 13px;
               line-height: 1.6;
               margin: 0;
               font-style: italic;
@@ -252,8 +255,8 @@ Return ONLY the email reply text.
             .reply-box {
               background: rgba(124, 77, 255, 0.04);
               border-left: 3px solid #7c4dff;
-              padding: 14px 18px;
-              margin: 12px 0 20px;
+              padding: 12px 16px;
+              margin: 10px 0 18px;
               border-radius: 0 8px 8px 0;
               text-align: left;
             }
@@ -268,43 +271,49 @@ Return ONLY the email reply text.
             }
             .reply-box p {
               color: #c8c8e0;
-              font-size: 14px;
+              font-size: 13px;
               line-height: 1.6;
               margin: 0;
             }
             .divider {
               height: 1px;
               background: rgba(255,255,255,0.04);
-              margin: 20px 0;
+              margin: 18px 0;
             }
             .footer {
-              margin-top: 20px;
-              padding-top: 16px;
+              margin-top: 18px;
+              padding-top: 12px;
               border-top: 2px solid rgba(124, 77, 255, 0.08);
               text-align: left;
             }
             .footer-regards {
               color: #8a8aaa;
-              font-size: 15px;
+              font-size: 13px;
               margin-bottom: 2px;
             }
             .footer-name {
               color: #e8e8f0;
-              font-size: 14px;
-              font-weight: 600;
+              font-size: 15px;
+              font-weight: 700;
             }
             .footer-disclaimer {
-              margin-top: 16px;
-              padding-top: 12px;
-              border-top: 1px solid rgba(255,255,255,0.06);
+              margin-top: 12px;
+              padding-top: 10px;
+              border-top: 1px solid rgba(255,255,255,0.04);
               text-align: center;
-              font-size: 10px;
+              font-size: 11px;
               color: #55556a;
-              line-height: 1.6;
+              line-height: 1.5;
             }
             @media (max-width: 480px) {
               .container { padding: 24px 20px; }
               .header-center h1 { font-size: 20px; }
+              .header-center .sub { font-size: 12px; }
+              .greeting { font-size: 14px; }
+              .query-box p, .reply-box p { font-size: 12px; }
+              .footer-regards { font-size: 12px; }
+              .footer-name { font-size: 14px; }
+              .footer-disclaimer { font-size: 10px; }
             }
           </style>
         </head>
