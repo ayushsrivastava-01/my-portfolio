@@ -4,17 +4,27 @@ export const handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({ error: "Method Not Allowed" }),
+      body: JSON.stringify({
+        success: false,
+        error: "Method Not Allowed",
+      }),
     };
   }
 
   try {
     const { name, email, message } = JSON.parse(event.body || "{}");
 
+    // ---------------------------------------------------------
+    // VALIDATION
+    // ---------------------------------------------------------
+
     if (!name || !email || !message) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "Missing required fields" }),
+        body: JSON.stringify({
+          success: false,
+          error: "Name, email and message are required.",
+        }),
       };
     }
 
@@ -22,18 +32,20 @@ export const handler = async (event) => {
     const cleanEmail = email.trim();
     const cleanMessage = message.trim();
 
-    // =========================================================
-    // 1. ASK GEMINI TO GENERATE A RELEVANT RESPONSE
-    // =========================================================
+    // ---------------------------------------------------------
+    // GEMINI
+    // ---------------------------------------------------------
 
     const geminiResponse = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
       {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
           "x-goog-api-key": process.env.GEMINI_API_KEY,
         },
+
         body: JSON.stringify({
           systemInstruction: {
             parts: [
@@ -42,25 +54,48 @@ export const handler = async (event) => {
               },
             ],
           },
+
           contents: [
             {
               role: "user",
+
               parts: [
                 {
-                  text: `Visitor name: ${cleanName}
+                  text: `
+A visitor has contacted Ayush through his portfolio.
 
-Visitor email: ${cleanEmail}
+Visitor name:
+${cleanName}
 
-Visitor's message:
+Visitor's question/message:
 ${cleanMessage}
 
-Write a concise, friendly and professional email response to this visitor based ONLY on the provided knowledge.`,
+IMPORTANT:
+Answer the visitor's actual question directly.
+
+Do not simply acknowledge the message.
+
+Do not say "I received your message".
+
+Do not say "Ayush will get back to you".
+
+Use the portfolio knowledge provided in the system instructions.
+
+If the question is about Ayush's skills, technologies, projects or Spring Boot experience, answer specifically using that information.
+
+If the information is not available in the knowledge base, honestly say that the information is not available and suggest contacting Ayush directly through his portfolio.
+
+Keep the response concise, natural, friendly and professional.
+
+Return ONLY the email reply text.
+                  `,
                 },
               ],
             },
           ],
+
           generationConfig: {
-            temperature: 0.4,
+            temperature: 0.3,
             maxOutputTokens: 500,
           },
         }),
@@ -69,48 +104,68 @@ Write a concise, friendly and professional email response to this visitor based 
 
     const geminiData = await geminiResponse.json();
 
-    let aiReply = "";
+    // ---------------------------------------------------------
+    // VERY IMPORTANT: DON'T SILENTLY FALLBACK
+    // ---------------------------------------------------------
 
-    if (geminiResponse.ok) {
-      aiReply =
-        geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
-    } else {
-      console.error("Gemini Error:", geminiData);
+    if (!geminiResponse.ok) {
+      console.error(
+        "❌ GEMINI API ERROR:",
+        JSON.stringify(geminiData, null, 2)
+      );
+
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "AI response generation failed.",
+          details:
+            geminiData?.error?.message || "Unknown Gemini API error",
+        }),
+      };
     }
 
-    // =========================================================
-    // 2. FALLBACK IF GEMINI FAILS
-    // =========================================================
+    const aiReply =
+      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
 
     if (!aiReply) {
-      aiReply = `Hi ${cleanName},
+      console.error(
+        "❌ GEMINI RETURNED NO TEXT:",
+        JSON.stringify(geminiData, null, 2)
+      );
 
-Thank you for reaching out to Ayush through his portfolio.
-
-I've received your message and Ayush will get back to you soon.
-
-Regards,
-Ayush Srivastava`;
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "Gemini returned an empty response.",
+        }),
+      };
     }
 
-    // =========================================================
-    // 3. BREVO FUNCTION
-    // =========================================================
+    console.log("✅ AI REPLY GENERATED:");
+    console.log(aiReply);
+
+    // ---------------------------------------------------------
+    // BREVO HELPER
+    // ---------------------------------------------------------
 
     const sendBrevoEmail = async (payload) => {
       return fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
+
         headers: {
           "Content-Type": "application/json",
           "api-key": process.env.BREVO_API_KEY,
         },
+
         body: JSON.stringify(payload),
       });
     };
 
-    // =========================================================
-    // 4. SEND AI RESPONSE TO VISITOR
-    // =========================================================
+    // ---------------------------------------------------------
+    // 1. SEND AI-GENERATED REPLY TO VISITOR
+    // ---------------------------------------------------------
 
     const userEmailResponse = await sendBrevoEmail({
       sender: {
@@ -125,16 +180,23 @@ Ayush Srivastava`;
         },
       ],
 
-      subject: `Thanks for reaching out, ${cleanName}`,
+      subject: `Re: Your message to Ayush Srivastava`,
 
       htmlContent: `
         <!DOCTYPE html>
+
         <html>
+
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+
         <body style="
           margin:0;
           padding:40px 20px;
           background:#0a0a14;
-          font-family:Arial,sans-serif;
+          font-family:Arial, sans-serif;
           color:#e8e8f0;
         ">
 
@@ -146,7 +208,10 @@ Ayush Srivastava`;
             padding:35px;
           ">
 
-            <h2 style="color:#ffffff;">
+            <h2 style="
+              color:#ffffff;
+              margin-top:0;
+            ">
               Hi ${cleanName},
             </h2>
 
@@ -159,13 +224,17 @@ Ayush Srivastava`;
               ${aiReply}
             </div>
 
-            <hr style="
-              border:none;
-              border-top:1px solid rgba(255,255,255,.08);
+            <div style="
+              height:1px;
+              background:rgba(255,255,255,0.08);
               margin:25px 0;
-            ">
+            "></div>
 
-            <p style="color:#77778f;font-size:13px;">
+            <p style="
+              color:#77778f;
+              font-size:13px;
+              margin-bottom:0;
+            ">
               Regards,<br>
               <strong style="color:#e8e8f0;">
                 Ayush Srivastava
@@ -175,6 +244,7 @@ Ayush Srivastava`;
           </div>
 
         </body>
+
         </html>
       `,
 
@@ -184,9 +254,9 @@ Ayush Srivastava`;
       },
     });
 
-    // =========================================================
-    // 5. SEND NOTIFICATION TO AYUSH
-    // =========================================================
+    // ---------------------------------------------------------
+    // 2. SEND NOTIFICATION ONLY TO AYUSH
+    // ---------------------------------------------------------
 
     const adminEmailResponse = await sendBrevoEmail({
       sender: {
@@ -205,12 +275,19 @@ Ayush Srivastava`;
 
       htmlContent: `
         <!DOCTYPE html>
+
         <html>
+
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+
         <body style="
           margin:0;
           padding:40px 20px;
           background:#0a0a14;
-          font-family:Arial,sans-serif;
+          font-family:Arial, sans-serif;
         ">
 
           <div style="
@@ -227,7 +304,8 @@ Ayush Srivastava`;
             </h2>
 
             <p>
-              <strong>Name:</strong> ${cleanName}
+              <strong>Name:</strong>
+              ${cleanName}
             </p>
 
             <p>
@@ -243,8 +321,8 @@ Ayush Srivastava`;
             <div style="
               margin-top:20px;
               padding:18px;
-              border-left:3px solid #7c4dff;
-              background:rgba(124,77,255,.05);
+              border-left:3px solid #ff4a57;
+              background:rgba(255,74,87,0.05);
             ">
 
               <strong>Visitor Message:</strong>
@@ -262,11 +340,11 @@ Ayush Srivastava`;
             <div style="
               margin-top:20px;
               padding:18px;
-              border-left:3px solid #3ecf8e;
-              background:rgba(62,207,142,.05);
+              border-left:3px solid #7c4dff;
+              background:rgba(124,77,255,0.05);
             ">
 
-              <strong>AI Generated Reply:</strong>
+              <strong>AI Reply Sent to Visitor:</strong>
 
               <p style="
                 color:#c8c8e0;
@@ -278,55 +356,91 @@ Ayush Srivastava`;
 
             </div>
 
+            <div style="
+              margin-top:25px;
+              text-align:center;
+            ">
+
+              <a
+                href="mailto:${cleanEmail}"
+                style="
+                  display:inline-block;
+                  background:#7c4dff;
+                  color:white;
+                  padding:11px 25px;
+                  border-radius:8px;
+                  text-decoration:none;
+                  font-weight:600;
+                "
+              >
+                Reply to ${cleanName}
+              </a>
+
+            </div>
+
           </div>
 
         </body>
+
         </html>
       `,
     });
 
-    // =========================================================
-    // 6. CHECK EMAIL STATUS
-    // =========================================================
+    // ---------------------------------------------------------
+    // CHECK BREVO RESPONSES
+    // ---------------------------------------------------------
 
-    const userEmailOk = userEmailResponse.ok;
-    const adminEmailOk = adminEmailResponse.ok;
+    if (!userEmailResponse.ok) {
+      const errorText = await userEmailResponse.text();
 
-    if (!userEmailOk || !adminEmailOk) {
-      const userError = await userEmailResponse.text();
-      const adminError = await adminEmailResponse.text();
-
-      console.error("User Brevo Error:", userError);
-      console.error("Admin Brevo Error:", adminError);
+      console.error("❌ USER EMAIL FAILED:");
+      console.error(errorText);
 
       return {
-        statusCode: 500,
+        statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "Email sending failed",
+          error: "AI reply was generated but visitor email could not be sent.",
         }),
       };
     }
 
-    // =========================================================
+    if (!adminEmailResponse.ok) {
+      const errorText = await adminEmailResponse.text();
+
+      console.error("❌ ADMIN EMAIL FAILED:");
+      console.error(errorText);
+
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "Visitor reply was sent but admin notification failed.",
+        }),
+      };
+    }
+
+    // ---------------------------------------------------------
     // SUCCESS
-    // =========================================================
+    // ---------------------------------------------------------
 
     return {
       statusCode: 200,
+
       body: JSON.stringify({
         success: true,
-        message: "AI response generated and emails sent successfully",
+        message: "AI-generated reply sent successfully.",
       }),
     };
   } catch (error) {
-    console.error("Function Error:", error);
+    console.error("❌ FUNCTION ERROR:", error);
 
     return {
       statusCode: 500,
+
       body: JSON.stringify({
         success: false,
-        error: "Internal server error",
+        error: "Internal server error.",
       }),
     };
   }
