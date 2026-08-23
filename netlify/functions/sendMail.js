@@ -29,30 +29,41 @@ export const handler = async (event) => {
     const cleanMessage = message.trim();
     const firstName = cleanName.split(' ')[0];
 
+    console.log("🚀 STARTING - Name:", firstName);
+    console.log("📧 Email:", cleanEmail);
+    console.log("💬 Message:", cleanMessage);
+
     // ---------------------------------------------------------
-    // GEMINI - ✅ CORRECT MODEL
+    // GEMINI - TRY BOTH MODELS
     // ---------------------------------------------------------
 
-    const model = "gemini-2.0-flash";  // ✅ Available model
+    let aiReply = null;
+    let geminiError = null;
 
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY,
-        },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: portfolioKnowledge }],
-          },
-          contents: [
-            {
-              role: "user",
-              parts: [
+    const models = ["gemini-1.5-flash", "gemini-pro"];
+    
+    for (const model of models) {
+      try {
+        console.log(`🔄 Trying model: ${model}`);
+
+        const geminiResponse = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-goog-api-key": process.env.GEMINI_API_KEY,
+            },
+            body: JSON.stringify({
+              systemInstruction: {
+                parts: [{ text: portfolioKnowledge }],
+              },
+              contents: [
                 {
-                  text: `
+                  role: "user",
+                  parts: [
+                    {
+                      text: `
 A visitor has contacted Ayush through his portfolio.
 
 Visitor name: ${firstName}
@@ -60,96 +71,90 @@ Visitor name: ${firstName}
 Visitor's question/message:
 ${cleanMessage}
 
-IMPORTANT:
 Answer the visitor's actual question directly.
-
-Do not simply acknowledge the message.
-
-Do not say "I received your message".
-
-Do not say "Ayush will get back to you".
-
-Use the portfolio knowledge provided in the system instructions.
-
-If the question is about Ayush's skills, technologies, projects or Spring Boot experience, answer specifically using that information.
-
-If the information is not available in the knowledge base, honestly say that the information is not available and suggest contacting Ayush directly through his portfolio.
-
+Use the portfolio knowledge provided.
 Keep the response concise, natural, friendly and professional.
-
 Return ONLY the email reply text.
-                  `,
+                      `,
+                    },
+                  ],
                 },
               ],
-            },
-          ],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 500,
-          },
-        }),
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 500,
+              },
+            }),
+          }
+        );
+
+        const geminiData = await geminiResponse.json();
+
+        if (geminiResponse.ok) {
+          const reply = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+          if (reply) {
+            aiReply = reply;
+            console.log(`✅ Model ${model} worked!`);
+            break;
+          } else {
+            console.error(`❌ Model ${model} returned empty response`);
+          }
+        } else {
+          console.error(`❌ Model ${model} failed:`, geminiData?.error?.message);
+          geminiError = geminiData?.error?.message;
+        }
+      } catch (err) {
+        console.error(`❌ Model ${model} error:`, err.message);
+        geminiError = err.message;
       }
-    );
-
-    const geminiData = await geminiResponse.json();
-
-    if (!geminiResponse.ok) {
-      console.error(
-        "❌ GEMINI API ERROR:",
-        JSON.stringify(geminiData, null, 2)
-      );
-
-      return {
-        statusCode: 502,
-        body: JSON.stringify({
-          success: false,
-          error: "AI response generation failed.",
-          details: geminiData?.error?.message || "Unknown Gemini API error",
-        }),
-      };
     }
 
-    const aiReply =
-      geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-
+    // If Gemini failed, use fallback
     if (!aiReply) {
-      console.error(
-        "❌ GEMINI RETURNED NO TEXT:",
-        JSON.stringify(geminiData, null, 2)
-      );
-
-      return {
-        statusCode: 502,
-        body: JSON.stringify({
-          success: false,
-          error: "Gemini returned an empty response.",
-        }),
-      };
+      console.warn("⚠️ All Gemini models failed. Using fallback reply.");
+      console.error("Last error:", geminiError);
+      
+      aiReply = `Thank you for your message. I'm currently experiencing high traffic, but I will get back to you within 24 hours.`;
     }
 
-    console.log("✅ AI REPLY GENERATED:");
+    console.log("✅ FINAL REPLY GENERATED:");
     console.log(aiReply);
 
     // ---------------------------------------------------------
-    // BREVO HELPER
+    // BREVO - SEND EMAILS
     // ---------------------------------------------------------
 
     const sendBrevoEmail = async (payload) => {
-      return fetch("https://api.brevo.com/v3/smtp/email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "api-key": process.env.BREVO_API_KEY,
-        },
-        body: JSON.stringify(payload),
-      });
+      try {
+        const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "api-key": process.env.BREVO_API_KEY,
+          },
+          body: JSON.stringify(payload),
+        });
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("❌ BREVO ERROR:", errorText);
+          return { ok: false, error: errorText };
+        }
+        
+        return { ok: true };
+      } catch (err) {
+        console.error("❌ BREVO FETCH ERROR:", err.message);
+        return { ok: false, error: err.message };
+      }
     };
 
     // ---------------------------------------------------------
-    // 1. SEND AI-GENERATED REPLY TO VISITOR
+    // 1. SEND REPLY TO VISITOR
     // ---------------------------------------------------------
 
-    const userEmailResponse = await sendBrevoEmail({
+    console.log("📤 Sending user email to:", cleanEmail);
+    
+    const userResult = await sendBrevoEmail({
       sender: {
         name: "Ayush Srivastava",
         email: "srivastava999ayush@gmail.com",
@@ -330,11 +335,24 @@ Return ONLY the email reply text.
       },
     });
 
+    if (!userResult.ok) {
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          success: false,
+          error: "Visitor email could not be sent.",
+          details: userResult.error,
+        }),
+      };
+    }
+
     // ---------------------------------------------------------
     // 2. SEND NOTIFICATION TO AYUSH
     // ---------------------------------------------------------
 
-    const adminEmailResponse = await sendBrevoEmail({
+    console.log("📤 Sending admin email to: srivastava999ayush@gmail.com");
+
+    const adminResult = await sendBrevoEmail({
       sender: {
         name: "Portfolio Contact Form",
         email: "srivastava999ayush@gmail.com",
@@ -550,35 +568,24 @@ Return ONLY the email reply text.
       `,
     });
 
-    if (!userEmailResponse.ok) {
-      const errorText = await userEmailResponse.text();
-      console.error("❌ USER EMAIL FAILED:", errorText);
+    if (!adminResult.ok) {
       return {
         statusCode: 502,
         body: JSON.stringify({
           success: false,
-          error: "AI reply was generated but visitor email could not be sent.",
+          error: "Admin notification failed.",
+          details: adminResult.error,
         }),
       };
     }
 
-    if (!adminEmailResponse.ok) {
-      const errorText = await adminEmailResponse.text();
-      console.error("❌ ADMIN EMAIL FAILED:", errorText);
-      return {
-        statusCode: 502,
-        body: JSON.stringify({
-          success: false,
-          error: "Visitor reply was sent but admin notification failed.",
-        }),
-      };
-    }
-
+    console.log("✅ ALL DONE!");
+    
     return {
       statusCode: 200,
       body: JSON.stringify({
         success: true,
-        message: "AI-generated reply sent successfully.",
+        message: "Reply sent successfully.",
       }),
     };
   } catch (error) {
