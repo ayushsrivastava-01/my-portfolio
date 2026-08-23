@@ -28,6 +28,9 @@ export const handler = async (event) => {
     const cleanEmail = email.trim();
     const cleanMessage = message.trim();
 
+    // 🔥 SIRF FIRST NAME EXTRACT
+    const firstName = cleanName.split(' ')[0];
+
     // ---------------------------------------------------------
     // GEMINI
     // ---------------------------------------------------------
@@ -168,11 +171,11 @@ Return ONLY the email reply text.
       to: [
         {
           email: cleanEmail,
-          name: cleanName,
+          name: firstName,
         },
       ],
 
-      subject: `Thanks for reaching out, ${cleanName}`,
+      subject: `Thanks for reaching out, ${firstName}`,
 
       htmlContent: `
         <!DOCTYPE html>
@@ -312,7 +315,7 @@ Return ONLY the email reply text.
               <div class="sub">Here's my response to your query</div>
             </div>
             
-            <div class="greeting">Hi <span>${cleanName}</span>,</div>
+            <div class="greeting">Hi <span>${firstName}</span>,</div>
             
             <div class="query-box">
               <span class="query-label">📝 Your Query</span>
