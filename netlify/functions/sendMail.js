@@ -285,12 +285,12 @@ Return ONLY the email reply text.
             }
             .footer-regards {
               color: #8a8aaa;
-              font-size: 14px;
+              font-size: 15px;
               margin-bottom: 2px;
             }
             .footer-name {
               color: #e8e8f0;
-              font-size: 17px;
+              font-size: 14px;
               font-weight: 600;
             }
             .footer-disclaimer {
