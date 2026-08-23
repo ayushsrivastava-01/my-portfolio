@@ -281,7 +281,7 @@ Return ONLY the email reply text.
               font-weight: 700;
             }
             .footer-disclaimer {
-              margin-top: 12px;
+              margin-top: 15px;
               padding-top: 10px;
               border-top: 1px solid rgba(255,255,255,0.04);
               text-align: center;
