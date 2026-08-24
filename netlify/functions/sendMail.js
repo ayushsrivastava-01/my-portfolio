@@ -65,10 +65,11 @@ async function processEmail(cleanName, cleanEmail, cleanMessage, firstName) {
     let aiReply = null;
     let geminiError = null;
 
+    // ✅ LATEST MODELS
     const models = [
-      "gemini-2.0-flash",
-      "gemini-1.5-flash",
-      "gemini-pro"
+      "gemini-3.6-flash",
+      "gemini-3.5-flash",
+      "gemini-2.5-flash"
     ];
     
     for (const model of models) {
