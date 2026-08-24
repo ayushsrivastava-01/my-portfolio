@@ -30,8 +30,41 @@ export const handler = async (event) => {
     const firstName = cleanName.split(' ')[0];
 
     console.log("🚀 STARTING - Name:", firstName);
-    console.log("📧 Email:", cleanEmail);
-    console.log("💬 Message:", cleanMessage);
+
+    // ✅ IMMEDIATE RESPONSE - User ko 200 bhejo
+    const response = {
+      statusCode: 200,
+      body: JSON.stringify({
+        success: true,
+        message: "Message received! You'll get a reply shortly.",
+      }),
+    };
+
+    // 🔥 Background me email bhejo (Non-blocking)
+    processEmail(cleanName, cleanEmail, cleanMessage, firstName).catch((err) =>
+      console.error("Background email error:", err)
+    );
+
+    return response;
+  } catch (error) {
+    console.error("❌ FUNCTION ERROR:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        success: false,
+        error: "Internal server error.",
+      }),
+    };
+  }
+};
+
+// ---------------------------------------------------------
+// BACKGROUND EMAIL PROCESSING
+// ---------------------------------------------------------
+
+async function processEmail(cleanName, cleanEmail, cleanMessage, firstName) {
+  try {
+    console.log("📧 Processing email for:", cleanName);
 
     // ---------------------------------------------------------
     // GEMINI - LATEST MODELS
@@ -119,7 +152,7 @@ Return ONLY the email reply text.
       console.warn("⚠️ All Gemini models failed. Using fallback reply.");
       console.error("Last error:", geminiError);
       
-      aiReply = `Thank you for your message. I'm currently experiencing high traffic, but I will get back to you within 24 hours.`;
+      aiReply = `Thank you for your message. I'll get back to you within 24 hours.`;
     }
 
     console.log("✅ FINAL REPLY GENERATED:");
@@ -342,14 +375,7 @@ Return ONLY the email reply text.
 
     if (!userResult.ok) {
       console.error("❌ USER EMAIL FAILED:", userResult.error);
-      return {
-        statusCode: 502,
-        body: JSON.stringify({
-          success: false,
-          error: "Visitor email could not be sent.",
-          details: userResult.error,
-        }),
-      };
+      return;
     }
 
     // ---------------------------------------------------------
@@ -576,33 +602,11 @@ Return ONLY the email reply text.
 
     if (!adminResult.ok) {
       console.error("❌ ADMIN EMAIL FAILED:", adminResult.error);
-      return {
-        statusCode: 502,
-        body: JSON.stringify({
-          success: false,
-          error: "Admin notification failed.",
-          details: adminResult.error,
-        }),
-      };
+      return;
     }
 
     console.log("✅ ALL DONE!");
-    
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        success: true,
-        message: "Reply sent successfully.",
-      }),
-    };
   } catch (error) {
-    console.error("❌ FUNCTION ERROR:", error);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        success: false,
-        error: "Internal server error.",
-      }),
-    };
+    console.error("❌ Background Process Error:", error);
   }
-};
+}
