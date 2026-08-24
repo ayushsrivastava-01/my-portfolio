@@ -6,6 +6,11 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# 🔥 YEH ADD KARO - Timeout 30 seconds
+[functions]
+  [functions.sendMail]
+    timeout = 30
+
 [[headers]]
   for = "/*"
   [headers.values]

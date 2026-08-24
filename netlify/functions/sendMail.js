@@ -34,7 +34,7 @@ export const handler = async (event) => {
     console.log("💬 Message:", cleanMessage);
 
     // ---------------------------------------------------------
-    // GEMINI - ✅ LATEST MODELS
+    // GEMINI - LATEST MODELS
     // ---------------------------------------------------------
 
     let aiReply = null;
@@ -281,7 +281,7 @@ Return ONLY the email reply text.
               font-weight: 700;
             }
             .footer-disclaimer {
-              margin-top: 15px;
+              margin-top: 12px;
               padding-top: 10px;
               border-top: 1px solid rgba(255,255,255,0.04);
               text-align: center;
@@ -341,6 +341,7 @@ Return ONLY the email reply text.
     });
 
     if (!userResult.ok) {
+      console.error("❌ USER EMAIL FAILED:", userResult.error);
       return {
         statusCode: 502,
         body: JSON.stringify({
@@ -574,6 +575,7 @@ Return ONLY the email reply text.
     });
 
     if (!adminResult.ok) {
+      console.error("❌ ADMIN EMAIL FAILED:", adminResult.error);
       return {
         statusCode: 502,
         body: JSON.stringify({
