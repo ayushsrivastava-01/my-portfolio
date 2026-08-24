@@ -1,7 +1,6 @@
 import { portfolioKnowledge } from "./portfolioKnowledge.js";
 
 export const handler = async (event, context) => {
-  // ✅ Force function to wait for background tasks
   context.callbackWaitsForEmptyEventLoop = false;
 
   if (event.httpMethod !== "POST") {
@@ -33,8 +32,9 @@ export const handler = async (event, context) => {
     const firstName = cleanName.split(' ')[0];
 
     console.log("🚀 STARTING - Name:", firstName);
+    console.log("🔑 GEMINI_API_KEY exists:", !!process.env.GEMINI_API_KEY);
+    console.log("🔑 GEMINI_API_KEY length:", process.env.GEMINI_API_KEY?.length || 0);
 
-    // ✅ IMMEDIATE RESPONSE
     const response = {
       statusCode: 200,
       body: JSON.stringify({
@@ -43,7 +43,6 @@ export const handler = async (event, context) => {
       }),
     };
 
-    // 🔥 Force wait for email processing
     await processEmail(cleanName, cleanEmail, cleanMessage, firstName);
 
     return response;
@@ -59,26 +58,17 @@ export const handler = async (event, context) => {
   }
 };
 
-// ---------------------------------------------------------
-// EMAIL PROCESSING
-// ---------------------------------------------------------
-
 async function processEmail(cleanName, cleanEmail, cleanMessage, firstName) {
   try {
     console.log("📧 Processing email for:", cleanName);
-
-    // ---------------------------------------------------------
-    // GEMINI
-    // ---------------------------------------------------------
 
     let aiReply = null;
     let geminiError = null;
 
     const models = [
-      "gemini-3.7-flash",
-      "gemini-3.6-flash",
-      "gemini-3.5-flash",
-      "gemini-2.5-flash"
+      "gemini-2.0-flash",
+      "gemini-1.5-flash",
+      "gemini-pro"
     ];
     
     for (const model of models) {
@@ -156,10 +146,6 @@ Return ONLY the email reply text.
 
     console.log("✅ FINAL REPLY GENERATED:", aiReply);
 
-    // ---------------------------------------------------------
-    // BREVO - SEND EMAILS
-    // ---------------------------------------------------------
-
     const sendBrevoEmail = async (payload) => {
       try {
         const response = await fetch("https://api.brevo.com/v3/smtp/email", {
@@ -176,7 +162,6 @@ Return ONLY the email reply text.
           console.error("❌ BREVO ERROR:", errorText);
           return { ok: false, error: errorText };
         }
-        
         return { ok: true };
       } catch (err) {
         console.error("❌ BREVO FETCH ERROR:", err.message);
@@ -184,7 +169,6 @@ Return ONLY the email reply text.
       }
     };
 
-    // 1. SEND REPLY TO VISITOR
     console.log("📤 Sending user email to:", cleanEmail);
     
     const userResult = await sendBrevoEmail({
@@ -373,7 +357,6 @@ Return ONLY the email reply text.
       return;
     }
 
-    // 2. ADMIN EMAIL
     console.log("📤 Sending admin email to: srivastava999ayush@gmail.com");
 
     const adminResult = await sendBrevoEmail({
