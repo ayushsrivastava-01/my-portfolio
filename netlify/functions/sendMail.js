@@ -1,6 +1,9 @@
 import { portfolioKnowledge } from "./portfolioKnowledge.js";
 
-export const handler = async (event) => {
+export const handler = async (event, context) => {
+  // ✅ Force function to wait for background tasks
+  context.callbackWaitsForEmptyEventLoop = false;
+
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -31,7 +34,7 @@ export const handler = async (event) => {
 
     console.log("🚀 STARTING - Name:", firstName);
 
-    // ✅ IMMEDIATE RESPONSE - User ko 200 bhejo
+    // ✅ IMMEDIATE RESPONSE
     const response = {
       statusCode: 200,
       body: JSON.stringify({
@@ -40,10 +43,8 @@ export const handler = async (event) => {
       }),
     };
 
-    // 🔥 Background me email bhejo (Non-blocking)
-    processEmail(cleanName, cleanEmail, cleanMessage, firstName).catch((err) =>
-      console.error("Background email error:", err)
-    );
+    // 🔥 Force wait for email processing
+    await processEmail(cleanName, cleanEmail, cleanMessage, firstName);
 
     return response;
   } catch (error) {
@@ -59,7 +60,7 @@ export const handler = async (event) => {
 };
 
 // ---------------------------------------------------------
-// BACKGROUND EMAIL PROCESSING
+// EMAIL PROCESSING
 // ---------------------------------------------------------
 
 async function processEmail(cleanName, cleanEmail, cleanMessage, firstName) {
@@ -67,7 +68,7 @@ async function processEmail(cleanName, cleanEmail, cleanMessage, firstName) {
     console.log("📧 Processing email for:", cleanName);
 
     // ---------------------------------------------------------
-    // GEMINI - LATEST MODELS
+    // GEMINI
     // ---------------------------------------------------------
 
     let aiReply = null;
@@ -147,16 +148,13 @@ Return ONLY the email reply text.
       }
     }
 
-    // If Gemini failed, use fallback
     if (!aiReply) {
       console.warn("⚠️ All Gemini models failed. Using fallback reply.");
       console.error("Last error:", geminiError);
-      
       aiReply = `Thank you for your message. I'll get back to you within 24 hours.`;
     }
 
-    console.log("✅ FINAL REPLY GENERATED:");
-    console.log(aiReply);
+    console.log("✅ FINAL REPLY GENERATED:", aiReply);
 
     // ---------------------------------------------------------
     // BREVO - SEND EMAILS
@@ -186,10 +184,7 @@ Return ONLY the email reply text.
       }
     };
 
-    // ---------------------------------------------------------
     // 1. SEND REPLY TO VISITOR
-    // ---------------------------------------------------------
-
     console.log("📤 Sending user email to:", cleanEmail);
     
     const userResult = await sendBrevoEmail({
@@ -378,10 +373,7 @@ Return ONLY the email reply text.
       return;
     }
 
-    // ---------------------------------------------------------
-    // 2. SEND NOTIFICATION TO AYUSH
-    // ---------------------------------------------------------
-
+    // 2. ADMIN EMAIL
     console.log("📤 Sending admin email to: srivastava999ayush@gmail.com");
 
     const adminResult = await sendBrevoEmail({
