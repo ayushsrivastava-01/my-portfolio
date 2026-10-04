@@ -101,10 +101,16 @@ Visitor name: ${firstName}
 Visitor's question/message:
 ${cleanMessage}
 
-Answer the visitor's actual question directly.
-Use the portfolio knowledge provided.
-Keep the response concise, natural, friendly and professional.
-Return ONLY the email reply text.
+IMPORTANT RULES:
+1. Answer the visitor's actual question directly.
+2. Use the portfolio knowledge provided.
+3. Keep the response concise — under 150 words.
+4. COMPLETE your response properly — never cut off mid-sentence.
+5. If giving code, give complete working code.
+6. Return ONLY the email reply text.
+7. Do NOT add "Regards" or closing text.
+
+Return the complete response now.
                       `,
                     },
                   ],
@@ -112,7 +118,7 @@ Return ONLY the email reply text.
               ],
               generationConfig: {
                 temperature: 0.3,
-                maxOutputTokens: 500,
+                maxOutputTokens: 2000,  // ✅ 500 → 2000
               },
             }),
           }
@@ -271,6 +277,7 @@ Return ONLY the email reply text.
               font-size: 13px;
               line-height: 1.6;
               margin: 0;
+              white-space: pre-wrap;
             }
             .divider {
               height: 1px;
@@ -483,6 +490,7 @@ Return ONLY the email reply text.
               font-size: 14px;
               line-height: 1.6;
               margin: 0;
+              white-space: pre-wrap;
             }
             .divider {
               height: 1px;
