@@ -104,12 +104,13 @@ ${cleanMessage}
 IMPORTANT RULES:
 1. Answer the visitor's actual question directly.
 2. Use the portfolio knowledge provided.
-3. COMPLETE your response properly — never cut off mid-sentence.
-4. If giving code, give complete working code.
-5. Return ONLY the email reply text.
-6. Do NOT add "Regards" or closing text.
+3. Keep the response UNDER 80 WORDS.
+4. COMPLETE your response properly — never cut off mid-sentence.
+5. If giving code, give complete working code.
+6. Return ONLY the email reply text.
+7. Do NOT add "Regards" or closing text.
 
-Return the complete response now.
+Response:
                       `,
                     },
                   ],
@@ -117,7 +118,7 @@ Return the complete response now.
               ],
               generationConfig: {
                 temperature: 0.3,
-                maxOutputTokens: 2000,
+                maxOutputTokens: 500,
               },
             }),
           }
@@ -127,11 +128,6 @@ Return the complete response now.
 
         if (geminiResponse.ok) {
           const reply = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-          
-          // Check finish reason
-          const finishReason = geminiData?.candidates?.[0]?.finishReason;
-          console.log(`📊 Finish Reason: ${finishReason}`);
-          
           if (reply) {
             aiReply = reply;
             console.log(`✅ Model ${model} worked!`);
