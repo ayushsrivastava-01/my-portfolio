@@ -1,15 +1,43 @@
+
 import React from "react";
 import "./css/Skills.css";
 import { motion } from "framer-motion";
 
 import {
-  FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGitAlt, FaGithub,
-  FaJava, FaPython, FaDatabase, FaBootstrap, FaBoxOpen, FaCode, FaLaptopCode
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaReact,
+  FaNodeJs,
+  FaGitAlt,
+  FaGithub,
+  FaJava,
+  FaPython,
+  FaDatabase,
+  FaBootstrap,
+  FaBoxOpen,
+  FaCode,
+  FaLaptopCode,
 } from "react-icons/fa";
+
 import {
-  SiMongodb, SiPhp, SiMysql, SiExpress, SiTailwindcss, SiOracle, SiSpring,
-  SiCplusplus, SiC, SiIntellijidea, SiEclipseide
+  SiMongodb,
+  SiPhp,
+  SiMysql,
+  SiExpress,
+  SiTailwindcss,
+  SiOracle,
+  SiSpring,
+  SiCplusplus,
+  SiC,
+  SiIntellijidea,
+  SiEclipseide,
+  SiTypescript,
+  SiAngular,
+  SiDotnet,
 } from "react-icons/si";
+
+import { TbBrandCSharp } from "react-icons/tb";
 
 const Skills = () => {
   const skillCategories = [
@@ -21,7 +49,9 @@ const Skills = () => {
         { name: "HTML5", icon: <FaHtml5 />, color: "#e34c26" },
         { name: "CSS3", icon: <FaCss3Alt />, color: "#264de4" },
         { name: "JavaScript", icon: <FaJs />, color: "#f7df1e" },
+        { name: "TypeScript", icon: <SiTypescript />, color: "#3178c6" },
         { name: "React", icon: <FaReact />, color: "#61dafb" },
+        { name: "Angular", icon: <SiAngular />, color: "#dd0031" },
         { name: "Bootstrap", icon: <FaBootstrap />, color: "#7952b3" },
         { name: "Tailwind", icon: <SiTailwindcss />, color: "#38b2ac" },
       ],
@@ -34,18 +64,22 @@ const Skills = () => {
         { name: "Node.js", icon: <FaNodeJs />, color: "#68a063" },
         { name: "Express", icon: <SiExpress />, color: "#ffffff" },
         { name: "Spring", icon: <SiSpring />, color: "#6db33f" },
+        { name: "C#", icon: <TbBrandCSharp />, color: "#68217a" },
+        { name: ".NET", icon: <SiDotnet />, color: "#512bd4" },
         { name: "PHP", icon: <SiPhp />, color: "#777bb4" },
       ],
     },
     {
       title: "Languages",
-      icon: "👨‍💻", // Changed to programmer emoji
+      icon: "👨‍💻",
       accentColor: "#f59e0b",
       skills: [
         { name: "Java", icon: <FaJava />, color: "#f89820" },
         { name: "C", icon: <SiC />, color: "#00599c" },
         { name: "C++", icon: <SiCplusplus />, color: "#004482" },
         { name: "Python", icon: <FaPython />, color: "#3776ab" },
+        { name: "JavaScript", icon: <FaJs />, color: "#f7df1e" },
+        { name: "TypeScript", icon: <SiTypescript />, color: "#3178c6" },
       ],
     },
     {
@@ -56,6 +90,7 @@ const Skills = () => {
         { name: "MySQL", icon: <SiMysql />, color: "#00758f" },
         { name: "SQLite", icon: <FaDatabase />, color: "#003b57" },
         { name: "Oracle", icon: <SiOracle />, color: "#f80000" },
+        { name: "MongoDB", icon: <SiMongodb />, color: "#47a248" },
       ],
     },
     {
@@ -66,9 +101,9 @@ const Skills = () => {
         { name: "Git", icon: <FaGitAlt />, color: "#f34f29" },
         { name: "GitHub", icon: <FaGithub />, color: "#ffffff" },
         { name: "Photoshop", icon: <FaBoxOpen />, color: "#31a8ff" },
-        { name: "Canvas", icon: <FaCode />, color: "#00c4cc" },
+        { name: "Canva", icon: <FaCode />, color: "#00c4cc" },
         { name: "VS Code", icon: <FaLaptopCode />, color: "#007acc" },
-        { name: "IntelliJ IDEA", icon: <SiIntellijidea />, color: "#000000" },
+        { name: "IntelliJ IDEA", icon: <SiIntellijidea />, color: "#ffffff" },
         { name: "Eclipse", icon: <SiEclipseide />, color: "#2c2255" },
         { name: "NetBeans", icon: <FaLaptopCode />, color: "#1b6ac6" },
       ],
@@ -79,7 +114,10 @@ const Skills = () => {
       accentColor: "#06b6d4",
       skills: [
         { name: "React", icon: <FaReact />, color: "#61dafb" },
+        { name: "Angular", icon: <SiAngular />, color: "#dd0031" },
         { name: "Express", icon: <SiExpress />, color: "#ffffff" },
+        { name: "Spring Boot", icon: <SiSpring />, color: "#6db33f" },
+        { name: ".NET", icon: <SiDotnet />, color: "#512bd4" },
         { name: "Tailwind", icon: <SiTailwindcss />, color: "#38b2ac" },
         { name: "Bootstrap", icon: <FaBootstrap />, color: "#7952b3" },
       ],
@@ -105,49 +143,57 @@ const Skills = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ 
-              delay: i * 0.2, 
+            transition={{
+              delay: i * 0.2,
               duration: 0.6,
-              ease: "easeOut"
+              ease: "easeOut",
             }}
             whileHover={{
               y: -8,
-              transition: { duration: 0.3, ease: "easeInOut" }
+              transition: { duration: 0.3, ease: "easeInOut" },
             }}
-            style={{ 
-              '--accent-color': category.accentColor 
+            style={{
+              "--accent-color": category.accentColor,
             }}
           >
             <div className="card-header">
               <span className="category-icon">{category.icon}</span>
               <h3>{category.title}</h3>
             </div>
+
             <div className="skills-list">
               {category.skills.map((skill, index) => (
-                <motion.div 
+                <motion.div
                   className="skill-item"
-                  key={index}
+                  key={`${skill.name}-${index}`}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.2 + index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.02, 
+                  viewport={{ once: true }}
+                  transition={{
+                    delay: i * 0.2 + index * 0.1,
+                  }}
+                  whileHover={{
+                    scale: 1.02,
                     x: 4,
-                    transition: { type: "spring", stiffness: 400, damping: 25 }
+                    transition: {
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 25,
+                    },
                   }}
                 >
-                  <span 
-                    className="skill-icon" 
+                  <span
+                    className="skill-icon"
                     style={{ color: skill.color }}
                   >
                     {skill.icon}
                   </span>
+
                   <span className="skill-name">{skill.name}</span>
                 </motion.div>
               ))}
             </div>
-            
-            {/* Animated Outline Element */}
+
             <div className="card-outline"></div>
           </motion.div>
         ))}

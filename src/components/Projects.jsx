@@ -6,6 +6,14 @@ import { FaGithub, FaExternalLinkAlt, FaLaptopCode, FaChevronDown, FaChevronUp }
 // Using your original projects array with added images
 const projects = [
   {
+    title: "BlogSphere WebApp",
+    description: "A platform where you can share your thoughts, ideas and opinions with modern web UI.",
+    github: "https://github.com/ayushsrivastava-01/BlogSphere.git",
+    image: "/images/BlogSphere.png",
+    live: null,
+    tech: ["TypeScript", "C#", "Angular", "DotNet", "MySQL", "JWT"]
+  },
+  {
     title: "Real Estate Webapp",
     description: "Property listing platform with advanced filtering and search capabilities",
     github: "https://github.com/ayushsrivastava-01/real-estate-agency",
