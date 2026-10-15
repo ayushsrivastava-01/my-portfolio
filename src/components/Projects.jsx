@@ -7,11 +7,11 @@ import { FaGithub, FaExternalLinkAlt, FaLaptopCode, FaChevronDown, FaChevronUp }
 const projects = [
   {
     title: "BlogSphere WebApp",
-    description: "A platform where you can share your thoughts, ideas and opinions with modern web UI.",
+    description: "A full-stack blogging platform where you can write, share, and discover stories.",
     github: "https://github.com/ayushsrivastava-01/BlogSphere.git",
     image: "/images/BlogSphere.png",
     live: "https://sphereblogs.vercel.app/",
-    tech: ["TypeScript", "C#", "Angular", "DotNet", "MySQL", "JWT"]
+    tech: ["TypeScript", "C#", "Angular", "ASP.NET Core", "MySQL", "JWT"]
   },
   {
     title: "Real Estate Webapp",
