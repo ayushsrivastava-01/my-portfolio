@@ -10,7 +10,7 @@ const projects = [
     description: "A platform where you can share your thoughts, ideas and opinions with modern web UI.",
     github: "https://github.com/ayushsrivastava-01/BlogSphere.git",
     image: "/images/BlogSphere.png",
-    live: null,
+    live: "https://sphereblogs.vercel.app/",
     tech: ["TypeScript", "C#", "Angular", "DotNet", "MySQL", "JWT"]
   },
   {
