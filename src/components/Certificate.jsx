@@ -104,7 +104,7 @@ const certificates = [
     title: "Data Science & Machine Learning",
     issuedBy: "Edureka!",
     image: C4,
-    pdf: P5,
+    pdf: P4,
   },
   {
     title: "Basics of Python",
@@ -140,7 +140,7 @@ const certificates = [
     title: "Career in Tech",
     issuedBy: "Barrownz Learning Academy",
     image: C5,
-    pdf: P4,
+    pdf: P5,
   },
 ];
 
