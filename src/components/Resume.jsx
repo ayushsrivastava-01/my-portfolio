@@ -40,7 +40,7 @@ const Resume = () => {
             href={resumePDF}
             download="Ayush_Srivastava_Resume.pdf"
             className="button download-button"
-            data-tooltip="Size: 604Kb"
+            data-tooltip="Size: 284Kb"
           >
             <div className="button-wrapper">
               <div className="text">Download Resume</div>
@@ -51,7 +51,7 @@ const Resume = () => {
               </span>
             </div>
           </a>
-          <div className="tooltip">Size: 604Kb</div>
+          <div className="tooltip">Size: 284Kb</div>
         </div>
 
         {/* View Resume Button */}
